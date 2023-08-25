@@ -11,26 +11,33 @@ import Recipes from "./Recipes";
 import Profile from "./Profile";
 import Error from "./Error";
 
-function App() {
-  const location = useLocation();
-
-  const showNavbar = location.pathname !== "/"
-
+const App = () => {
   return (
     <BrowserRouter>
-    <GlobalStyles />
-    {showNavbar && <Navbar />}
-    <Routes>
-      <Route path="/" element={<DefPage />} />
-      <Route path="/homepage" element={<Homepage />} />
-      <Route path="/stocks" element={<Stocks />} />
-      <Route path="/planner" element={<Planner />} />
-      <Route path="/grocery" element={<Grocery />} />
-      <Route path="/recipes" element={<Recipes />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/error" element={<Error />} />
-    </Routes>
-  </BrowserRouter>
+      <GlobalStyles />
+      <AppRoutes />
+    </BrowserRouter>
+  );
+}
+
+const AppRoutes = () => {
+  const location = useLocation();
+  const showNavbar = location.pathname !== "/";
+
+  return (
+    <>
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<DefPage />} />
+        <Route path="/homepage" element={<Homepage />} />
+        <Route path="/stocks" element={<Stocks />} />
+        <Route path="/planner" element={<Planner />} />
+        <Route path="/grocery" element={<Grocery />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/error" element={<Error />} />
+      </Routes>
+    </>
   );
 }
 

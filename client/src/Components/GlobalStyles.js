@@ -31,7 +31,7 @@ const GlobalStyles = createGlobalStyle`
     }
     body {
         line-height: 1;
-        font-family: sans-serif;
+        font-family: "rubik";
         height: 100vh;
         max-width: 100vw;
     }
