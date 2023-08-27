@@ -36,7 +36,7 @@ function exactTesting(query, target) {
     if (targetName.includes(query)) {matchingNames.push(target)}
 }
 
-const query = "strawberrie";
+const query = "worsceteshire";
 
 initialItems.forEach((item) => {exactTesting(query, item)})
 

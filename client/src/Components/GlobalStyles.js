@@ -33,7 +33,8 @@ const GlobalStyles = createGlobalStyle`
         line-height: 1;
         font-family: "rubik";
         height: 100vh;
-        max-width: 100vw;
+        width: 100vw;
+        background-color: #F8F6EF;
     }
     ol, ul {
         list-style: none;

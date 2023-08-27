@@ -1,3 +1,4 @@
+import Loading from "./Loading";
 
 
 const Stocks = () =>

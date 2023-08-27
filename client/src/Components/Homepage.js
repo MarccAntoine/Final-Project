@@ -1,11 +1,11 @@
 import { styled } from "styled-components"
+import Loading from "./Loading"
 
 const Homepage = () =>
 {
     return (
     <Container>
         <ContentContainer>
-
         </ContentContainer>
     </Container>
     )

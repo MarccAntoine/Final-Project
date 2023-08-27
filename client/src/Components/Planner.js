@@ -1,8 +1,9 @@
+import Loading from "./Loading";
 
 
 const Planner = () =>
 {
-    return (<></>)
+    return (<><Loading></Loading></>)
 }
 
 export default Planner;
