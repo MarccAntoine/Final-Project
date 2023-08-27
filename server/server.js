@@ -5,6 +5,8 @@ const port = 8000
 
 const app = express()
 
+const {getUser, postNewUser} = require('./handlers')
+
 app
     .use(function(req, res, next) {
         res.header(
@@ -23,6 +25,8 @@ app
     .use(express.urlencoded({ extended: false }))
     .use('/', express.static(__dirname + '/'))
 
-    .get('/', (req, res) => {res.status(200).json({message : "hello"})})
+    .get('/api/user/:userId', getUser)
+
+    .post('/api/newUser', postNewUser)
 
 app.listen(port, () => {console.log('Server running at port 8000')})

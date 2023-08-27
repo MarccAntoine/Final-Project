@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export const KitchenContext = createContext(null);
 
 export const KitchenProvider = ({ children }) => {
-    const { logout, user, isAuthenticated } = useAuth0
+    const { logout, user, isAuthenticated, isLoading } = useAuth0()
     const [currentStock, setCurrentStock] = useState(null);
     const [status, setStatus] = useState("loading");
     const [triggerModification, setTriggerModification] = useState(0)
@@ -20,21 +20,21 @@ export const KitchenProvider = ({ children }) => {
     {
         if (isAuthenticated)
         {
-            fetch(`/api/user/${user._id}`)
-            .then((response) => response.json())
-            .then((data) =>
-            {
-                setCurrentStock(data.data)
-                setStatus("idle")
-            })
-            .catch((err) => {setStatus("idle"); logout()})
+            fetch(`/api/user/${user.sub}`)
+                .then((response) => {return response.json()})
+                .then((data) =>
+                {
+                    setCurrentStock(data.data)
+                    setStatus("idle")
+                })
+                .catch((err) => {setStatus("idle"); console.log(err)})
         }
-        else {setCurrentStock(null); setStatus("idle")}
-    }, [triggerModification, isAuthenticated])
+        else {setCurrentStock(undefined); setStatus("idle")}
+    }, [isAuthenticated])
 
     return (
         <>
-            {status === "loading" ? (
+            {status === "loading" || isLoading ? (
                 <Loading /> ) : (
                 <KitchenContext.Provider value={{ currentStock, setTriggerModification, triggerModification }}>
                     {children}

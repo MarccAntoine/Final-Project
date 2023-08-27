@@ -1,19 +1,25 @@
 import { styled } from "styled-components";
 import LoginButton from "./LoginButton";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Description from "./Description";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { KitchenContext } from "./KitchenContext";
 
 const DefPage = () =>
 {
     const { isAuthenticated } = useAuth0();
+    const {currentStock} = useContext(KitchenContext)
     const [descIsUp, setDescIsUp] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isAuthenticated) {navigate('/homepage')}
-    }, [isAuthenticated])
+        if (isAuthenticated && currentStock !== undefined) 
+        {
+            if (currentStock === null) {navigate('/profile/setup')}
+            else {navigate('/homepage')}
+        }
+    }, [isAuthenticated, currentStock])
 
     return (
         !isAuthenticated &&

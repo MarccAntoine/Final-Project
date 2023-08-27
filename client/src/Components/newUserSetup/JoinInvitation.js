@@ -1,19 +1,45 @@
 import { styled } from "styled-components";
 import {FiArrowLeft} from "react-icons/fi"
+import { useState, useEffect } from "react";
 
-const JoinInvitation = ({step, setStep}) =>
+const JoinInvitation = ({step, setStep, initialSetup, fetchData, user}) =>
 {
+    const [formData, setFormData] = useState(initialSetup);
+
+    useEffect(() =>
+    {
+        setFormData({...formData, _id: user.sub})
+    }, [])
+
+    const handleChange = (ev) => 
+    {
+        setFormData({ ...formData, [ev.target.id]: ev.target.value });
+    };
 
     return (
         step === "invitation" && 
             <>
                 <BackButton onClick={() => setStep("initial")}><BackArrow /></BackButton>
-                <Question>Please enter your invitation code</Question>
-                <OptionsDiv></OptionsDiv>
-                <ConfirmButton>Confirm</ConfirmButton>
+                <FormContainer>
+                    <Question>What is your preffered name?</Question>
+                    <OptionsDiv id="name" onChange={handleChange}></OptionsDiv>
+                    <Question>Please enter your invitation code</Question>
+                    <OptionsDiv id="inviteCode" onChange={handleChange}></OptionsDiv>
+                    <ConfirmButton onClick={(ev) => fetchData(ev, formData)}>Confirm</ConfirmButton>
+                </FormContainer>
             </>
     )
 }
+
+const FormContainer = styled.form`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6%;
+`
 
 const Question = styled.h3`
     font-size: 35px;

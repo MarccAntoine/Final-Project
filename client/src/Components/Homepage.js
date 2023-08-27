@@ -1,8 +1,21 @@
 import { styled } from "styled-components"
 import Loading from "./Loading"
+import { useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { KitchenContext } from "./KitchenContext"
 
 const Homepage = () =>
 {
+    const {currentStock} = useContext(KitchenContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (currentStock === null) 
+        {
+            navigate('/profile/setup')
+        }
+    }, [currentStock])
+
     return (
     <Container>
         <ContentContainer>

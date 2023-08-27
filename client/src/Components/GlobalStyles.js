@@ -28,11 +28,14 @@ const GlobalStyles = createGlobalStyle`
     }
     #root {
         max-width: 100vw;
+        min-height: 100vh;
+        width: 100vw;
+        background-color: #F8F6EF;
     }
     body {
         line-height: 1;
         font-family: "rubik";
-        height: 100vh;
+        min-height: 100vh;
         width: 100vw;
         background-color: #F8F6EF;
     }

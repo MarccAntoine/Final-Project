@@ -20,6 +20,8 @@ const OutButton = styled.button`
     color: inherit;
     text-decoration: none;
     font-size: inherit;
+    font-family: inherit;
+    font-weight: lighter;
 
     &:focus {
         outline: none;

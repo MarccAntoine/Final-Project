@@ -1,21 +1,56 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Type from "./Type";
 import JoinInvitation from "./JoinInvitation";
 import SetupNewEnv from "./SetUpNewEnv";
+import { KitchenContext } from "../KitchenContext";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const initialSetup = {
+    "_id": undefined,
+    "name" : undefined,
+    "system" : undefined,
+    "inviteCode" : undefined
+}
 
 const NewUserSetup = () =>
 {
-    const navigate = useNavigate()
-    const [step, setStep] = useState("initial")
+    const [step, setStep] = useState("initial");
+    const {triggerModification, setTriggerModification} = useContext(KitchenContext)
+    const { user } = useAuth0()
+    const navigate = useNavigate();
+
+    const fetchData = (ev, formData) =>
+    {
+        console.log(formData)
+        ev.preventDefault();
+        fetch("/api/newUser", {
+        method: "POST",
+        body: JSON.stringify({"userData" : formData}),
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        })
+        .then((res) => res.json())
+        .then((json) => {
+            setTriggerModification(triggerModification + 1)
+            const { status } = json;
+            if (status === 201) {
+            navigate(`/homepage`)
+            } else {
+            navigate("/error")
+            }
+        });
+    }
 
     return (
         <Container>
             <ContentContainer>
                 <Type step={step} setStep={setStep} />
-                <JoinInvitation step={step} setStep={setStep} />
-                <SetupNewEnv step={step} setStep={setStep} />
+                <JoinInvitation step={step} setStep={setStep} initialSetup={initialSetup} fetchData={fetchData} user={user} />
+                <SetupNewEnv step={step} setStep={setStep} initialSetup={initialSetup} fetchData={fetchData} user={user}/>
             </ContentContainer>
         </Container>
     )

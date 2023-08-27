@@ -84,6 +84,8 @@ const NavContainer = styled.div`
     justify-content: center;
     gap: 4%;
     color: white;
+
+    z-index: 95;
 `
 
 const DropDownButton = styled(Link)`

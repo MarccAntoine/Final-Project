@@ -6,8 +6,8 @@ const Type = ({step, setStep}) =>
     return (
         step === "initial" && 
             <>
-                <Welcome>Welcome Marc-Antoine</Welcome>
-                <Message>Before starting to use FoodFlow let's set up your kitchen.</Message>
+                <Welcome>Welcome to FoodFlow!</Welcome>
+                <Message>Before starting to use our services let's set up your kitchen.</Message>
                 <Question>Are you creating your own FoodFlow kitchen or have you been invited to join an existing kitchen?</Question>
                 <OptionsDiv>
                     <Option onClick={() => setStep('setup')} style={{borderRight: "0.5px solid white", borderRadius: "30px 0px 0px 30px"}}>My own</Option>
