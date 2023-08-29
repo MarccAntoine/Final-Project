@@ -6,15 +6,15 @@ import { KitchenContext } from "./KitchenContext"
 
 const Homepage = () =>
 {
-    const {currentStock} = useContext(KitchenContext);
+    const {currentUser} = useContext(KitchenContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (currentStock === null) 
+        if (currentUser === null) 
         {
             navigate('/profile/setup')
         }
-    }, [currentStock])
+    }, [currentUser])
 
     return (
     <Container>

@@ -4,7 +4,7 @@ import GlobalStyles from "./GlobalStyles";
 import Navbar from "./navbarcomponents/Navbar";
 import DefPage from "./DefPage";
 import Homepage from "./Homepage";
-import Stocks from "./Stocks";
+import Stocks from "./stocks/Stocks";
 import Planner from "./Planner";
 import Grocery from "./Grocery";
 import Recipes from "./Recipes";

@@ -9,17 +9,17 @@ import { KitchenContext } from "./KitchenContext";
 const DefPage = () =>
 {
     const { isAuthenticated } = useAuth0();
-    const {currentStock} = useContext(KitchenContext)
+    const {currentUser} = useContext(KitchenContext)
     const [descIsUp, setDescIsUp] = useState(false)
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isAuthenticated && currentStock !== undefined) 
+        if (isAuthenticated && currentUser !== undefined) 
         {
-            if (currentStock === null) {navigate('/profile/setup')}
+            if (currentUser === null) {navigate('/profile/setup')}
             else {navigate('/homepage')}
         }
-    }, [isAuthenticated, currentStock])
+    }, [isAuthenticated, currentUser])
 
     return (
         !isAuthenticated &&

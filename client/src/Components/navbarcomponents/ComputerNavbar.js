@@ -74,6 +74,8 @@ const DropDownButton = styled(Link)`
     color: black;
     text-decoration: none;
     text-align: center;
+    overflow: visible;
+    white-space: nowrap;
 
     &:focus {
         outline: none;

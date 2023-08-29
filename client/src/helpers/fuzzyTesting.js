@@ -1,6 +1,6 @@
+const {initialItems, categories, measurement} = require('./MainItemsDatabase')
 let matchingNames = [];
 let exactMatch = null
-const {initialItems} = require('./MainItemsDatabase')
 
 function jaccardIndex(s1, s2) {
     const set1 = new Set(s1);
@@ -14,7 +14,7 @@ function jaccardIndex(s1, s2) {
 
 function fuzzyMatch(query, target) {
     query = query.toLowerCase();
-    targetName = target.name.toLowerCase();
+    let targetName = target.name.toLowerCase();
 
     const similarity = jaccardIndex(query, targetName);
     
@@ -29,17 +29,25 @@ function fuzzyMatch(query, target) {
 }
 
 function exactTesting(query, target) {
+    if (matchingNames.includes(target)) {return}
     query = query.toLowerCase();
-    targetName = target.name.toLowerCase();
+    let targetName = target.name.toLowerCase();
 
     if (query === targetName) {exactMatch = {...target, match: "exact"}}
     if (targetName.includes(query)) {matchingNames.push(target)}
 }
 
-const query = "worsceteshire";
+const itemSearch = (input) => {
+    exactMatch = null;
+    matchingNames = [];
+    const query = input;
 
-initialItems.forEach((item) => {exactTesting(query, item)})
+    initialItems.forEach((item) => {exactTesting(query, item)})
 
-if (exactMatch === null) {initialItems.forEach((item) => {fuzzyMatch(query, item)})}
+    if (exactMatch === null) {initialItems.forEach((item) => {fuzzyMatch(query, item)})}
 
-console.log(exactMatch || matchingNames);
+    return {exactMatch, matchingNames}
+}
+
+module.exports = {itemSearch, categories, measurement}
+

@@ -72,4 +72,36 @@ const postNewUser = async (req, res) => {
   }
 }
 
-module.exports = {getUser, postNewUser}
+const postNewStock = async (req, res) =>
+{
+  let client
+  let itemData = req.body.itemData
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const userId = itemData.userId;
+
+      delete itemData.userId
+
+      const result = await db.collection("kitchen").findOneAndUpdate(
+        { "users": { $elemMatch: { $eq: userId } } },
+        { $push: { "items": itemData } },
+        { returnOriginal: false }
+      );
+
+      if (result.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
+
+      else {return res.status(400).json({ status: 400, message: "failed"});}
+      
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock}

@@ -8,7 +8,7 @@ export const KitchenContext = createContext(null);
 
 export const KitchenProvider = ({ children }) => {
     const { logout, user, isAuthenticated, isLoading } = useAuth0()
-    const [currentStock, setCurrentStock] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
     const [status, setStatus] = useState("loading");
     const [triggerModification, setTriggerModification] = useState(0)
 
@@ -24,19 +24,23 @@ export const KitchenProvider = ({ children }) => {
                 .then((response) => {return response.json()})
                 .then((data) =>
                 {
-                    setCurrentStock(data.data)
+                    setCurrentUser(data.data)
                     setStatus("idle")
                 })
-                .catch((err) => {setStatus("idle"); console.log(err)})
+                .catch((err) => {setStatus("idle"); logout()})
         }
-        else {setCurrentStock(undefined); setStatus("idle")}
-    }, [isAuthenticated])
+        else 
+        {
+            setCurrentUser(undefined); 
+            if (!isLoading) {setStatus("idle")}
+        }
+    }, [isAuthenticated, triggerModification])
 
     return (
         <>
-            {status === "loading" || isLoading ? (
+            {status === "loading" ? (
                 <Loading /> ) : (
-                <KitchenContext.Provider value={{ currentStock, setTriggerModification, triggerModification }}>
+                <KitchenContext.Provider value={{ currentUser, setTriggerModification, triggerModification }}>
                     {children}
                 </KitchenContext.Provider>
                 )

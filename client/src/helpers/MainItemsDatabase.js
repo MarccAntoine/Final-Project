@@ -1,1356 +1,1292 @@
 const initialItems = [
   {
   "name": "Apple",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Banana",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Orange",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Grapes",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Strawberry",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Watermelon",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Mango",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Pineapple",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Kiwi",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Blueberry",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Raspberry",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Cherry",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Pear",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Peach",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Plum",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Avocado",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Tomato",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Cucumber",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Carrot",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Broccoli",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Spinach",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Lettuce",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Cabbage",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Potato",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Sweet Potato",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Onion",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Garlic",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Bell Pepper",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Eggplant",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Zucchini",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Asparagus",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Celery",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Artichoke",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Cauliflower",
-  "category": "fruitsAndVegetables"
-  },
-  {
-  "name": "Cabbage",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Brussels Sprouts",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Radish",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Beetroot",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Turnip",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Pumpkin",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Squash",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Kale",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Swiss Chard",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Collard Greens",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Bok Choy",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Okra",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Green Beans",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Snow Peas",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Snap Peas",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Peas",
-  "category": "fruitsAndVegetables"
-  },
-  {
-  "name": "Cabbage",
-  "category": "fruitsAndVegetables"
-  },
-  {
-  "name": "Cauliflower",
-  "category": "fruitsAndVegetables"
-  },
-  {
-  "name": "Eggplant",
-  "category": "fruitsAndVegetables"
-  },
-  {
-  "name": "Bell Pepper",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Broccoli Rabe",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Fennel",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Leek",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Chives",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Scallions",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Sweet Corn",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Yam",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Rutabaga",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Daikon",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Jicama",
-  "category": "fruitsAndVegetables"
-  },
-  {
-  "name": "Ginger",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Radicchio",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Watercress",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Mushroom",
-  "category": "fruitsAndVegetables"
+  "category": "Fruits & Vegetables"
   },
   {
   "name": "Chicken",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Beef",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Pork",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Lamb",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Turkey",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Duck",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Bacon",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Ham",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Steak",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Ground Beef",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Pork Chops",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Pork Ribs",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Lamb Chops",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Lamb Shank",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Chicken Breast",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Chicken Thighs",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Chicken Drumsticks",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Whole Chicken",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Turkey Breast",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Turkey Legs",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Duck Breast",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Ground Pork",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Ground Lamb",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Ground Turkey",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Ground Chicken",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Pork Sausage",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Chicken Sausage",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Italian Sausage",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Hot Dogs",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Smoked Ham",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Pork Belly",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Beef Ribs",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Beef Brisket",
-  "category": "meats"
+  "category": "Meat"
   },
   {
   "name": "Salmon",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Tuna",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Shrimp",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Crab",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Lobster",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Tilapia",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Cod",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Trout",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Sardines",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Mackerel",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Scallops",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Squid",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Clams",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Oysters",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Mussels",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Octopus",
-  "category": "seafood"
+  "category": "Seafood"
   },
   {
   "name": "Milk",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Butter",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Yogurt",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Heavy Cream",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Sour Cream",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Cream Cheese",
-  "category": "dairiesAndEggs"
-  },
-  {
-  "name": "Cottage Cheese",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Whipped Cream",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Condensed Milk",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Evaporated Milk",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Almond Milk",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Coconut Milk",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Eggs",
-  "category": "dairiesAndEggs"
+  "category": "Dairies, Milk & Eggs"
   },
   {
   "name": "Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Cheddar Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Parmesan Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Mozzarella Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Swiss Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Brie Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Gouda Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Feta Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Bocconcini",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Blue Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Goat Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Provolone Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Havarti Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Gruyère Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Pepper Jack Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Camembert Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Emmental Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Manchego Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Ricotta Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Cottage Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Monterey Jack Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Haloumi Cheese",
-  "category": "cheeses"
+  "category": "Cheese"
   },
   {
   "name": "Salami",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Prosciutto",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Chorizo",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Mortadella",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Pepperoni",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Capicola",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Soppressata",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Pancetta",
-  "category": "charcuteries"
+  "category": "Charcuterie"
   },
   {
   "name": "Flour",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Sugar",
-  "category": "pantryItems"
-  },
-  {
-  "name": "Olive Oil",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Vegetable Oil",
-  "category": "pantryItems"
-  },
-  {
-  "name": "Vinegar",
-  "category": "pantryItems"
-  },
-  {
-  "name": "Soy Sauce",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Honey",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Maple Syrup",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Canned Tomatoes",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Tomato Paste",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Beans",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Lentils",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Chickpeas",
-  "category": "pantryItems"
-  },
-  {
-  "name": "Coconut Milk",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Broth",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Canned Tuna",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Canned Salmon",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Canned Sardines",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Peanut Butter",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Almond Butter",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Nutella",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Jam",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Pickles",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Olives",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Capers",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Breadcrumbs",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Cereal",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Oats",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Popcorn",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Tea",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Coffee",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Cocoa Powder",
-  "category": "pantryItems"
-  },
-  {
-  "name": "Spices (Cumin, Paprika, etc.)",
-  "category": "pantryItems"
-  },
-  {
-  "name": "Herbs (Basil, Oregano, etc.)",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Vanilla Extract",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Baking Powder",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Baking Soda",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Yeast",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Canned Beans",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Dried Pasta",
-  "category": "pantryItems"
+  "category": "Pantry"
   },
   {
   "name": "Baguette",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Croissant",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "White Bread",
-  "category": "boulangerieItems"
-  },
-  {
-  "name": "Rye Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Walnut Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Raisin Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Fougasse",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Bagel",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Pretzel",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "English Muffin",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Ciabatta",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Sourdough Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Whole Wheat Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Multigrain Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Rye Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Brioche",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Spice Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Almond Bread",
-  "category": "boulangerieItems"
+  "category": "Boulangerie"
   },
   {
   "name": "Basil",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Thyme",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Rosemary",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Oregano",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Parsley",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Cilantro",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Dill",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Mint",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Sage",
-  "category": "herbsAndSpices"
-  },
-  {
-  "name": "Chives",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Coriander",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Cumin",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Paprika",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Cayenne Pepper",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Red Pepper Flakes",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Black Pepper",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "White Pepper",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Cinnamon",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Nutmeg",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Cloves",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Ginger",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Turmeric",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Cardamom",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Mustard Seeds",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Fennel Seeds",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Celery Seeds",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Bay Leaves",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Allspice",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Marjoram",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Tarragon",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Fenugreek",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Caraway Seeds",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Poppy Seeds",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Saffron",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Vanilla",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Curry Powder",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Five-Spice Powder",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Garam Masala",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Herbes de Provence",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Italian Seasoning",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Za'atar",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Sumac",
-  "category": "herbsAndSpices"
+  "category": "Herbs & Spices"
   },
   {
   "name": "Ketchup",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Mustard",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Mayonnaise",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Barbecue Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Soy Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Worcestershire Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Hot Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Sriracha",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Honey Mustard",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Tartar Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Sweet Chili Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Teriyaki Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Hoisin Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Fish Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Oyster Sauce",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Basil Pesto",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Tomato Pesto",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Guacamole",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Salsa",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Hummus",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Tahini",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Vinegar",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Olive Oil",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Sesame Oil",
-  "category": "saucesAndCondiments"
-  },
-  {
-  "name": "Sour Cream",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Ranch Dressing",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Blue Cheese Dressing",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Thousand Island Dressing",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Caesar Dressing",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Tzatziki",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Kimchi",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Harissa",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Sambal",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Chili Oil",
-  "category": "saucesAndCondiments"
+  "category": "Sauce & Condiment"
   },
   {
   "name": "Mixed Vegetables",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Blueberries",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
-  "name": "Pizza (Pepperoni)",
-  "category": "frozenItems"
+  "name": "Frozen Pizza",
+  "category": "Frozen"
   },
   {
   "name": "French Fries",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Chicken Nuggets",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Salmon Fillets",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
-  "name": "Shrimp",
-  "category": "frozenItems"
+  "name": "Frozen Shrimp",
+  "category": "Frozen"
   },
   {
-  "name": "Ground Beef",
-  "category": "frozenItems"
+  "name": "Ice Cream",
+  "category": "Frozen"
   },
   {
-  "name": "Ice Cream (Vanilla)",
-  "category": "frozenItems"
+  "name": "Frozen Spinach",
+  "category": "Frozen"
   },
   {
-  "name": "Spinach",
-  "category": "frozenItems"
-  },
-  {
-  "name": "Broccoli",
-  "category": "frozenItems"
+  "name": "Frozen Broccoli",
+  "category": "Frozen"
   },
   {
   "name": "Strawberries",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Chicken Wings",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Tilapia Fillets",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Corn",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
-  "name": "Green Beans",
-  "category": "frozenItems"
+  "name": "Frozen Green Beans",
+  "category": "Frozen"
   },
   {
   "name": "Onion Rings",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Meatballs",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Turkey Burgers",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Mango Chunks",
-  "category": "frozenItems"
+  "category": "Frozen"
   },
   {
   "name": "Spaghetti",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Penne",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Fettuccine",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Macaroni",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Farfalle",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Rotini",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Rigatoni",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Linguine",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Orzo",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Lasagna",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Tagliatelle",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Gnocchi",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Ravioli",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Brown Rice",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "White Rice",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Basmati Rice",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Jasmine Rice",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Sauvage Rice",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Medium Couscous",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Pearl Couscous",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Quinoa",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Udon Noodle",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Ramen",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   },
   {
   "name": "Rice Noodle",
-  "category": "PastaAndRiceTypes"
+  "category": "Pasta, Noodle & Rice"
   }
   ]
 
-  module.exports = {initialItems}
+  const categories = Array.from(new Set(initialItems.map((item) => {return item.category})))
+
+  const measurement = ["whole", "l", "ml", "g", "mg", "cup"]
+
+  module.exports = {initialItems, categories, measurement}
