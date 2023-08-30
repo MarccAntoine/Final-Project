@@ -40,6 +40,7 @@ const getUser = async (req, res) => {
 const postNewUser = async (req, res) => {
   let client
   const userData = req.body.userData
+  const id = uuidv4()
 
   try {
       client = new MongoClient(MONGO_URI, options);
@@ -59,7 +60,12 @@ const postNewUser = async (req, res) => {
           "users": [userData._id],
           "items": [],
           "recipeBook": [],
-          "groceryList": []
+          "groceryList": id
+        }
+
+        const newList = {
+          "_id" : id,
+          "list" : []
         }
 
         const newUserResult = await db.collection("usersProfile").insertOne( newUser );
@@ -181,4 +187,60 @@ const deleteStock = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock}
+const postAddGrocery = async (req, res) =>
+{
+  let client
+  let itemData = req.body.itemData
+  const id = uuidv4()
+  itemData = {...itemData, "stockId" : id}
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const groceryId = itemData.userId;
+
+      delete itemData.userId
+
+      const result = await db.collection("grocery").findOneAndUpdate(
+        { "_id": groceryId },
+        { $push: { "list": itemData } },
+        { returnOriginal: false }
+      );
+
+      if (result.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
+
+      else {return res.status(400).json({ status: 400, message: "failed"});}
+
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+const getGrocery = async (req, res) =>
+{
+  let client
+  const groceryId = req.params.groceryId;
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      let groceryResult = await db.collection("grocery").findOne({ _id: groceryId});
+
+      return res.status(200).json({ status: 200, data: groceryResult});
+
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery}

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import {CiCirclePlus} from "react-icons/ci"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import moment from 'moment';
 import { KitchenContext } from "../KitchenContext";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ export const initialForm = {
     "expiration": ""
 }
 
-const AddStockButton = () =>
+const AddStockButton = ({location}) =>
 {
     const {currentUser, setTriggerModification, triggerModification} = useContext(KitchenContext);
     const [buttonState, setButtonState] = useState("button");
@@ -65,32 +65,57 @@ const AddStockButton = () =>
     {
         ev.preventDefault();
 
-        if (formData.expiration.length > 0 && !(moment(formData.expiration, 'MM/DD/YY', true).isValid())) {setNotification("Please enter a valid date"); return}
+        if (formData.expiration.length > 0 && !(moment(formData.expiration, 'MM/DD/YY', true).isValid()) && location === "stock") {setNotification("Please enter a valid date"); return}
         if (formData.product.length <= 1) {setNotification("Please enter a valid item"); return}
         if (formData.category.length <= 1) {setNotification("Please enter a valid category"); return}
         if (formData.quantity.length < 0) {setNotification("Please enter a valid quantity"); return}
 
-        fetch("/api/stock/add", {
-        method: "POST",
-        body: JSON.stringify({"itemData" : {...formData, "userId": currentUser._id}}),
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        })
-        .then((res) => res.json())
-        .then((json) => {
-            setTriggerModification(triggerModification + 1)
-            setFormData(initialForm)
-            setNotification(null)
-            const { status } = json;
-            if (status === 201) {
-            setButtonState("button")
-            } else {
-            navigate("/error")
-            }
-        });
-        
+        if (location === "stock")
+        {
+            fetch("/api/stock/add", {
+                method: "POST",
+                body: JSON.stringify({"itemData" : {...formData, "userId": currentUser._id}}),
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    setTriggerModification(triggerModification + 1)
+                    setFormData(initialForm)
+                    setNotification(null)
+                    const { status } = json;
+                    if (status === 201) {
+                    setButtonState("button")
+                    } else {
+                    navigate("/error")
+                    }
+                });
+        }
+        else if (location === "grocery")
+        {
+            fetch("/api/grocery/add", {
+                method: "POST",
+                body: JSON.stringify({"itemData" : {...formData, "userId": currentUser.groceryList}}),
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    setTriggerModification(triggerModification + 1)
+                    setFormData(initialForm)
+                    setNotification(null)
+                    const { status } = json;
+                    if (status === 201) {
+                    setButtonState("button")
+                    } else {
+                    navigate("/error")
+                    }
+                });
+        }
     }
 
     return (
@@ -106,7 +131,7 @@ const AddStockButton = () =>
                     <AddForm>
                         <CloseButton onClick={(ev) => {ev.preventDefault(); setButtonState("button"); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
                         <SeparationDiv>
-                            <Title>New Product</Title>
+                            <Title>Add Product</Title>
                         </SeparationDiv>
 
                         <SeparationDiv>
@@ -134,7 +159,7 @@ const AddStockButton = () =>
                                 {categories.map((category) => {return (<option value={category} key={category}>{category}</option>)})}
                             </CatSelect>
 
-                            <ExpInput autoComplete="off" maxLength={8} id="expiration" value={formData.expiration} placeholder="Exp: MM/DD/YY" onChange={handleChange}></ExpInput>
+                            {location === "stock" && (<ExpInput autoComplete="off" maxLength={8} id="expiration" value={formData.expiration} placeholder="Exp: MM/DD/YY" onChange={handleChange}></ExpInput>)}
                         </SeparationDiv>
 
                         <SeparationDiv style={{flexDirection: "column"}}>
@@ -305,7 +330,8 @@ const CatSelect = styled.select`
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
     height: 100%;
-    width: 47%;
+    min-width: 47%;
+    max-width: 70%;
     border-radius: 10px;
     font-size: 15px;
     padding: 5px 5px;

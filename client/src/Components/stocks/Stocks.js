@@ -101,8 +101,8 @@ const Stocks = () =>
                             })}
                     </SideContainer>
                 </TopContainer>) : (<NoStock>You don't have any saved stocks!</NoStock>)}
-                <AddStockButton />
-                <EditStock edit={edit} setEdit={setEdit}/>
+                <AddStockButton location={"stock"} />
+                <EditStock location={"stock"} edit={edit} setEdit={setEdit}/>
             </ContentContainer>
         </Container>
         )
