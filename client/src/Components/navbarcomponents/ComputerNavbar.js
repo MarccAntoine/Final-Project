@@ -48,7 +48,7 @@ const Container = styled.div`
     background-color: transparent;
     gap: 20px;
 
-    z-index: 99;
+    z-index: 60;
 
     @media only screen and (max-width: 850px) {
         display: none;

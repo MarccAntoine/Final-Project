@@ -1,4 +1,4 @@
-const initialItems = [
+export const initialItems = [
   {
   "name": "Apple",
   "category": "Fruits & Vegetables"
@@ -1285,8 +1285,6 @@ const initialItems = [
   }
   ]
 
-  const categories = Array.from(new Set(initialItems.map((item) => {return item.category})))
+  export const categories = Array.from(new Set(initialItems.map((item) => {return item.category})))
 
-  const measurement = ["whole", "l", "ml", "g", "mg", "cup"]
-
-  module.exports = {initialItems, categories, measurement}
+  export const measurement = ["whole", "half", "L", "ML", "G", "MG", "KG", "cup", "tbsp", "tsp"]

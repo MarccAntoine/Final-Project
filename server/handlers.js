@@ -1,5 +1,7 @@
 'use strict';
 
+const { v4: uuidv4 } = require('uuid');
+
 const e = require("express");
 const { MongoClient } = require("mongodb");
 
@@ -55,8 +57,9 @@ const postNewUser = async (req, res) => {
 
         const newKitchen = {
           "users": [userData._id],
-          "items": null,
-          "recipeBook": null
+          "items": [],
+          "recipeBook": [],
+          "groceryList": []
         }
 
         const newUserResult = await db.collection("usersProfile").insertOne( newUser );
@@ -76,6 +79,8 @@ const postNewStock = async (req, res) =>
 {
   let client
   let itemData = req.body.itemData
+  const id = uuidv4()
+  itemData = {...itemData, "stockId" : id}
 
   try {
       client = new MongoClient(MONGO_URI, options);
@@ -96,7 +101,7 @@ const postNewStock = async (req, res) =>
       if (result.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
 
       else {return res.status(400).json({ status: 400, message: "failed"});}
-      
+
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
   } finally {
@@ -104,4 +109,76 @@ const postNewStock = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock}
+const modifyStock = async (req, res) =>
+{
+  let client
+  let itemData = req.body.itemData
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const userId = itemData.userId;
+
+      delete itemData.userId
+
+      const result = await db.collection("kitchen").findOneAndUpdate(
+        { "users": { $elemMatch: { $eq: userId } } },
+        {
+          $set: {
+            "items.$[item]": itemData,
+          }
+        },
+        {
+          arrayFilters: [{ "item.stockId": itemData.stockId }],
+          returnOriginal: false
+        }
+      );
+
+      console.log(result)
+
+      if (result.value) {return res.status(200).json({ status: 200, message: "success"});}
+
+      else {return res.status(400).json({ status: 400, message: "failed"});}
+
+  } catch (err) {
+      console.log(err)
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+const deleteStock = async (req, res) =>
+{
+  let client
+  let userId = req.params.userId
+  let stockId = req.params.stockId
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const result = await db.collection("kitchen").findOneAndUpdate(
+        { "users": { $elemMatch: { $eq: userId } } },
+        { $pull: { "items": { "stockId": stockId } } },
+        { returnOriginal: false }
+      );
+
+      if (result.value) {return res.status(200).json({ status: 200, message: "success"});}
+
+      else {return res.status(400).json({ status: 400, message: "failed"});}
+
+  } catch (err) {
+      console.log(err)
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock}

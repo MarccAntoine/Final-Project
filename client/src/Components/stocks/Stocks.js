@@ -3,12 +3,15 @@ import { styled } from "styled-components";
 import AddStockButton from "./AddStockButton";
 import { useContext, useEffect, useState } from "react";
 import { KitchenContext } from "../KitchenContext";
+import EditStock from "./EditStock";
+import { dateTesting } from "../../helpers/dateTesting";
 
 const Stocks = () =>
 {
     const {currentUser} = useContext(KitchenContext)
     const [sides, setSides] = useState({"left": undefined, "right": undefined})
     const [itemsByCategory, setItemsByCategory] = useState(null)
+    const [edit, setEdit] = useState(false)
 
     useEffect(() =>
     {
@@ -21,16 +24,20 @@ const Stocks = () =>
     
             let total = currentUser.items.reduce((acc, item) => {
                 let category = item.category
-                separation = {...separation, [category]: (separation[category] || 0) + 1}
+
+                if (!separation[category]) {separation[category] = []}
+
+                separation[category].push(item)
+
                 return (acc + 1)
             }, 0)
     
             setItemsByCategory(separation)
     
             Object.keys(separation).forEach((category) => {
-                if (middle <= (total / 2))
+                if (middle < (total / 2))
                 {
-                    middle += separation[category]
+                    middle += separation[category].length
                     left.push(category)
                 }
                 else {right.push(category)}
@@ -43,12 +50,59 @@ const Stocks = () =>
     return (
         <Container>
             <ContentContainer>
-                {itemsByCategory != null > 0 ? (                
+                {itemsByCategory !== null ? (                
                 <TopContainer>
-                    <SideContainer></SideContainer>
-                    <SideContainer></SideContainer>
-                </TopContainer>) : (<h2>You don't have any saved stocks!</h2>)}
+                    <SideContainer>
+                        {sides.left.map((category) => {
+                            return (
+                            <CategoryDiv key={category}>
+                                <CategoryTitle>{category}</CategoryTitle>
+                                <CategoryList>
+                                    {itemsByCategory[category].map((item) => {
+                                        return (
+                                            <CategoryItem key={item.stockId}>
+                                                <SideDiv>
+                                                    <Qty>{item.quantity} {item.measurement}</Qty>
+                                                    <Name>{item.product}</Name>
+                                                </SideDiv>
+                                                <SideDiv>
+                                                    <Exp style={dateTesting(item.expiration) ? {backgroundColor: 'rgba(212, 122, 115, 0.7)'} : {}}>{item.expiration}</Exp>
+                                                    <DeleteButton onClick={() => {setEdit(item)}}>Edit</DeleteButton>
+                                                </SideDiv>
+                                            </CategoryItem>
+                                        )
+                                    })}
+                                </CategoryList>
+                            </CategoryDiv>)
+                        })}
+                    </SideContainer>
+                    <SideContainer>
+                        {sides.right.map((category) => {
+                                return (
+                                <CategoryDiv key={category}>
+                                    <CategoryTitle>{category}</CategoryTitle>
+                                    <CategoryList>
+                                        {itemsByCategory[category].map((item) => {
+                                            return (
+                                                <CategoryItem key={item.stockId}>
+                                                    <SideDiv>
+                                                        <Qty>{item.quantity} {item.measurement}</Qty>
+                                                        <Name>{item.product}</Name>
+                                                    </SideDiv>
+                                                    <SideDiv>
+                                                        <Exp style={dateTesting(item.expiration) ? {backgroundColor: 'rgba(212, 122, 115, 0.7)'} : {}}>{item.expiration}</Exp>
+                                                        <DeleteButton onClick={() => {setEdit(item)}}>Edit</DeleteButton>
+                                                    </SideDiv>
+                                                </CategoryItem>
+                                            )
+                                        })}
+                                    </CategoryList>
+                                </CategoryDiv>)
+                            })}
+                    </SideContainer>
+                </TopContainer>) : (<NoStock>You don't have any saved stocks!</NoStock>)}
                 <AddStockButton />
+                <EditStock edit={edit} setEdit={setEdit}/>
             </ContentContainer>
         </Container>
         )
@@ -61,6 +115,7 @@ const Stocks = () =>
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
     `
     
     const ContentContainer = styled.div`
@@ -72,14 +127,7 @@ const Stocks = () =>
         align-items: center;
         justify-content: center;
         gap: 20px;
-        position: relative;
         margin-top: 5vh;
-
-        h2 {
-            font-size: 40px;
-            font-weight: lighter;
-            margin-bottom: 10px;
-        }
     
     
         @media only screen and (max-width: 650px) {
@@ -94,17 +142,23 @@ const Stocks = () =>
         }
     `
 
+    const NoStock = styled.span`
+            font-size: 40px;
+            font-weight: lighter;
+            margin-bottom: 10px;
+    `
+
     const SideContainer = styled.div`
         width: 45%;
-        min-height: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         align-items: center;
-        border: 1px solid black;
     `
 
     const TopContainer = styled.div`
-        height: 70%;
+        height: 80%;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -112,6 +166,84 @@ const Stocks = () =>
         align-items: center;
         justify-content: center;
         gap: 5%;
+        overflow: scroll;
+    `
+
+    const CategoryDiv = styled.div`
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px 0px;
+        gap: 5px;
+    `
+
+    const CategoryTitle = styled.h3`
+        width: 90%;
+        background-color: rgba(209,207,198,0.6);
+        border-radius: 20px;
+        padding: 12px 20px;
+        color: white;
+        font-size: 20px;
+    `
+
+    const CategoryList = styled.ul`
+        width: 85%;
+        display: flex;
+        flex-direction: column;
+        font-weight: lighter;
+    `
+
+    const SideDiv = styled.div`
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    `
+
+    const CategoryItem = styled.li`
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 7px;
+        border-radius: 20px;
+        
+        &:hover {
+            background-color: rgba(209,207,198,0.3);
+        }
+    `
+
+    const Qty = styled.span`
+    
+    `
+
+    const Name = styled.span`
+    
+    `
+
+    const Exp = styled.span`
+        padding: 6px;
+        border-radius: 10px;
+    `
+
+    const DeleteButton = styled.button`
+        background-color: transparent;
+        border-radius: 10px;
+        padding: 5px;
+        border: none;
+        font-size: 12px;
+        font-weight: bold;
+        text-decoration: underline;
+        visibility: hidden;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(209,207,198,0.6);
+        }
+
+        ${CategoryItem}:hover & { 
+            visibility: visible;
+        }
     `
 
 export default Stocks;

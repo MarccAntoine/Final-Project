@@ -5,9 +5,10 @@ import moment from 'moment';
 import { KitchenContext } from "../KitchenContext";
 import { useNavigate } from "react-router-dom";
 
-const {itemSearch, categories, measurement} = require('../../helpers/fuzzyTesting')
+import { itemSearch } from "../../helpers/fuzzyTesting";
+import {measurement, categories} from "../../helpers/MainItemsDatabase"
 
-const initialForm = {
+export const initialForm = {
     "quantity": "",
     "measurement": "",
     "product": "",
@@ -21,6 +22,7 @@ const AddStockButton = () =>
     const [buttonState, setButtonState] = useState("button");
     const [similar, setSimilar] = useState([]);
     const [formData, setFormData] = useState(initialForm);
+    const [notification, setNotification] = useState(null)
     const navigate = useNavigate();
 
     const setSuggestion = (item) =>
@@ -63,12 +65,12 @@ const AddStockButton = () =>
     {
         ev.preventDefault();
 
-        if (formData.expiration.length > 0 && !(moment(formData.expiration, 'MM/DD/YY', true).isValid())) {window.alert("Please enter a valid date"); return}
-        if (formData.product.length <= 1) {window.alert("Please enter a valid item"); return}
-        if (formData.category.length <= 1) {window.alert("Please enter a valid category"); return}
-        if (formData.quantity.length < 0) {window.alert("Please enter a valid quantity"); return}
+        if (formData.expiration.length > 0 && !(moment(formData.expiration, 'MM/DD/YY', true).isValid())) {setNotification("Please enter a valid date"); return}
+        if (formData.product.length <= 1) {setNotification("Please enter a valid item"); return}
+        if (formData.category.length <= 1) {setNotification("Please enter a valid category"); return}
+        if (formData.quantity.length < 0) {setNotification("Please enter a valid quantity"); return}
 
-        fetch("/api/newStock", {
+        fetch("/api/stock/add", {
         method: "POST",
         body: JSON.stringify({"itemData" : {...formData, "userId": currentUser._id}}),
         headers: {
@@ -79,6 +81,8 @@ const AddStockButton = () =>
         .then((res) => res.json())
         .then((json) => {
             setTriggerModification(triggerModification + 1)
+            setFormData(initialForm)
+            setNotification(null)
             const { status } = json;
             if (status === 201) {
             setButtonState("button")
@@ -90,42 +94,90 @@ const AddStockButton = () =>
     }
 
     return (
-    <Container>
-        {buttonState === "button" && (<AddButton onClick={() => setButtonState("add")}><Plus /><p>Add Item</p></AddButton>)}
+        <>
+        <ContainerButton>
+            <AddButton onClick={() => setButtonState("add")}><Plus /><p>Add Product</p></AddButton>
+        </ContainerButton>
+        <>
         {buttonState === "add" && (
-            <AddForm>
-                <UnitInput autoComplete="off" id="quantity" value={formData.quantity} placeholder="Qty" onChange={handleChange}></UnitInput>
+            <>
+                <Background></Background>
+                <Container>
+                    <AddForm>
+                        <CloseButton onClick={(ev) => {ev.preventDefault(); setButtonState("button"); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
+                        <SeparationDiv>
+                            <Title>New Product</Title>
+                        </SeparationDiv>
 
-                <MeasureSelect id="measurement" value={formData.measurement} onChange={handleChange}>
-                    <option value={undefined}> </option> 
-                    {measurement.map((unit) => {return (<option value={unit} key={unit}>{unit}</option>)})}
-                </MeasureSelect>
+                        <SeparationDiv>
+                            <UnitInput autoComplete="off" id="quantity" value={formData.quantity} placeholder="Qty" onChange={handleChange}></UnitInput>
 
-                <ItemInputDiv>
-                    <ItemInput autoComplete="off" id="product" value={formData.product} placeholder="Item" onChange={handleChange}></ItemInput>
-                    {similar.length !== 0 ? (
-                    <ItemSuggestions>
-                        {similar && similar.map((item) => {return (<SuggestionButton onClick={() => setSuggestion(item)} id="product" value={item.name} key={item.name}><Suggestion>{item.name}</Suggestion></SuggestionButton>)})}
-                    </ItemSuggestions>) : (<></>)}
-                </ItemInputDiv>
+                            <MeasureSelect id="measurement" value={formData.measurement} onChange={handleChange}>
+                                <option value={undefined}> </option> 
+                                {measurement.map((unit) => {return (<option value={unit} key={unit}>{unit}</option>)})}
+                            </MeasureSelect>
+                        </SeparationDiv>
 
-                <CatSelect id="category" value={formData.category} onChange={handleChange}>
-                    {categories.map((category) => {return (<option value={category} key={category}>{category}</option>)})}
-                </CatSelect>
+                        <SeparationDiv>
+                            <ItemInputDiv>
+                                <ItemInput autoComplete="off" id="product" value={formData.product} placeholder="Item" onChange={handleChange}></ItemInput>
+                                {similar.length !== 0 ? (
+                                <ItemSuggestions>
+                                    <SuggestionTitle>Suggestions:</SuggestionTitle>
+                                    {similar && similar.map((item) => {return (<SuggestionButton onClick={() => setSuggestion(item)} id="product" value={item.name} key={item.name}><Suggestion>{item.name}<SuggestionCat> - {item.category}</SuggestionCat></Suggestion></SuggestionButton>)})}
+                                </ItemSuggestions>) : (<></>)}
+                            </ItemInputDiv>
+                        </SeparationDiv>
 
-                <ExpInput maxLength={8} id="expiration" value={formData.expiration} placeholder="Exp: MM/DD/YY" onChange={handleChange}></ExpInput>
+                        <SeparationDiv>
+                            <CatSelect id="category" value={formData.category} onChange={handleChange}>
+                                {categories.map((category) => {return (<option value={category} key={category}>{category}</option>)})}
+                            </CatSelect>
 
-                <ConfirmButton onClick={sendProduct}>Add</ConfirmButton>
-            </AddForm>)}
-    </Container>
+                            <ExpInput autoComplete="off" maxLength={8} id="expiration" value={formData.expiration} placeholder="Exp: MM/DD/YY" onChange={handleChange}></ExpInput>
+                        </SeparationDiv>
+
+                        <SeparationDiv style={{flexDirection: "column"}}>
+                            <Notification>{notification ? notification : ""}</Notification>
+                            <ConfirmButton onClick={sendProduct}>Add</ConfirmButton>
+                        </SeparationDiv>
+                    </AddForm>
+                </Container>
+            </>
+            )}
+        </>
+        </>
     )
 }
 
-const Container = styled.div`
-    width: 80%;
-    height: 55px;
+export const Background = styled.div`
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255,255,255,0.7);
+    z-index: 70;
+`
+
+const ContainerButton = styled.div`
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    background-color: rgba(209,207,198,0.6);
+    border-radius: 25px;
+`
+
+export const Container = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 25%;
+    aspect-ratio: 1;
     border-radius: 25px;
     background-color: #95B88D;
+    z-index: 75;
 `
 
 const AddButton = styled.button`
@@ -133,14 +185,15 @@ const AddButton = styled.button`
     height: 100%;
     border-radius: inherit;
     color: white;
-    font-size: 35px;
+    font-size: 20px;
     font-family: inherit;
-    font-weight: lighter;
+    font-weight: 500;
     background-color: transparent;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
     gap: 2%;
 
     &:hover {
@@ -149,11 +202,11 @@ const AddButton = styled.button`
 `
 
 const Plus = styled(CiCirclePlus)`
-    height: 60%;
+    height: 25px;
     width: auto;
 `
 
-const AddForm = styled.form`
+export const AddForm = styled.form`
     width: 100%;
     height: 100%;
     border-radius: inherit;
@@ -164,21 +217,55 @@ const AddForm = styled.form`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5%;
+    flex-direction: column;
+`
+
+export const CloseButton = styled.button`
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 50%;
+
+    &:hover {
+        background-color: rgba(255,255,255,0.2);
+        cursor: pointer;
+    }
+`
+
+export const Title = styled.h2`
+    width: 90%;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: center;
+    overflow: hidden;
+`
+
+export const SeparationDiv = styled.div`
+    height: 15%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6%;
+    margin: 7px 0px;
 `
 
 const ItemInputDiv = styled.div`
-    height: 60%;
-    width: 35%;
+    height: 100%;
+    width: 100%;
     position: relative;
 `
 
-const UnitInput = styled.input`
+export const UnitInput = styled.input`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
-    height: 60%;
-    width: 6%;
+    height: 100%;
+    width: 47%;
     border-radius: 10px;
     font-size: 15px;
     padding: 0px 5px;
@@ -191,13 +278,18 @@ const UnitInput = styled.input`
     &:focus {
         outline: none;
     }
+
+    &:disabled {
+        filter: brightness(91%);
+    }
 `
 
-const MeasureSelect = styled.select`
+export const MeasureSelect = styled.select`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
-    height: 60%;
+    height: 100%;
+    width: 47%;
     border-radius: 10px;
     font-size: 15px;
     padding: 5px 5px;
@@ -212,7 +304,8 @@ const CatSelect = styled.select`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
-    height: 60%;
+    height: 100%;
+    width: 47%;
     border-radius: 10px;
     font-size: 15px;
     padding: 5px 5px;
@@ -247,7 +340,7 @@ const ItemInput = styled.input`
 
 const ItemSuggestions = styled.ul`
     width: 100%;
-    max-height: 90px;
+    max-height: 270%;
     overflow: scroll;
     padding: 10px;
     position: absolute;
@@ -258,8 +351,9 @@ const ItemSuggestions = styled.ul`
     border-radius: 0px 0px 10px 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     gap: 5px;
+    font-family: inherit;
 `
 
 const SuggestionButton = styled.button`
@@ -273,22 +367,44 @@ const SuggestionButton = styled.button`
     }
 `
 
+const SuggestionTitle = styled.h5`
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+`
+
 const Suggestion = styled.li`
     width: 100%;
     height: 100%;
     font-size: 15px;
-    text-align: center;
+    text-align: left;
     color: white;
-    font-weight: lighter;
+    font-weight: 300;
     border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    white-space: nowrap;
+
+    &:hover {
+        background-color: rgba(255,255,255,0.2);
+    }
 `
 
-const ExpInput = styled.input`
+const SuggestionCat = styled.span`
+    font-weight: 100;
+    font-size: 12px;
+    color: white;
+    white-space: nowrap;
+`
+
+export const ExpInput = styled.input`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
-    height: 60%;
-    width: 13%;
+    height: 100%;
+    width: 47%;
     border-radius: 10px;
     font-size: 15px;
     padding: 0px 5px;
@@ -301,9 +417,22 @@ const ExpInput = styled.input`
     &:focus {
         outline: none;
     }
+
+    &:disabled {
+        filter: brightness(91%);
+    }
 `
 
-const ConfirmButton = styled.button`
+export const Notification = styled.span`
+    width: 100%;
+    text-align: center;
+    height: 30%;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: -5px;
+`
+
+export const ConfirmButton = styled.button`
     width: fit-content;
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
@@ -320,6 +449,7 @@ const ConfirmButton = styled.button`
 
     &:hover {
         cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.4);
     }
 `
 

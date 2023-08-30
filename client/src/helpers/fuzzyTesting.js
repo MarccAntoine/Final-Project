@@ -1,4 +1,5 @@
-const {initialItems, categories, measurement} = require('./MainItemsDatabase')
+const {initialItems} = require('./MainItemsDatabase')
+
 let matchingNames = [];
 let exactMatch = null
 
@@ -37,7 +38,7 @@ function exactTesting(query, target) {
     if (targetName.includes(query)) {matchingNames.push(target)}
 }
 
-const itemSearch = (input) => {
+export const itemSearch = (input) => {
     exactMatch = null;
     matchingNames = [];
     const query = input;
@@ -48,6 +49,4 @@ const itemSearch = (input) => {
 
     return {exactMatch, matchingNames}
 }
-
-module.exports = {itemSearch, categories, measurement}
 
