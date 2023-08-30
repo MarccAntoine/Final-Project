@@ -15,35 +15,38 @@ const Stocks = () =>
 
     useEffect(() =>
     {
-        if (currentUser.items.length > 0)
+        if (currentUser)
         {
-            let separation = {};
-            let middle = 0;
-            let left = [];
-            let right = [];
+            if (currentUser.items.length > 0)
+            {
+                let separation = {};
+                let middle = 0;
+                let left = [];
+                let right = [];
+        
+                let total = currentUser.items.reduce((acc, item) => {
+                    let category = item.category
     
-            let total = currentUser.items.reduce((acc, item) => {
-                let category = item.category
-
-                if (!separation[category]) {separation[category] = []}
-
-                separation[category].push(item)
-
-                return (acc + 1)
-            }, 0)
+                    if (!separation[category]) {separation[category] = []}
     
-            setItemsByCategory(separation)
+                    separation[category].push(item)
     
-            Object.keys(separation).forEach((category) => {
-                if (middle < (total / 2))
-                {
-                    middle += separation[category].length
-                    left.push(category)
-                }
-                else {right.push(category)}
-            })
-    
-            setSides({"left": left, "right": right})
+                    return (acc + 1)
+                }, 0)
+        
+                setItemsByCategory(separation)
+        
+                Object.keys(separation).forEach((category) => {
+                    if (middle < (total / 2))
+                    {
+                        middle += separation[category].length
+                        left.push(category)
+                    }
+                    else {right.push(category)}
+                })
+        
+                setSides({"left": left, "right": right})
+            }
         }
     }, [currentUser.items])
 

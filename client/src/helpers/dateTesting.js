@@ -8,7 +8,9 @@ export const dateTesting = (expDate) =>
 
     const distanceBetween = dateToTest.diff(today, 'days')
 
-    if (distanceBetween <= 3) {return true}
+    const isInPast = dateToTest.isBefore(today)
+
+    if (distanceBetween <= 3 || isInPast) {return true}
     else {return false}
 }
 

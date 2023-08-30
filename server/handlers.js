@@ -85,8 +85,12 @@ const postNewStock = async (req, res) =>
 {
   let client
   let itemData = req.body.itemData
-  const id = uuidv4()
-  itemData = {...itemData, "stockId" : id}
+
+  if (!itemData.stockId)
+  {
+    const id = uuidv4()
+    itemData = {...itemData, "stockId" : id}
+  }
 
   try {
       client = new MongoClient(MONGO_URI, options);
@@ -243,4 +247,34 @@ const getGrocery = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery}
+const deleteFromGrocery = async (req, res) =>
+{
+  let client
+  let groceryId = req.params.groceryId
+  let stockId = req.params.stockId
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const result = await db.collection("grocery").findOneAndUpdate(
+        { "_id": groceryId },
+        { $pull: { "list": { "stockId": stockId } } },
+        { returnOriginal: false }
+      );
+
+      if (result.value) {return res.status(200).json({ status: 200, message: "success"});}
+
+      else {return res.status(400).json({ status: 400, message: "failed"});}
+
+  } catch (err) {
+      console.log(err)
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery}

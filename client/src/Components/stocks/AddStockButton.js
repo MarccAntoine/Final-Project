@@ -226,7 +226,7 @@ const AddButton = styled.button`
     }
 `
 
-const Plus = styled(CiCirclePlus)`
+export const Plus = styled(CiCirclePlus)`
     height: 25px;
     width: auto;
 `
@@ -277,9 +277,10 @@ export const SeparationDiv = styled.div`
     align-items: center;
     gap: 6%;
     margin: 7px 0px;
+    color: white;
 `
 
-const ItemInputDiv = styled.div`
+export const ItemInputDiv = styled.div`
     height: 100%;
     width: 100%;
     position: relative;
@@ -288,7 +289,7 @@ const ItemInputDiv = styled.div`
 export const UnitInput = styled.input`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    color: inherit;
     height: 100%;
     width: 47%;
     border-radius: 10px;
@@ -312,7 +313,7 @@ export const UnitInput = styled.input`
 export const MeasureSelect = styled.select`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    color: inherit;
     height: 100%;
     width: 47%;
     border-radius: 10px;
@@ -325,10 +326,10 @@ export const MeasureSelect = styled.select`
     }
 `
 
-const CatSelect = styled.select`
+export const CatSelect = styled.select`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    color: inherit;
     height: 100%;
     min-width: 47%;
     max-width: 70%;
@@ -342,10 +343,10 @@ const CatSelect = styled.select`
     }
 `
 
-const ItemInput = styled.input`
+export const ItemInput = styled.input`
     border: none;
     background-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    color: inherit;
     height: 100%;
     width: 96%;
     border-radius: 10px;
@@ -364,7 +365,7 @@ const ItemInput = styled.input`
     }
 `
 
-const ItemSuggestions = styled.ul`
+export const ItemSuggestions = styled.ul`
     width: 100%;
     max-height: 270%;
     overflow: scroll;
@@ -380,31 +381,33 @@ const ItemSuggestions = styled.ul`
     align-items: start;
     gap: 5px;
     font-family: inherit;
+    color: inherit;
 `
 
-const SuggestionButton = styled.button`
+export const SuggestionButton = styled.button`
     width: 95%;
     height: 30px;
     background-color: transparent;
     border: none;
+    color: inherit;
 
     &:hover {
         cursor: pointer;
     }
 `
 
-const SuggestionTitle = styled.h5`
+export const SuggestionTitle = styled.h5`
     font-size: 13px;
     font-weight: bold;
     margin-bottom: 5px;
 `
 
-const Suggestion = styled.li`
+export const Suggestion = styled.li`
     width: 100%;
     height: 100%;
     font-size: 15px;
     text-align: left;
-    color: white;
+    color: inherit;
     font-weight: 300;
     border-radius: 15px;
     overflow: hidden;
@@ -418,10 +421,10 @@ const Suggestion = styled.li`
     }
 `
 
-const SuggestionCat = styled.span`
+export const SuggestionCat = styled.span`
     font-weight: 100;
     font-size: 12px;
-    color: white;
+    color: inherit;
     white-space: nowrap;
 `
 
