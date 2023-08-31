@@ -93,29 +93,6 @@ const AddStockButton = ({location}) =>
                     }
                 });
         }
-        else if (location === "grocery")
-        {
-            fetch("/api/grocery/add", {
-                method: "POST",
-                body: JSON.stringify({"itemData" : {...formData, "userId": currentUser.groceryList}}),
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-                })
-                .then((res) => res.json())
-                .then((json) => {
-                    setTriggerModification(triggerModification + 1)
-                    setFormData(initialForm)
-                    setNotification(null)
-                    const { status } = json;
-                    if (status === 201) {
-                    setButtonState("button")
-                    } else {
-                    navigate("/error")
-                    }
-                });
-        }
     }
 
     return (

@@ -70,6 +70,7 @@ const postNewUser = async (req, res) => {
 
         const newUserResult = await db.collection("usersProfile").insertOne( newUser );
         const newKitchenResult = await db.collection("kitchen").insertOne( newKitchen );
+        const newListResult = await db.collection("grocery").insertOne( newList );
 
         return res.status(201).json({ status: 201, message: "success"});
       }
@@ -277,4 +278,43 @@ const deleteFromGrocery = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery}
+const postNewRecipe = async (req, res) =>
+{
+  let client
+  let recipeData = req.body.recipeData
+
+  const id = uuidv4()
+  recipeData = {...recipeData, "_id" : id}
+  
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const userId = recipeData.userId;
+
+      delete recipeData.userId
+
+      const recipeIdresult = await db.collection("kitchen").findOneAndUpdate(
+        { "users": { $elemMatch: { $eq: userId } } },
+        { $push: { "recipeBook": id } },
+        { returnOriginal: false }
+      );
+
+      const recipesResult = await db.collection("recipes").insertOne(recipeData)
+
+      if (recipesResult.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
+
+      else {return res.status(400).json({ status: 400, message: "failed"});}
+
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+      console.log(err)
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe}

@@ -10,7 +10,7 @@ export const dateTesting = (expDate) =>
 
     const isInPast = dateToTest.isBefore(today)
 
-    if (distanceBetween <= 3 || isInPast) {return true}
+    if (distanceBetween <= 2 || isInPast) {return true}
     else {return false}
 }
 

@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
-import AddStockButton, { MeasureSelect, UnitInput } from "./stocks/AddStockButton";
 import { useContext, useEffect, useState } from "react";
 import { KitchenContext } from "./KitchenContext";
 import { useNavigate } from "react-router-dom";
 import AddProductSmall from "./AddProductSmall";
+import Loading from "./Loading";
 
 const Grocery = () =>
 {
@@ -30,7 +30,7 @@ const Grocery = () =>
                 console.log(error);
             })
         }
-    }, [currentUser])
+    }, [currentUser.items])
 
     const deleteFromList = (item) =>
     {
@@ -75,29 +75,33 @@ const Grocery = () =>
     }
 
     return (
-        <Container>
-            <ContentContainer>
-                <Title>My Grocery List</Title>
-                <ItemsList>
-                    {groceryList !== [] && groceryList.map((item) => {return (
-                        <ListItem key={item.stockId}>
-                            <SideDiv>
-                                <Quantity>{item.quantity} {item.measurement}</Quantity>
-                                <Name>{item.product}</Name>
-                                <Category>- {item.category}</Category>
-                            </SideDiv>
-                            <SideDiv>
-                                <ListButtons onClick={(ev) => {ev.preventDefault(); deleteFromList(item)}}>Delete</ListButtons>
-                                <ListButtons onClick={(ev) => {ev.preventDefault(); addToStocks(item)}}>Add to stocks</ListButtons>
-                            </SideDiv>
-                        </ListItem>
-                    )})}
-                    <ListItem style={{padding: "0px"}}>
-                        <AddProductSmall currentUser={currentUser}></AddProductSmall>
-                    </ListItem>
-                </ItemsList>
-            </ContentContainer>
-        </Container>
+        <>
+            {isLoading ? (<Loading />) : (        
+                <Container>
+                <ContentContainer>
+                    <Title>My Grocery List</Title>
+                    <ItemsList>
+                        {groceryList !== [] && groceryList.map((item) => {return (
+                            <ListItem key={item.stockId}>
+                                <SideDiv>
+                                    <Quantity>{item.quantity} {item.measurement}</Quantity>
+                                    <Name>{item.product}</Name>
+                                    <Category>- {item.category}</Category>
+                                </SideDiv>
+                                <SideDiv>
+                                    <ListButtons onClick={(ev) => {ev.preventDefault(); deleteFromList(item)}}>Delete</ListButtons>
+                                    <ListButtons onClick={(ev) => {ev.preventDefault(); addToStocks(item)}}>Add to stocks</ListButtons>
+                                </SideDiv>
+                            </ListItem>
+                        )})}
+                        <ListItemProd>
+                            <AddProductSmall location={"grocery"}></AddProductSmall>
+                        </ListItemProd>
+                    </ItemsList>
+                </ContentContainer>
+            </Container>)}
+        </>
+
     )
 }
 
@@ -166,6 +170,15 @@ const ListItem = styled.li`
 
     &:hover {
             background-color: rgba(209,207,198,0.3);
+        }
+`
+
+const ListItemProd = styled(ListItem)`
+    margin: 15px 2% 100px 2%;
+    padding: 0px;
+
+    &:hover {
+            background-color: transparent;
         }
 `
 

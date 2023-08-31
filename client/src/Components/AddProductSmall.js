@@ -7,7 +7,7 @@ import {measurement, categories} from "../helpers/MainItemsDatabase"
 import { KitchenContext } from "./KitchenContext";
 import { useNavigate } from "react-router-dom";
 
-const AddProductSmall = () =>
+const AddProductSmall = ({location, recipeFormData, setRecipeFormData}) =>
 {
     const {currentUser, triggerModification, setTriggerModification} = useContext(KitchenContext)
     const [formData, setFormData] = useState(initialForm)
@@ -55,29 +55,37 @@ const AddProductSmall = () =>
     {
         ev.preventDefault();
 
-        if (formData.product.length <= 1) {setNotification("Please enter a valid item"); return}
-        if (formData.category.length <= 1) {setNotification("Please enter a valid category"); return}
+        if (formData.product.length <= 1) {setNotification("Please enter a product"); return}
+        if (location !== "recipe" && formData.category.length <= 1) {setNotification("Please choose a category"); return}
         if (formData.quantity.length < 0) {setNotification("Please enter a valid quantity"); return}
 
-        fetch("/api/grocery/add", {
-            method: "POST",
-            body: JSON.stringify({"itemData" : {...formData, "userId": currentUser.groceryList}}),
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            })
-            .then((res) => res.json())
-            .then((json) => {
-                setTriggerModification(triggerModification + 1)
-                setFormData(initialForm)
-                setNotification(null)
-                const { status } = json;
-                if (status === 201) {
-                } else {
-                navigate("/error")
-                }
-            });
+        if (location === "recipe")
+        {
+            setRecipeFormData({...recipeFormData, "ingredients" : [...recipeFormData.ingredients, formData]})
+            setFormData(initialForm)
+        }
+        else 
+        {
+            fetch("/api/grocery/add", {
+                method: "POST",
+                body: JSON.stringify({"itemData" : {...formData, "userId": currentUser.groceryList}}),
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                })
+                .then((res) => res.json())
+                .then((json) => {
+                    setTriggerModification(triggerModification + 1)
+                    setFormData(initialForm)
+                    setNotification(null)
+                    const { status } = json;
+                    if (status === 201) {
+                    } else {
+                    navigate("/error")
+                    }
+                });
+        }
     }
 
     return (
@@ -93,7 +101,7 @@ const AddProductSmall = () =>
                 <ItemInputDiv>
                     <ItemInput autoComplete="off" id="product" value={formData.product} placeholder="Item" onChange={handleChange}></ItemInput>
                     {similar.length !== 0 ? (
-                    <ItemSuggestions style={{backgroundColor: "rgba(209,207,198,0.6)"}}>
+                    <ItemSuggestions style={{backgroundColor: "#b8ccac"}}>
                         <SuggestionTitle>Suggestions:</SuggestionTitle>
                         {similar && similar.map((item) => {return (<SuggestionButton onClick={() => setSuggestion(item)} id="product" value={item.name} key={item.name}><Suggestion>{item.name}<SuggestionCat> - {item.category}</SuggestionCat></Suggestion></SuggestionButton>)})}
                     </ItemSuggestions>) : (<></>)}
@@ -113,13 +121,13 @@ const AddProductSmall = () =>
 }
 
 const Container = styled.form`
-    width: 100%;
+    width: 95%;
     height: 95%;
     display: flex;
     align-items: center;
     gap: 10px;
     border-radius: inherit;
-    background-color: rgba(209,207,198,0.3);
+    background-color: #b8ccac;
     padding: 10px;
     position: relative;
 `
@@ -131,10 +139,10 @@ const SectionContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    color: black;
+    color: white;
 `
 
-const AddButton = styled.button`
+export const AddButton = styled.button`
     width: fit-content;
     border: none;
     background-color: transparent;
@@ -144,10 +152,11 @@ const AddButton = styled.button`
     align-items: center;
     justify-content: center;
     aspect-ratio: 1;
+    color: white;
 
     &:hover {
         cursor: pointer;
-        background-color: rgba(209,207,198,0.5);
+        background-color: rgba(209,207,198,0.7);
     }
 `
 
