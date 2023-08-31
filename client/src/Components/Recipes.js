@@ -1,10 +1,34 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NewRecipeForm from "./NewRecipeForm";
+import { KitchenContext } from "./KitchenContext";
 
 const Recipes = () =>
 {
     const [addRecipe, setAddRecipe] = useState(false)
+    const [recipes, setRecipes] = useState(null)
+    const [isLoading, setIsLoading] = useState(true);
+    const {currentUser} = useContext(KitchenContext)
+
+    useEffect(() => {
+        if (currentUser)
+        {
+            fetch(`/api/recipes/${currentUser._id}`)
+            .then(res => res.json())
+            .then((data) => {
+                if(data.status === 400 || data.status === 500) {
+                    throw new Error(data.message);
+                }
+                else {
+                    setRecipes(data.data);
+                    setIsLoading(false)
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+    }, [currentUser])
 
     return (
         <>

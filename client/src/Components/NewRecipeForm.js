@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import AddProductSmall, { AddButton } from "./AddProductSmall";
-import { CloseButton, ConfirmButton, Plus } from "./stocks/AddStockButton";
+import { CloseButton, ConfirmButton, Notification, Plus } from "./stocks/AddStockButton";
 import { KitchenContext } from "./KitchenContext";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
 {
     const [instruction, setInstruction] = useState("");
     const [recipeFormData, setRecipeFormData] = useState({"ingredients" : [], "instructions" : [], "name" : ""})
+    const [notification, setNotification] = useState(null);
     const {currentUser, setTriggerModification, triggerModification} = useContext(KitchenContext)
     const navigate = useNavigate();
 
@@ -36,6 +37,10 @@ const NewRecipeForm = ({setAddRecipe}) =>
     {
         ev.preventDefault();
 
+        if (recipeFormData.name.length === 0) {setNotification("Please give a name to your recipe."); return}
+        else if (recipeFormData.ingredients.length === 0) {setNotification("Please add ingredients."); return}
+        else if (recipeFormData.instructions.length === 0) {setNotification("Please add instructions."); return}
+
         fetch("/api/recipes/add", {
             method: "POST",
             body: JSON.stringify({"recipeData" : {...recipeFormData, "userId": currentUser._id}}),
@@ -49,6 +54,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
                 setTriggerModification(triggerModification + 1)
                 setRecipeFormData(null)
                 setAddRecipe(false)
+                setNotification(null)
                 const { status } = json;
                 if (status === 201) {
                 } else {
@@ -62,7 +68,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
         <Container>
             <ContentContainer>
                 <CloseButton onClick={(ev) => {ev.preventDefault(); setAddRecipe(false)}}>X</CloseButton>
-                <TitleInput value={recipeFormData.name} id="name" onChange={handleChange} placeholder="New Recipe.."></TitleInput>
+                <TitleInput autoComplete="off" value={recipeFormData.name} id="name" onChange={handleChange} placeholder="New Recipe.."></TitleInput>
                 <ContentDiv>
                     <h3>Ingredients</h3>
                     <List>
@@ -99,6 +105,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
                 </ContentDiv>
                 <ButtonDiv>
                     <ConfirmButton onClick={sendRecipe}>Add Recipe</ConfirmButton>
+                    <Notification>{notification && notification}</Notification>
                 </ButtonDiv>
                 
             </ContentContainer>
@@ -132,7 +139,7 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     margin-top: 5vh;
     background-color: rgba(209,207,198);
     overflow: scroll;
@@ -282,6 +289,11 @@ const Step = styled.input`
 
 const ButtonDiv = styled.div`
     height: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    color: rgba(212, 122, 115, 0.9);
 `
 
 export default NewRecipeForm;

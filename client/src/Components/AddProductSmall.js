@@ -156,7 +156,7 @@ export const AddButton = styled.button`
 
     &:hover {
         cursor: pointer;
-        background-color: rgba(209,207,198,0.7);
+        background-color: rgba(255, 255, 255, 0.3);
     }
 `
 
