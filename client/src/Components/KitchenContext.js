@@ -12,10 +12,6 @@ export const KitchenProvider = ({ children }) => {
     const [status, setStatus] = useState("loading");
     const [triggerModification, setTriggerModification] = useState(0)
 
-    useEffect(() => {
-        setStatus("loading")
-    }, [isAuthenticated])
-
     useEffect(() =>
     {
         if (isAuthenticated)
@@ -34,6 +30,7 @@ export const KitchenProvider = ({ children }) => {
             setCurrentUser(undefined); 
             {setStatus("idle")}
         }
+        // eslint-disable-next-line
     }, [isAuthenticated, triggerModification])
 
     return (

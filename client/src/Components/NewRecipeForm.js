@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { styled } from "styled-components";
 import AddProductSmall, { AddButton } from "./AddProductSmall";
 import { CloseButton, ConfirmButton, Notification, Plus } from "./stocks/AddStockButton";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const NewRecipeForm = ({setAddRecipe}) =>
 {
     const [instruction, setInstruction] = useState("");
-    const [recipeFormData, setRecipeFormData] = useState({"ingredients" : [], "instructions" : [], "name" : ""})
+    const [recipeFormData, setRecipeFormData] = useState({"ingredients" : [], "instructions" : [], "name" : "", "time": ""})
     const [notification, setNotification] = useState(null);
     const {currentUser, setTriggerModification, triggerModification} = useContext(KitchenContext)
     const navigate = useNavigate();
@@ -38,6 +38,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
         ev.preventDefault();
 
         if (recipeFormData.name.length === 0) {setNotification("Please give a name to your recipe."); return}
+        else if (recipeFormData.time.length === 0) {setNotification("Please add a time."); return}
         else if (recipeFormData.ingredients.length === 0) {setNotification("Please add ingredients."); return}
         else if (recipeFormData.instructions.length === 0) {setNotification("Please add instructions."); return}
 
@@ -68,7 +69,10 @@ const NewRecipeForm = ({setAddRecipe}) =>
         <Container>
             <ContentContainer>
                 <CloseButton onClick={(ev) => {ev.preventDefault(); setAddRecipe(false)}}>X</CloseButton>
+                <HeadingDiv>
                 <TitleInput autoComplete="off" value={recipeFormData.name} id="name" onChange={handleChange} placeholder="New Recipe.."></TitleInput>
+                <TimeInput autoComplete="off" value={recipeFormData.time} id="time" onChange={handleChange} placeholder="Time"></TimeInput>
+                </HeadingDiv>
                 <ContentDiv>
                     <h3>Ingredients</h3>
                     <List>
@@ -158,18 +162,23 @@ const ContentContainer = styled.div`
     }
 `
 
+const HeadingDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+`
+
 const TitleInput = styled.input`
     color: white;
     font-weight: lighter;
     font-family: inherit;
-    font-size: 40px;
+    font-size: 30px;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
-    min-width: 40%;
-    max-width: 80%;
+    width: 50%;
     text-align: center;
-    padding: 7px;
+    padding: 5px 7px;
     border-radius: 25px;
 
     &::placeholder {
@@ -185,7 +194,11 @@ const TitleInput = styled.input`
     }
 `
 
-const ContentDiv = styled.div`
+const TimeInput = styled(TitleInput)`
+    width: 25%;
+`
+
+export const ContentDiv = styled.div`
     width: 90%;
     height: 35%;
     padding: 10px 10px;
@@ -204,7 +217,7 @@ const ContentDiv = styled.div`
     }
 `
 
-const List = styled.ul`
+export const List = styled.ul`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -214,7 +227,7 @@ const List = styled.ul`
     width: 100%;
 `
 
-const ListItem = styled.li`
+export const ListItem = styled.li`
     margin: 13px 0px 0px 10px;
     display: flex;
     align-items: center;

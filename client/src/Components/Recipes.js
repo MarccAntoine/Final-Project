@@ -2,11 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import NewRecipeForm from "./NewRecipeForm";
 import { KitchenContext } from "./KitchenContext";
+import CurrentRecipeContent from "./CurrentRecipeContent";
+import Loading from "./Loading";
 
 const Recipes = () =>
 {
     const [addRecipe, setAddRecipe] = useState(false)
-    const [recipes, setRecipes] = useState(null)
+    const [recipes, setRecipes] = useState([])
+    const [currentRecipe, setCurrentRecipe] = useState({_id: null})
     const [isLoading, setIsLoading] = useState(true);
     const {currentUser} = useContext(KitchenContext)
 
@@ -32,20 +35,37 @@ const Recipes = () =>
 
     return (
         <>
-            <Container>
-                <ContentContainer>
-                    <TopContainer>
-                        <SideContainer></SideContainer>
-                        <SideContainer></SideContainer>
-                    </TopContainer>
-                    <AddButton onClick={() => setAddRecipe(true)}>Add Recipe</AddButton>
-                </ContentContainer>
-            </Container>
-            {addRecipe && (<>
-                    <Background></Background>
-                    <NewRecipeForm setAddRecipe={setAddRecipe}></NewRecipeForm>
-                </>
-            )}
+        {isLoading ? (<Loading />) : (
+            <>
+                <Container>
+                    <ContentContainer>
+                        <TopContainer>
+                            <SideContainer>
+                                <RecipeList>
+                                {recipes.map((recipe) => {return (
+                                    <RecipeButton key={recipe._id} onClick={() => setCurrentRecipe(recipe)}>
+                                        <RecipeItem>
+                                            <Name>{recipe.name}</Name>
+                                            <Time> - {recipe.time}</Time>
+                                        </RecipeItem>
+                                    </RecipeButton>
+                                )})}
+                                </RecipeList>
+                            </SideContainer>
+                            <RecipeContainer>
+                                <CurrentRecipeContent currentRecipe={currentRecipe} />
+                            </RecipeContainer>
+                        </TopContainer>
+                        <AddButton onClick={() => setAddRecipe(true)}>Add Recipe</AddButton>
+                    </ContentContainer>
+                </Container>
+                {addRecipe && (<>
+                        <Background></Background>
+                        <NewRecipeForm setAddRecipe={setAddRecipe}></NewRecipeForm>
+                    </>
+                )}
+            </>
+        )}
         </>
     )
 }
@@ -72,7 +92,7 @@ const Container = styled.div`
 
 const ContentContainer = styled.div`
     height: 85%;
-    width: 85%;
+    width: 90%;
     border-radius: 50px;
     display: flex;
     flex-direction: column;
@@ -95,18 +115,23 @@ const ContentContainer = styled.div`
 `
 
 const SideContainer = styled.div`
-    width: 45%;
+    width: 47%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid black;
     overflow: scroll;
+    padding: 20px;
+`
+
+const RecipeContainer = styled(SideContainer)`
+    border-radius: 25px;
+    background-color: rgba(209,207,198,0.5);
 `
 
 const TopContainer = styled.div`
-    height: 80%;
+    height: 90%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -133,6 +158,44 @@ const AddButton = styled.button`
     &:hover {
         cursor: pointer;
     }
+`
+
+const RecipeList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+`
+
+const RecipeButton = styled.button`
+    width: 100%;
+    background-color: transparent;
+    font-weight: lighter;
+    font-family: inherit;
+    padding: 5px;
+    border-radius: 15px;
+    border: none;
+
+    &:hover {
+        background-color: rgba(209,207,198,0.6);
+        cursor: pointer;
+    }
+`
+
+const RecipeItem = styled.li`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`
+
+const Name = styled.h3`
+    font-weight: lighter;
+    font-size: 24px;
+`
+
+const Time = styled.span`
+    font-weight: 500;
+    font-size: 15px;
 `
 
 export default Recipes;

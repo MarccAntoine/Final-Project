@@ -30,7 +30,7 @@ const Grocery = () =>
                 console.log(error);
             })
         }
-    }, [currentUser.items])
+    }, [currentUser])
 
     const deleteFromList = (item) =>
     {
