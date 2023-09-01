@@ -60,7 +60,8 @@ const postNewUser = async (req, res) => {
           "users": [userData._id],
           "items": [],
           "recipeBook": [],
-          "groceryList": id
+          "groceryList": id,
+          "planner" : []
         }
 
         const newList = {
@@ -328,13 +329,11 @@ const getRecipes = async (req, res) =>
       const dbName = "FinalProject";
       const db = client.db(dbName);
 
-      console.log(userId)
-
       const userQuery = { "users": { $elemMatch: { $eq: userId } } }
 
       let userResult = await db.collection("kitchen").findOne(userQuery);
 
-      if (userResult.recipeBook.length === 0) {return res.status(200).json({ status: 200, data: null, message: "No recipes"});}
+      if (userResult.recipeBook.length === 0) {return res.status(200).json({ status: 200, data: [null], message: "No recipes"});}
 
       else 
       {
@@ -342,9 +341,6 @@ const getRecipes = async (req, res) =>
         const recipesResult = await db.collection("recipes").find(query).toArray()
         return res.status(200).json({ status: 200, data: recipesResult});
       }
-
-      
-
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
   } finally {
@@ -352,4 +348,35 @@ const getRecipes = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes}
+const getPlanner = async (req, res) =>
+{
+  let client
+  const userId = req.params.userId;
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const userQuery = { "users": { $elemMatch: { $eq: userId } } }
+
+      let userResult = await db.collection("kitchen").findOne(userQuery);
+
+      if (userResult.planner.length === 0) {return res.status(200).json({ status: 200, data: ["null"], message: "No planner"});}
+
+      else 
+      {
+        const query = { _id: { $in: userResult.planner } }
+        const plannerResult = await db.collection("planner").find(query).toArray()
+
+        return res.status(200).json({ status: 200, data: plannerResult});
+      }
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner}

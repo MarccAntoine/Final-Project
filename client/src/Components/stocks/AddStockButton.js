@@ -158,7 +158,7 @@ export const Background = styled.div`
     left: 0px;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.6);
     z-index: 70;
 `
 
@@ -166,7 +166,7 @@ const ContainerButton = styled.div`
     width: fit-content;
     height: fit-content;
     padding: 10px;
-    background-color: rgba(209,207,198,0.6);
+    background-color: #b8ccac;
     border-radius: 25px;
 `
 
@@ -178,8 +178,8 @@ export const Container = styled.div`
     width: 25%;
     aspect-ratio: 1;
     border-radius: 25px;
-    background-color: #95B88D;
-    z-index: 75;
+    background-color: #b8ccac;
+    z-index: 80;
 `
 
 const AddButton = styled.button`

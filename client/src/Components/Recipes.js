@@ -177,7 +177,7 @@ const RecipeButton = styled.button`
     border: none;
 
     &:hover {
-        background-color: rgba(209,207,198,0.6);
+        background-color: rgba(209,207,198,0.3);
         cursor: pointer;
     }
 `

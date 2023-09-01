@@ -118,7 +118,7 @@ const EditStock = ({edit, setEdit}) =>
         {edit &&
         <>
             <Background></Background>
-            <Container style={{backgroundColor: "#E99F54"}}>
+            <Container style={{backgroundColor: "#ECC49C"}}>
                 <CloseButton onClick={() => {setEdit(false); setDeleteAll(false); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
                 <AddForm>
                     <SeparationDiv><Title>Edit Product : {edit.product}</Title></SeparationDiv>
