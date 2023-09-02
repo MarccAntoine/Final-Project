@@ -4,14 +4,24 @@ import NewRecipeForm from "./NewRecipeForm";
 import { KitchenContext } from "./KitchenContext";
 import CurrentRecipeContent from "./CurrentRecipeContent";
 import Loading from "./Loading";
+import { useParams } from "react-router-dom";
 
 const Recipes = () =>
 {
+    const param = (useParams())
     const [addRecipe, setAddRecipe] = useState(false)
     const [recipes, setRecipes] = useState([])
     const [currentRecipe, setCurrentRecipe] = useState({_id: null})
     const [isLoading, setIsLoading] = useState(true);
     const {currentUser} = useContext(KitchenContext)
+
+    useEffect(() => {
+        if (recipes.length !== 0 && param.recipeId !== undefined)
+        {
+            let recipe = recipes.filter((reci) => reci._id === param.recipeId)
+            setCurrentRecipe(recipe[0])
+        }
+    }, [recipes])
 
     useEffect(() => {
         if (currentUser)

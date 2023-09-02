@@ -1,9 +1,20 @@
 import { styled } from "styled-components";
 import { dateToDay } from "../helpers/weekBuilding";
 import AddPlan from "./AddPlan";
+import { DeleteButton } from "./stocks/Stocks";
+import { useNavigate } from "react-router-dom";
 
 const PlannerDay = ({day, dayPlan, sendPlanServer, currentUser}) =>
 {
+    const navigate = useNavigate();
+
+    const removePlan = (index) =>
+    {
+        dayPlan.splice(index, 1)
+
+        sendPlanServer()
+    }
+
     return (
         <DayContainer>
             <DateHeader>
@@ -12,10 +23,16 @@ const PlannerDay = ({day, dayPlan, sendPlanServer, currentUser}) =>
             </DateHeader>
             <PlanContainer>
                 <TopPlanContainer>
-                    {dayPlan.map((plan) => {return (
+                    {dayPlan.map((plan, index) => {return (
                         <DayItem key={plan.recipe}>
-                            <Moment>{plan.moment}:</Moment>
-                            <Name>{plan.recipe}</Name>
+                            <SeparateDiv>
+                                <Moment>{plan.moment}:</Moment>
+                                <Name>{plan.recipe}</Name>
+                            </SeparateDiv>
+                            <SeparateDiv>
+                                {plan.recipeId && <PlanButton onClick={() => {navigate(`/recipes/${plan.recipeId}`)}}>Go to recipe</PlanButton>}
+                                <PlanButton onClick={() => removePlan(index)}>Remove</PlanButton>
+                            </SeparateDiv>
                         </DayItem>
                     )})}
                 </TopPlanContainer>
@@ -82,14 +99,20 @@ const TopPlanContainer = styled.ul`
 const DayItem = styled.li`
     padding: 10px 20px;
     display: flex;
-    gap: 20px;
     align-items: center;
+    justify-content: space-between;
     width: 80%;
     border-radius: 20px;
 
     &:hover {
         background-color: rgba(209,207,198,0.3);
     }
+`
+
+const SeparateDiv = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
 `
 
 const Moment = styled.span`
@@ -100,6 +123,12 @@ const Moment = styled.span`
 const Name = styled.span`
     font-weight: lighter;
     font-size: 20px;
+`
+
+const PlanButton = styled(DeleteButton)`
+    ${DayItem}:hover & {
+        visibility: visible;
+    }
 `
 
 export default PlannerDay;

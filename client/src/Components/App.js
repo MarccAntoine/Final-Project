@@ -35,6 +35,7 @@ const AppRoutes = () => {
         <Route path="/planner" element={<Planner />} />
         <Route path="/grocery" element={<Grocery />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:recipeId" element={<Recipes />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/setup" element={<NewUserSetup />} />
         <Route path="/error" element={<Error />} />

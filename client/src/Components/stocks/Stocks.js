@@ -229,7 +229,7 @@ const Stocks = () =>
         border-radius: 10px;
     `
 
-    const DeleteButton = styled.button`
+    export const DeleteButton = styled.button`
         background-color: transparent;
         border-radius: 10px;
         padding: 5px;

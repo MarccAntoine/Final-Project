@@ -111,6 +111,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 20px;
 `
 
 const ContentContainer = styled.div`
