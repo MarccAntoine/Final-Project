@@ -3,15 +3,41 @@ import Loading from "./Loading";
 import { KitchenContext } from "./KitchenContext";
 import { dateToDay, getCurrentWeek, getNextWeek, whenIsDate } from "../helpers/weekBuilding";
 import { styled } from "styled-components";
+import PlannerDay from "./PlannerDay";
+import { useNavigate } from "react-router-dom";
 
 
 const Planner = () =>
 {
-    const [planner, setPlanner] = useState([])
-    const [weeks, setWeeks] = useState({"current": {}, "next" : {}})
+    const [weeks, setWeeks] = useState({"current": {}, "next" : {}, "_id" : ""})
     const [isLoading, setIsLoading] = useState(true)
     const [selectedWeek, setSelectedWeek] = useState("current")
-    const {currentUser} = useContext(KitchenContext)
+    const {currentUser, triggerModification, setTriggerModification} = useContext(KitchenContext)
+    const navigate = useNavigate();
+
+    const setWeeksPlanner = (planner) =>
+    {
+        let current, next;
+        if (planner.length <= 1)
+        {
+            setWeeks({"current" : getCurrentWeek(), "next" : getNextWeek(), "_id" : planner[0]})
+        }
+        else if (planner !== [])
+        {
+            for (let week of planner.planner)
+            {
+                let result = whenIsDate(Object.keys(week)[0])
+
+                if (result === "current") {current = week}
+                else if (result === "next") {next = week}
+                else 
+                {
+                    next = getNextWeek();
+                }
+            }
+            setWeeks({"current" : current, "next" : next, "_id" : planner._id})
+        }
+    }
 
     useEffect(() =>
     {
@@ -24,7 +50,7 @@ const Planner = () =>
                     throw new Error(data.message);
                 }
                 else {
-                    setPlanner(data.data);
+                    setWeeksPlanner(data.data);
                     setIsLoading(false)
                 }
             })
@@ -34,29 +60,26 @@ const Planner = () =>
         }
     }, [currentUser])
 
-    useEffect(() =>
+    const sendPlanServer = () =>
     {
-        if (planner[0] === 'null')
-        {
-            setWeeks({"current" : getCurrentWeek(), "next" : getNextWeek()})
-        }
-        else if (planner !== [])
-        {
-            for (let week of planner)
-            {
-                let result = whenIsDate(Object.keys(week)[0])
-
-                if (result === "current") {setWeeks({...weeks, "current" : week})}
-                else if (result === "next") {setWeeks({...weeks, "next" : week})}
-                else 
-                {
-                    setWeeks({...weeks, "next" : getNextWeek()});
+        fetch("/api/planner/add", {
+            method: "POST",
+            body: JSON.stringify({"plannerData" : weeks}),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            })
+            .then((res) => res.json())
+            .then((json) => {
+                setTriggerModification(triggerModification + 1)
+                const { status, message } = json;
+                if (status === 200) {
+                } else {
+                navigate("/error")
                 }
-            }
-        }
-    }, [planner])
-
-    console.log(weeks.current)
+            });
+    }
 
     return (
         <>
@@ -64,15 +87,9 @@ const Planner = () =>
                 <Container>
                     <ContentContainer>
                         <TopContainer>
-                            <DayContainer>
-                                <DateHeader>
-                                    <DateCircle>{Object.keys(weeks.current)[0].slice(0,5)}</DateCircle>
-                                    <Day>{dateToDay(Object.keys(weeks.current)[0])}</Day>
-                                </DateHeader>
-                                <PlanContainer>
-
-                                </PlanContainer>
-                            </DayContainer>
+                            {Object.keys(weeks[selectedWeek]).map((day) => {
+                                return <PlannerDay key={day} day={day} dayPlan={weeks[selectedWeek][day]} sendPlanServer={sendPlanServer} currentUser={currentUser}/>
+                            })}
                         </TopContainer>
                         <ButtonsContainer>
                             {selectedWeek === "current" ? (<CurrentButtonSelected onClick={() => setSelectedWeek("current")}>Current Week</CurrentButtonSelected>) : (<CurrentButton onClick={() => setSelectedWeek("current")}>Current Week</CurrentButton>)}
@@ -103,7 +120,7 @@ const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 20px;
     margin-top: 5vh;
 
@@ -155,50 +172,9 @@ const TopContainer = styled.div`
     flex-direction: column;
     width: 100%;
     align-items: center;
-    justify-content: center;
-    gap: 5%;
-    overflow: hidden;
-`
-
-const DayContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const DateHeader = styled.div`
-    width: 90%;
-    height: 60px;
-    border-radius: 30px;
-    background-color: rgba(209,207,198,0.6);
-    display: flex;
-    align-items: center;
-`
-
-const DateCircle = styled.div`
-    height: 85%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    font-weight: 500;
-    font-size: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    margin-left: 5px;
-    color: rgba(209,207,198,0.8);
-`
-
-const Day = styled.div`
-    margin-left: 15px;
-    color: white;
-    font-weight: normal;
-    font-size: 32px;
-`
-
-const PlanContainer = styled.ul`
-
+    justify-content: flex-start;
+    gap: 2%;
+    overflow: scroll;
 `
 
 export default Planner;

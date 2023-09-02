@@ -38,12 +38,14 @@ function exactTesting(query, target) {
     if (targetName.includes(query)) {matchingNames.push(target)}
 }
 
-export const itemSearch = (input) => {
+export const itemSearch = (input, array) => {
     exactMatch = null;
     matchingNames = [];
     const query = input;
 
-    initialItems.forEach((item) => {exactTesting(query, item)})
+    if (array === "initialItems") {array = initialItems}
+
+    array.forEach((item) => {exactTesting(query, item)})
 
     if (exactMatch === null) {initialItems.forEach((item) => {fuzzyMatch(query, item)})}
 

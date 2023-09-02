@@ -367,8 +367,9 @@ const getPlanner = async (req, res) =>
 
       else 
       {
-        const query = { _id: { $in: userResult.planner } }
-        const plannerResult = await db.collection("planner").find(query).toArray()
+        const plannerResult = await db.collection("planners").findOne({ _id : userResult.planner})
+
+        if (plannerResult.planner.length === 0) {return res.status(200).json({ status: 200, data: [userResult.planner], message: "No planner"});}
 
         return res.status(200).json({ status: 200, data: plannerResult});
       }
@@ -379,4 +380,41 @@ const getPlanner = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner}
+const addPlan = async (req, res) =>
+{
+  let client
+  const plannerData = req.body.plannerData;
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const plannerId = plannerData._id
+
+      delete plannerData._id
+
+      const plannerDataArray = [plannerData.current, plannerData.next]
+
+      console.log(plannerId + "hi")
+
+      const update = { $set: { planner : plannerData } }
+
+      let updateResult = await db.collection("planners").findOneAndUpdate(
+        { _id : plannerId },
+        { $set: { planner : plannerDataArray } }
+      );
+
+      console.log(updateResult)
+
+      return res.status(200).json({ status: 200, message: "success"})
+
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan}

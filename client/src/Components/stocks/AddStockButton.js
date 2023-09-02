@@ -53,7 +53,7 @@ const AddStockButton = ({location}) =>
         else if (ev.target.id === "product")
         {
             const input = ev.target.value
-            let result = itemSearch(input)
+            let result = itemSearch(input, "initialItems")
             if (input.length >= 2) {setSimilar(result.matchingNames)}
             else {setSimilar([])}
             setFormData({...formData, [ev.target.id]: input})
@@ -349,8 +349,8 @@ export const ItemSuggestions = styled.ul`
     padding: 10px;
     position: absolute;
     top: 100%;
-    left: 0%;
-    background-color: #95B88D;
+    left: 2%;
+    background-color: #b8ccac;
     z-index: 40;
     border-radius: 0px 0px 10px 10px;
     display: flex;
