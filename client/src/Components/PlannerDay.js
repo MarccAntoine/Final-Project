@@ -96,7 +96,7 @@ const TopPlanContainer = styled.ul`
     align-items: center;
 `
 
-const DayItem = styled.li`
+export const DayItem = styled.li`
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -109,23 +109,23 @@ const DayItem = styled.li`
     }
 `
 
-const SeparateDiv = styled.div`
+export const SeparateDiv = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
 `
 
-const Moment = styled.span`
+export const Moment = styled.span`
     font-weight: 500;
     font-size: 17px;
 `
 
-const Name = styled.span`
+export const Name = styled.span`
     font-weight: lighter;
     font-size: 20px;
 `
 
-const PlanButton = styled(DeleteButton)`
+export const PlanButton = styled(DeleteButton)`
     ${DayItem}:hover & {
         visibility: visible;
     }

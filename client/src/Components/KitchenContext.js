@@ -37,7 +37,7 @@ export const KitchenProvider = ({ children }) => {
         <>
             {status === "loading" ? (
                 <Loading /> ) : (
-                <KitchenContext.Provider value={{ currentUser, setTriggerModification, triggerModification }}>
+                <KitchenContext.Provider value={{ currentUser, setTriggerModification, triggerModification, status }}>
                     {children}
                 </KitchenContext.Provider>
                 )

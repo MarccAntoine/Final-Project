@@ -14,3 +14,15 @@ export const dateTesting = (expDate) =>
     else {return false}
 }
 
+export const dateTestingDay = (expDate) =>
+{
+    const dateToTest = moment(expDate, 'MM/DD/YY')
+
+    const today = moment().format('MM/DD/YY')
+
+    const distanceBetween = dateToTest.isSame(today, 'MM/DD,YY')
+
+    if (distanceBetween) {return true}
+    else {return false}
+}
+
