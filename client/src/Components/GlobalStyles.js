@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
@@ -49,6 +50,25 @@ const GlobalStyles = createGlobalStyle`
     q:before, q:after {
         content: '';
         content: none;
+    }
+    input, button, select {
+        &:focus {
+            outline: none;
+            border: 1px solid white;
+            filter: brightness(1.05);
+        } 
+    }
+    label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: none;
+        visibility: hidden;
     }
 `;
 

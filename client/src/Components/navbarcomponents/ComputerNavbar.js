@@ -76,9 +76,13 @@ const DropDownButton = styled(Link)`
     text-align: center;
     overflow: visible;
     white-space: nowrap;
+    border-radius: 20px;
+    padding: 3px;
 
     &:focus {
         outline: none;
+        border: 1px solid white;
+        filter: brightness(1.05);
     }
 `
 
@@ -119,6 +123,8 @@ const DropDownLink = styled(Link)`
 
     &:focus {
         outline: none;
+        border: 1px solid white;
+        filter: brightness(1.05);
     }
 
     &:hover {
@@ -148,6 +154,8 @@ const OptionButton = styled.button`
     font-size: 17px;
     border: none;
     background-color: transparent;
+    border-radius: 20px;
+    padding: 3px;
 `
 
 const DropDownOption = styled.div`

@@ -4,6 +4,7 @@ import { AddButton } from "./AddProductSmall";
 import { Plus } from "./stocks/AddStockButton";
 import { itemSearch } from "../helpers/fuzzyTesting";
 import { ItemSuggestions, SuggestionButton, Suggestion, SuggestionCat, SuggestionTitle } from "./stocks/AddStockButton";
+import DropDown from "./DropDown";
 
 const initialForm = {
     "moment" : "",
@@ -15,14 +16,7 @@ const AddPlan = ({sendPlanServer, dayPlan, currentUser}) =>
 {
     const [showForm, setShowForm] = useState(false)
     const [formData, setFormData] = useState(initialForm)
-    const [similar, setSimilar] = useState([])
     const [recipes, setRecipes] = useState([])
-
-    const setSuggestion = (recipe) =>
-    {
-        setFormData({...formData, "recipe": recipe.name, "recipeId": recipe._id})
-        setSimilar([]);
-    }
 
     useEffect(() =>
     {
@@ -46,15 +40,6 @@ const AddPlan = ({sendPlanServer, dayPlan, currentUser}) =>
 
     const handleChange = (ev) =>
     {
-        if (ev.target.id === "recipe")
-        {
-            const input = ev.target.value
-            let result = itemSearch(input, recipes)
-            console.log(result.matchingNames)
-            if (input.length >= 2) {setSimilar(result.matchingNames)}
-            else {setSimilar([])}
-            setFormData({...formData, [ev.target.id]: input})
-        }
         setFormData({...formData, [ev.target.id] : ev.target.value})
     }
 
@@ -73,18 +58,14 @@ const AddPlan = ({sendPlanServer, dayPlan, currentUser}) =>
 
     return (
         <Container>
-            {!showForm ? (<ToggleButton onClick={() => setShowForm(true)}>Add</ToggleButton>) : (
+            {!showForm ? (<ToggleButton aria-label="New Plan" onClick={() => setShowForm(true)}>Add</ToggleButton>) : (
                 <FormContainer>
+                    <label htmlFor="moment" >Moment</label>
                     <MomentInput autoComplete="off" onChange={handleChange} placeholder="Moment" id="moment" value={formData.moment}></MomentInput>
                     <RecipeDiv>
-                        <RecipeInput autoComplete="off" onChange={handleChange} placeholder="Recipe" id="recipe" value={formData.recipe}></RecipeInput>
-                            {similar.length !== 0 ? (
-                                <ItemSuggestions>
-                                    <SuggestionTitle>Suggestions:</SuggestionTitle>
-                                    {similar && similar.map((recipe) => {return (<SuggestionButton onClick={() => setSuggestion(recipe)} id="product" value={recipe.name} key={recipe.name}><Suggestion>{recipe.name}<SuggestionCat> - {recipe.time}</SuggestionCat></Suggestion></SuggestionButton>)})}
-                                </ItemSuggestions>) : (<></>)}
+                        <DropDown recipes={recipes} location={"recipe"} setFormData={setFormData} formData={formData} />
                     </RecipeDiv>
-                    <AddButton onClick={sendPlan}><Plus /></AddButton>
+                    <AddButton aria-label="Add Plan" onClick={sendPlan}><Plus /></AddButton>
                 </FormContainer>
             )}
         </Container>

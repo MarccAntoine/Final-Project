@@ -11,6 +11,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
     const [recipeFormData, setRecipeFormData] = useState({"ingredients" : [], "instructions" : [], "name" : "", "time": ""})
     const [notification, setNotification] = useState(null);
     const {currentUser, setTriggerModification, triggerModification} = useContext(KitchenContext)
+    const [showForm, setShowForm] = useState(false)
     const navigate = useNavigate();
 
     const handleChange = (ev) =>
@@ -31,6 +32,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
 
         setRecipeFormData({...recipeFormData, "instructions" : [...recipeFormData.instructions, instruction]})
         setInstruction("")
+        setShowForm(false)
     }
 
     const sendRecipe = (ev) =>
@@ -98,12 +100,15 @@ const NewRecipeForm = ({setAddRecipe}) =>
                             </ListItem>
                         )})}
                         <ListItemProd style={{marginBottom: "20px"}}>
+                        {!showForm ? (<ToggleButton aria-label="New Instruction" onClick={() => setShowForm(true)}>Add</ToggleButton>) : (
                             <AddInstruction>
+                                <label htmlFor="instruction" >Instruction</label>
                                 <Step id="instruction" value={instruction} onChange={handleChange} placeholder="Instruction:"></Step>
-                                <AddButton onClick={addInstruction}>
+                                <AddButton aria-label="Add Instruction" onClick={addInstruction}>
                                     <Plus />
                                 </AddButton>
                             </AddInstruction>
+                        )}
                         </ListItemProd>
                     </List>
                 </ContentDiv>
@@ -242,10 +247,29 @@ const ListItemProd = styled(ListItem)`
     width: 95%;
     display: flex;
     justify-content: center;
+    align-items: center;
 
     &:hover {
             background-color: transparent;
         }
+`
+
+const ToggleButton = styled.button`
+    width: 65px;
+    height: 30px;
+    border: none;
+    background-color: #b8ccac;
+    border-radius: 15px;
+    color: white;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 20px;
+
+
+    &:hover {
+        filter: brightness(1.05);
+        cursor: pointer;
+    }
 `
 
 const Quantity = styled.span`

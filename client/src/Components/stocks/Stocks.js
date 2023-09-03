@@ -48,7 +48,7 @@ const Stocks = () =>
                 setSides({"left": left, "right": right})
             }
         }
-    }, [currentUser.items])
+    }, [currentUser])
 
     return (
         <Container>

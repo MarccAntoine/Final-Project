@@ -4,9 +4,8 @@ import { useContext, useState } from "react";
 import moment from 'moment';
 import { KitchenContext } from "../KitchenContext";
 import { useNavigate } from "react-router-dom";
-
-import { itemSearch } from "../../helpers/fuzzyTesting";
 import {measurement, categories} from "../../helpers/MainItemsDatabase"
+import DropDown from "../DropDown";
 
 export const initialForm = {
     "quantity": "",
@@ -20,16 +19,9 @@ const AddStockButton = ({location}) =>
 {
     const {currentUser, setTriggerModification, triggerModification} = useContext(KitchenContext);
     const [buttonState, setButtonState] = useState("button");
-    const [similar, setSimilar] = useState([]);
     const [formData, setFormData] = useState(initialForm);
     const [notification, setNotification] = useState(null)
     const navigate = useNavigate();
-
-    const setSuggestion = (item) =>
-    {
-        setFormData({...formData, "product": item.name, "category": item.category})
-        setSimilar([]);
-    }
 
     const handleChange = (ev) =>
     {
@@ -49,14 +41,6 @@ const AddStockButton = ({location}) =>
             }
     
             setFormData({...formData, [ev.target.id]: formatted})
-        }
-        else if (ev.target.id === "product")
-        {
-            const input = ev.target.value
-            let result = itemSearch(input, "initialItems")
-            if (input.length >= 2) {setSimilar(result.matchingNames)}
-            else {setSimilar([])}
-            setFormData({...formData, [ev.target.id]: input})
         }
         else {setFormData({...formData, [ev.target.id]: ev.target.value})}
     }
@@ -98,7 +82,7 @@ const AddStockButton = ({location}) =>
     return (
         <>
         <ContainerButton>
-            <AddButton onClick={() => setButtonState("add")}><Plus /><p>Add Product</p></AddButton>
+            <AddButton aria-label="New Product" onClick={() => setButtonState("add")}><Plus /><p>Add Product</p></AddButton>
         </ContainerButton>
         <>
         {buttonState === "add" && (
@@ -106,14 +90,16 @@ const AddStockButton = ({location}) =>
                 <Background></Background>
                 <Container>
                     <AddForm>
-                        <CloseButton onClick={(ev) => {ev.preventDefault(); setButtonState("button"); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
+                        <CloseButton aria-label="Close Section" onClick={(ev) => {ev.preventDefault(); setButtonState("button"); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
                         <SeparationDiv>
                             <Title>Add Product</Title>
                         </SeparationDiv>
 
                         <SeparationDiv>
+                            <label htmlFor="quantity" >Quantity</label>
                             <UnitInput autoComplete="off" id="quantity" value={formData.quantity} placeholder="Qty" onChange={handleChange}></UnitInput>
 
+                            <label htmlFor="measurement" >Measurement Unit</label>
                             <MeasureSelect id="measurement" value={formData.measurement} onChange={handleChange}>
                                 <option value={undefined}> </option> 
                                 {measurement.map((unit) => {return (<option value={unit} key={unit}>{unit}</option>)})}
@@ -122,26 +108,22 @@ const AddStockButton = ({location}) =>
 
                         <SeparationDiv>
                             <ItemInputDiv>
-                                <ItemInput autoComplete="off" id="product" value={formData.product} placeholder="Item" onChange={handleChange}></ItemInput>
-                                {similar.length !== 0 ? (
-                                <ItemSuggestions>
-                                    <SuggestionTitle>Suggestions:</SuggestionTitle>
-                                    {similar && similar.map((item) => {return (<SuggestionButton onClick={() => setSuggestion(item)} id="product" value={item.name} key={item.name}><Suggestion>{item.name}<SuggestionCat> - {item.category}</SuggestionCat></Suggestion></SuggestionButton>)})}
-                                </ItemSuggestions>) : (<></>)}
+                                <DropDown formData={formData} setFormData={setFormData} location={"product"}/>
                             </ItemInputDiv>
                         </SeparationDiv>
 
                         <SeparationDiv>
+                            <label htmlFor="category" >Category</label>
                             <CatSelect id="category" value={formData.category} onChange={handleChange}>
                                 {categories.map((category) => {return (<option value={category} key={category}>{category}</option>)})}
                             </CatSelect>
 
-                            {location === "stock" && (<ExpInput autoComplete="off" maxLength={8} id="expiration" value={formData.expiration} placeholder="Exp: MM/DD/YY" onChange={handleChange}></ExpInput>)}
+                            {location === "stock" && (<><label htmlFor="expiration" >Expiration Date</label><ExpInput autoComplete="off" maxLength={8} id="expiration" value={formData.expiration} placeholder="Exp: MM/DD/YY" onChange={handleChange}></ExpInput></>)}
                         </SeparationDiv>
 
                         <SeparationDiv style={{flexDirection: "column"}}>
                             <Notification>{notification ? notification : ""}</Notification>
-                            <ConfirmButton onClick={sendProduct}>Add</ConfirmButton>
+                            <ConfirmButton aria-label="Add product" onClick={sendProduct}>Add</ConfirmButton>
                         </SeparationDiv>
                     </AddForm>
                 </Container>
@@ -160,6 +142,7 @@ export const Background = styled.div`
     width: 100vw;
     background-color: rgba(255,255,255,0.6);
     z-index: 70;
+    pointer-events: none;
 `
 
 const ContainerButton = styled.div`
@@ -318,91 +301,6 @@ export const CatSelect = styled.select`
     &:focus {
         outline: none;
     }
-`
-
-export const ItemInput = styled.input`
-    border: none;
-    background-color: rgba(255, 255, 255, 0.3);
-    color: inherit;
-    height: 100%;
-    width: 96%;
-    border-radius: 10px;
-    font-size: 15px;
-    padding: 0px 5px;
-    text-align: center;
-    position: relative;
-    z-index: 50;
-
-    &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-    }
-
-    &:focus {
-        outline: none;
-    }
-`
-
-export const ItemSuggestions = styled.ul`
-    width: 100%;
-    max-height: 270%;
-    overflow: scroll;
-    padding: 10px;
-    position: absolute;
-    top: 100%;
-    left: 2%;
-    background-color: #b8ccac;
-    z-index: 40;
-    border-radius: 0px 0px 10px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 5px;
-    font-family: inherit;
-    color: inherit;
-`
-
-export const SuggestionButton = styled.button`
-    width: 95%;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-    color: inherit;
-
-    &:hover {
-        cursor: pointer;
-    }
-`
-
-export const SuggestionTitle = styled.h5`
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 5px;
-`
-
-export const Suggestion = styled.li`
-    width: 100%;
-    height: 100%;
-    font-size: 15px;
-    text-align: left;
-    color: inherit;
-    font-weight: 300;
-    border-radius: 15px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    padding: 4px;
-    white-space: nowrap;
-
-    &:hover {
-        background-color: rgba(255,255,255,0.2);
-    }
-`
-
-export const SuggestionCat = styled.span`
-    font-weight: 100;
-    font-size: 12px;
-    color: inherit;
-    white-space: nowrap;
 `
 
 export const ExpInput = styled.input`
