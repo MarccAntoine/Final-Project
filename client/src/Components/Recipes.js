@@ -5,12 +5,14 @@ import { KitchenContext } from "./KitchenContext";
 import CurrentRecipeContent from "./CurrentRecipeContent";
 import Loading from "./Loading";
 import { useParams } from "react-router-dom";
+import { howManyInStock, recipeFilter } from "../helpers/RecipeFiltering";
 
 const Recipes = () =>
 {
     const param = (useParams())
     const [addRecipe, setAddRecipe] = useState(false)
     const [recipes, setRecipes] = useState([])
+    const [showSort, setshowSort] = useState(false)
     const [currentRecipe, setCurrentRecipe] = useState({_id: null})
     const [isLoading, setIsLoading] = useState(true);
     const {currentUser} = useContext(KitchenContext)
@@ -23,23 +25,28 @@ const Recipes = () =>
         }
     }, [recipes])
 
+    const fetchRecipes = () =>
+    {
+        fetch(`/api/recipes/${currentUser._id}`)
+        .then(res => res.json())
+        .then((data) => {
+            if(data.status === 400 || data.status === 500) {
+                throw new Error(data.message);
+            }
+            else {
+                setRecipes(data.data);
+                setIsLoading(false)
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
     useEffect(() => {
         if (currentUser)
         {
-            fetch(`/api/recipes/${currentUser._id}`)
-            .then(res => res.json())
-            .then((data) => {
-                if(data.status === 400 || data.status === 500) {
-                    throw new Error(data.message);
-                }
-                else {
-                    setRecipes(data.data);
-                    setIsLoading(false)
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+            fetchRecipes();
         }
     }, [currentUser])
 
@@ -51,12 +58,23 @@ const Recipes = () =>
                     <ContentContainer>
                         <TopContainer>
                             <SideContainer>
+                                <FilterDiv>
+                                    <FilterButton onClick={() => {setshowSort(!showSort); document.activeElement.blur();}}>Sort</FilterButton>
+                                    {showSort ? (
+                                        <SortingList>
+                                            <Filter onClick={() => {fetchRecipes(); setshowSort(false)}}>Default</Filter>
+                                            <Filter onClick={() => {setRecipes(recipeFilter(recipes, null, "alpha")); setshowSort(false)}}>Alphabetical</Filter>
+                                            <Filter onClick={() => {setRecipes(recipeFilter(recipes, currentUser.items, "stock")); setshowSort(false)}}>In stock</Filter>
+                                        </SortingList>
+                                    ) : (<></>)}
+                                </FilterDiv>
                                 <RecipeList>
                                 {recipes.map((recipe) => {return (
                                     <RecipeButton key={recipe._id} onClick={() => setCurrentRecipe(recipe)}>
                                         <RecipeItem>
                                             <Name>{recipe.name}</Name>
                                             <Time> - {recipe.time}</Time>
+                                            <InStock>{howManyInStock(recipe, currentUser.items)}/{recipe.ingredients.length} In stock</InStock>
                                         </RecipeItem>
                                     </RecipeButton>
                                 )})}
@@ -133,6 +151,7 @@ const SideContainer = styled.div`
     align-items: center;
     overflow: scroll;
     padding: 20px;
+    position: relative;
 
     @media only screen and (max-width: 500px) {
         width: 75%;
@@ -142,7 +161,7 @@ const SideContainer = styled.div`
 const RecipeContainer = styled(SideContainer)`
     width: 60%;
     border-radius: 25px;
-    background-color: rgba(209,207,198,0.5);
+    background-color: #e8e4dc;
 
     @media only screen and (max-width: 500px) {
         width: 90%;
@@ -164,6 +183,36 @@ const TopContainer = styled.div`
     @media only screen and (max-width: 500px) {
         flex-direction: column-reverse;
         padding-top: 70px;
+    }
+`
+
+const FilterDiv = styled.div`
+    height: fit-content;
+    width: 150px;
+    position: absolute;
+    top: 0px;
+    left: 25px;
+`
+
+const FilterButton = styled.button`
+    height: 30px;
+    width: 150px;
+    background-color: #e8e4dc;
+    border-radius: 15px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 1.4rem;
+    border: none;
+    z-index: 15;
+
+    &:hover {
+        cursor: pointer;
     }
 `
 
@@ -190,6 +239,40 @@ const RecipeList = styled.ul`
     flex-direction: column;
     gap: 5px;
     width: 100%;
+    margin-top: 25px;
+`
+
+const SortingList = styled.ul`
+    height: fit-content;
+    width: 150px;
+    background-color: #e8e4dc;
+    border-radius: 15px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding-top: 40px;
+    z-index: 10;
+    gap: 4px;
+`
+
+const Filter = styled.li`
+    width: 90%;
+    padding: 3px 0px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1rem;
+
+    &:hover {
+        background-color: rgba(209,207,198,0.3);
+        cursor: pointer;
+    }
 `
 
 const RecipeButton = styled.button`
@@ -211,6 +294,7 @@ const RecipeItem = styled.li`
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 `
 
 const Name = styled.h3`
@@ -220,7 +304,14 @@ const Name = styled.h3`
 
 const Time = styled.span`
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+`
+
+const InStock = styled.span`
+    position: absolute;
+    right: 10px;
+    font-weight: 500;
+    font-size: 0.8rem;
 `
 
 export default Recipes;

@@ -16,15 +16,15 @@ const MobileNavbar = () =>
                     <BurgerNav onClick={() => setShowNav(!showNav)} />
                     <LogoutButton />
                 </Container>
-                <DropDownButton to={'/homepage'}>My Kitchen</DropDownButton>
-                <DropDownLink to={'/stocks'}>Stocks</DropDownLink>
-                <DropDownLink to={'/planner'}>Planner</DropDownLink>
-                <DropDownLink to={'/grocery'}>Grocery</DropDownLink>
-                <DropDownLink to={'/recipes'}>Recipes</DropDownLink>
-                <DropDownButton to={'/blog'}>Tricks and Tips</DropDownButton>
-                <DropDownLink to={'/blog'}>Blog</DropDownLink>
-                <DropDownLink to={'/blog/recipes'}>Recipes</DropDownLink>
-                <DropDownButton to={'/profile'}>Profile</DropDownButton>
+                <DropDownButton onClick={() => setShowNav(false)} to={'/homepage'}>My Kitchen</DropDownButton>
+                <DropDownLink onClick={() => setShowNav(false)} to={'/stocks'}>Stocks</DropDownLink>
+                <DropDownLink onClick={() => setShowNav(false)} to={'/planner'}>Planner</DropDownLink>
+                <DropDownLink onClick={() => setShowNav(false)} to={'/grocery'}>Grocery</DropDownLink>
+                <DropDownLink onClick={() => setShowNav(false)} to={'/recipes'}>Recipes</DropDownLink>
+                <DropDownButton onClick={() => setShowNav(false)} to={'/blog'}>Tricks and Tips</DropDownButton>
+                <DropDownLink onClick={() => setShowNav(false)} to={'/blog'}>Blog</DropDownLink>
+                <DropDownLink onClick={() => setShowNav(false)} to={'/blog/recipes'}>Recipes</DropDownLink>
+                <DropDownButton onClick={() => setShowNav(false)} to={'/profile'}>Profile</DropDownButton>
             </NavContainer>) : (        
             <Container>
                 <Burger onClick={() => setShowNav(!showNav)} />
