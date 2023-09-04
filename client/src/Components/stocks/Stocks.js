@@ -146,9 +146,9 @@ const Stocks = () =>
     `
 
     const NoStock = styled.span`
-            font-size: 40px;
-            font-weight: lighter;
-            margin-bottom: 10px;
+        font-size: 2.4rem;
+        font-weight: lighter;
+        margin-bottom: 10px;
     `
 
     const SideContainer = styled.div`
@@ -158,6 +158,11 @@ const Stocks = () =>
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+
+
+        @media only screen and (max-width: 500px) {
+            width: 75%;
+        }
     `
 
     const TopContainer = styled.div`
@@ -170,6 +175,12 @@ const Stocks = () =>
         justify-content: center;
         gap: 5%;
         overflow: scroll;
+
+        @media only screen and (max-width: 500px) {
+            flex-direction: column;
+            padding-top: 70px;
+            gap: 10px;
+        }
     `
 
     const CategoryDiv = styled.div`
@@ -188,7 +199,7 @@ const Stocks = () =>
         border-radius: 20px;
         padding: 12px 20px;
         color: white;
-        font-size: 20px;
+        font-size: 1.3rem;
     `
 
     const CategoryList = styled.ul`
@@ -217,16 +228,17 @@ const Stocks = () =>
     `
 
     const Qty = styled.span`
-    
+        font-size: 1rem;
     `
 
     const Name = styled.span`
-    
+        font-size: 1rem;
     `
 
     const Exp = styled.span`
         padding: 6px;
         border-radius: 10px;
+        font-size: 1rem;
     `
 
     export const DeleteButton = styled.button`
@@ -234,7 +246,7 @@ const Stocks = () =>
         border-radius: 10px;
         padding: 5px;
         border: none;
-        font-size: 12px;
+        font-size: 0.8rem;
         font-weight: bold;
         text-decoration: underline;
         visibility: hidden;
@@ -245,6 +257,10 @@ const Stocks = () =>
         }
 
         ${CategoryItem}:hover & { 
+            visibility: visible;
+        }
+
+        @media only screen and (max-width: 850px) {
             visibility: visible;
         }
     `

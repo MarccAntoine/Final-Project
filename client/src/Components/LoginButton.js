@@ -19,9 +19,10 @@ const LogButton = styled.button`
     margin-top: 35px;
     font-weight: normal;
     color: white;
-    font-size: 50px;
+    font-size: 3rem;
     background-color: transparent;
     border: none;
+    border-radius: 25px;
 
     &:focus {
         outline: none;
@@ -29,18 +30,6 @@ const LogButton = styled.button`
 
     &:hover {
         cursor: pointer;
-    }
-
-    @media only screen and (max-width: 850px) {
-        font-size: 44px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 37px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 33px;
     }
 `
 

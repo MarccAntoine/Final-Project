@@ -22,6 +22,7 @@ const OutButton = styled.button`
     font-size: inherit;
     font-family: inherit;
     font-weight: lighter;
+    border-radius: 15px;
 
     &:focus {
         outline: none;

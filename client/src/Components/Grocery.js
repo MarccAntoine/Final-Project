@@ -131,22 +131,21 @@ const ContentContainer = styled.div`
     overflow: scroll;
 
 
-    @media only screen and (max-width: 650px) {
-        height: 90%;
-        width: 90%;
+    @media only screen and (max-width: 850px) {
+        height: 80%;
+        width: 85%;
     }
 
     @media only screen and (max-width: 500px) {
-        height: 100%;
-        width: 100%;
-        border-radius: 0px;
+        height: 80%;
+        width: 85%;
     }
 `
 
 const Title = styled.h1`
     color: white;
     font-weight: bold;
-    font-size: 35px;
+    font-size: 2.1rem;
     margin-top: 20px;
 `
 
@@ -157,7 +156,11 @@ const ItemsList = styled.ul`
     padding: 20px 40px;
     width: 100%;
     font-weight: lighter;
-    font-size: 20px;
+    font-size: 1.4rem;
+
+    @media only screen and (max-width: 850px) {
+        padding: 5px 10px;
+    }
 `
 
 const ListItem = styled.li`
@@ -189,21 +192,34 @@ align-items: center;
 `
 
 const Quantity = styled.span`
+    font-size: 1rem;
 
+    @media only screen and (max-width: 850px) {
+        font-size: 1.2rem;
+    }
 `
 
 const Name = styled.span`
+    font-size: 1rem;
 
+    @media only screen and (max-width: 850px) {
+        font-size: 1.2rem;
+    }
 `
 
 const Category = styled.span`
-    font-size: 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+
+    @media only screen and (max-width: 850px) {
+        font-size: 1rem;
+    }
 `
 
 const ListButtons = styled.button`
     font-family: inherit;
     font-weight: bold;
-    font-size: 11px;
+    font-size: 0.7rem;
     text-decoration: underline;
     border: none;
     background-color: transparent;
@@ -219,6 +235,11 @@ const ListButtons = styled.button`
         cursor: pointer;
         background-color: rgba(209,207,198,0.6);
 }
+
+@media only screen and (max-width: 850px) {
+        visibility: visible;
+        font-size: 1rem;
+    }
 `
 
 export default Grocery;

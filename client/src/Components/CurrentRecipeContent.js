@@ -49,7 +49,7 @@ const Container = styled.div`
     gap: 10px;
 
     h2 {
-        font-size: 30px;
+        font-size: 1.9rem;
         text-align: center;
         font-weight: lighter;
         color: black;
@@ -58,31 +58,35 @@ const Container = styled.div`
 
 const RecipeName = styled.h1`
     font-weight: lighter;
-    font-size: 40px;
+    font-size: 2.5rem;
 `
 
 const Time = styled.span`
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.4rem;
 `
 
 const Quantity = styled.span`
-
+    font-size: 1rem;
 `
 
 const Name = styled.span`
+    font-size: 1rem;
 
 `
 
 const Category = styled.span`
+    font-size: 1rem;
 
 `
 
 const Index = styled.span`
+    font-size: 1rem;
 
 `
 
 const Instruction = styled.span`
+    font-size: 1rem;
 
 `
 

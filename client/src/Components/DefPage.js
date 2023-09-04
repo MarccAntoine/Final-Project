@@ -70,39 +70,15 @@ const ContentContainer = styled.div`
 `
 
 const Name = styled.h1`
-    font-size: 150px;
+    font-size: 7rem;
     color: white;
     font-weight: bold;
-
-    @media only screen and (max-width: 850px) {
-        font-size: 110px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 80px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 70px;
-    }
 `
 
 const ByMe = styled.h3`
-    font-size: 20px;
+    font-size: 1.5rem;
     color: white;
     font-weight: lighter;
-
-    @media only screen and (max-width: 850px) {
-        font-size: 17px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 15px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 12px;
-    }
 `
 
 const DescDown = styled.div`

@@ -22,9 +22,11 @@ const JoinInvitation = ({step, setStep, initialSetup, fetchData, user}) =>
                 <BackButton onClick={() => setStep("initial")}><BackArrow /></BackButton>
                 <FormContainer>
                     <Question>What is your preffered name?</Question>
-                    <OptionsDiv id="name" onChange={handleChange}></OptionsDiv>
+                    <label htmlFor="name">Name</label>
+                    <OptionsDiv autoComplete="off" id="name" onChange={handleChange}></OptionsDiv>
                     <Question>Please enter your invitation code</Question>
-                    <OptionsDiv id="inviteCode" onChange={handleChange}></OptionsDiv>
+                    <label htmlFor="inviteCode">Invite Code</label>
+                    <OptionsDiv autoComplete="off" id="inviteCode" onChange={handleChange}></OptionsDiv>
                     <ConfirmButton onClick={(ev) => fetchData(ev, formData)}>Confirm</ConfirmButton>
                 </FormContainer>
             </>
@@ -42,21 +44,9 @@ const FormContainer = styled.form`
 `
 
 const Question = styled.h3`
-    font-size: 35px;
+    font-size: 2rem;
     color: white;
     font-weight: normal;
-
-    @media only screen and (max-width: 850px) {
-        font-size: 30px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 25px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 22px;
-    }
 `
 
 const OptionsDiv = styled.input`
@@ -69,7 +59,7 @@ const OptionsDiv = styled.input`
     flex-wrap: nowrap;
     text-align: center;
     color: white;
-    font-size: 25px;
+    font-size: 1.5rem;
     border: none;
     padding: 0px 20px;
 
@@ -97,7 +87,7 @@ const ConfirmButton = styled.button`
     align-items: center;
     justify-content: center;
     color: #95B88D;
-    font-size: 29px;
+    font-size: 1.8rem;
     font-weight: bold;
     border: none;
     padding: 0px 20px;

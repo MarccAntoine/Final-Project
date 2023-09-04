@@ -25,12 +25,13 @@ const Homepage = () =>
 
     const setDayPlanner = (planner) =>
     {
-    if (planner !== [])
+    if (planner !== undefined)
         {
             const datesToTest = [...Object.keys(planner[0]), ...Object.keys(planner[1])]
             const today = datesToTest.filter((date) => dateTestingDay(date))
             setDayPlan(planner[0][today[0]] || planner[1][today[0]])
         }
+        setIsLoading(false)
     }
 
     useEffect(() =>
@@ -127,11 +128,13 @@ const ContentContainer = styled.div`
     position: relative;
     overflow: hidden;
     margin-top: 5vh;
+    text-align: center;
 
 
     @media only screen and (max-width: 650px) {
         height: 90%;
         width: 90%;
+        padding: 0px 20px;
     }
 
     @media only screen and (max-width: 500px) {
@@ -151,7 +154,7 @@ const SectionContainer = styled.div`
 `
 
 const Welcome = styled.div`
-    font-size: 45px;
+    font-size: 3rem;
     font-weight: bold;
     padding: 20px;
     border-radius: 25px;
@@ -160,7 +163,7 @@ const Welcome = styled.div`
 
 const PlanningTitle = styled.div`
     font-weight: lighter;
-    font-size: 30px;
+    font-size: 1.9rem;
     padding: 10px 30px;
     background-color: rgba(209,207,198,0.6);
     border-radius: 25px;
@@ -178,14 +181,14 @@ const SubContentDiv = styled.ul`
 
     h3 {
         font-weight: lighter;
-        font-size: 20px;
+        font-size: 1.3rem;
     }
 `
 
 
 const StocksTitle = styled.div`
     font-weight: lighter;
-    font-size: 30px;
+    font-size: 1.9rem;
     padding: 10px 30px;
     background-color: rgba(212, 122, 115, 0.7);
     border-radius: 25px;

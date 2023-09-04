@@ -129,7 +129,7 @@ const Container = styled.div`
     background-color: transparent;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     flex-direction: column;
     gap: 15px;
     position: absolute;
@@ -155,15 +155,15 @@ const ContentContainer = styled.div`
     position: relative;
 
 
-    @media only screen and (max-width: 650px) {
-        height: 90%;
-        width: 90%;
+    @media only screen and (max-width: 850px) {
+        height: 80%;
+        width: 80%;
     }
 
     @media only screen and (max-width: 500px) {
-        height: 100%;
-        width: 100%;
-        border-radius: 0px;
+        height: 85%;
+        width: 90%;
+        padding-top: 15px;
     }
 `
 
@@ -177,7 +177,7 @@ const TitleInput = styled.input`
     color: white;
     font-weight: lighter;
     font-family: inherit;
-    font-size: 30px;
+    font-size: 1.8rem;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
@@ -218,7 +218,7 @@ export const ContentDiv = styled.div`
     h3 {
         padding-left: 15px;
         text-decoration: underline;
-        font-size: 15px;
+        font-size: 0.9rem;
     }
 `
 
@@ -226,7 +226,7 @@ export const List = styled.ul`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: lighter;
     padding-top: 5px;
     width: 100%;
@@ -237,6 +237,10 @@ export const ListItem = styled.li`
     display: flex;
     align-items: center;
     gap: 7px;
+
+    @media only screen and (max-width: 500px) {
+        margin: 5px 0px 0px 10px;
+    }
 `
 
 const ListItemProd = styled(ListItem)`
@@ -252,6 +256,10 @@ const ListItemProd = styled(ListItem)`
     &:hover {
             background-color: transparent;
         }
+
+    @media only screen and (max-width: 500px) {
+        height: 40px;
+    }
 `
 
 const ToggleButton = styled.button`
@@ -263,7 +271,7 @@ const ToggleButton = styled.button`
     color: white;
     font-family: inherit;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.3rem;
 
 
     &:hover {
@@ -273,23 +281,23 @@ const ToggleButton = styled.button`
 `
 
 const Quantity = styled.span`
-
+    font-size: 1rem;
 `
 
 const Name = styled.span`
-
+    font-size: 1rem;
 `
 
 const Category = styled.span`
-    font-size: 14px;
+    font-size: 0.8rem;
 `
 
 const Index = styled.span`
-
+    font-size: 1rem;
 `
 
 const Instruction = styled.span`
-
+    font-size: 1rem;
 `
 
 const AddInstruction = styled.form`
@@ -313,6 +321,7 @@ const Step = styled.input`
     border: none;
     color: white;
     font-family: inherit;
+    font-size: 1rem;
 
     &:focus {
         outline: none;

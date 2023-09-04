@@ -27,11 +27,36 @@ const GlobalStyles = createGlobalStyle`
     footer, header, hgroup, menu, nav, section {
         display: block;
     }
+    html {
+        @media only screen and (max-width: 1000px) {
+            font-size: 14px;
+        }
+
+        @media only screen and (max-width: 650px) {
+            font-size: 12px;
+        }
+
+        @media only screen and (max-width: 500px) {
+            font-size: 10px;
+        }
+    }
     #root {
         max-width: 100vw;
         min-height: 100vh;
         width: 100vw;
         background-color: #F8F6EF;
+
+        @media only screen and (max-width: 850px) {
+            font-size: 110px;
+        }
+
+        @media only screen and (max-width: 650px) {
+            font-size: 80px;
+        }
+
+        @media only screen and (max-width: 500px) {
+            font-size: 70px;
+        }
     }
     body {
         line-height: 1;

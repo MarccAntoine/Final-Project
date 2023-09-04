@@ -125,7 +125,7 @@ const ContentContainer = styled.div`
 `
 
 const SideContainer = styled.div`
-    width: 47%;
+    width: 35%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -133,11 +133,21 @@ const SideContainer = styled.div`
     align-items: center;
     overflow: scroll;
     padding: 20px;
+
+    @media only screen and (max-width: 500px) {
+        width: 75%;
+    }
 `
 
 const RecipeContainer = styled(SideContainer)`
+    width: 60%;
     border-radius: 25px;
     background-color: rgba(209,207,198,0.5);
+
+    @media only screen and (max-width: 500px) {
+        width: 90%;
+        height: 250%;
+    }
 `
 
 const TopContainer = styled.div`
@@ -150,6 +160,11 @@ const TopContainer = styled.div`
     justify-content: center;
     gap: 5%;
     overflow: hidden;
+
+    @media only screen and (max-width: 500px) {
+        flex-direction: column-reverse;
+        padding-top: 70px;
+    }
 `
 
 const AddButton = styled.button`
@@ -158,7 +173,7 @@ const AddButton = styled.button`
     border-radius: 25px;
     padding: 10px 15px;
     color: white;
-    font-size: 20px;
+    font-size: 1.3rem;
     font-family: inherit;
     font-weight: 500;
     background-color: rgba(209,207,198,0.6);
@@ -200,12 +215,12 @@ const RecipeItem = styled.li`
 
 const Name = styled.h3`
     font-weight: lighter;
-    font-size: 24px;
+    font-size: 1.6rem;
 `
 
 const Time = styled.span`
     font-weight: 500;
-    font-size: 15px;
+    font-size: 0.9rem;
 `
 
 export default Recipes;

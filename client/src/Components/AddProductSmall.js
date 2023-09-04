@@ -1,8 +1,6 @@
 import { styled } from "styled-components";
 import { MeasureSelect, UnitInput, initialForm, ItemInputDiv, CatSelect, Plus } from "./stocks/AddStockButton";
-import { useContext, useEffect, useState } from "react";
-
-import { itemSearch } from "../helpers/fuzzyTesting";
+import { useContext, useState } from "react";
 import {measurement, categories} from "../helpers/MainItemsDatabase"
 import { KitchenContext } from "./KitchenContext";
 import { useNavigate } from "react-router-dom";
@@ -121,6 +119,10 @@ const Container = styled.form`
     border-radius: inherit;
     padding: 10px;
     position: relative;
+
+    @media only screen and (max-width: 500px) {
+        width: 100%;
+    }
 `
 
 const ToggleButton = styled.button`
@@ -132,7 +134,7 @@ const ToggleButton = styled.button`
     color: white;
     font-family: inherit;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.4rem;
 
 
     &:hover {
@@ -149,6 +151,10 @@ const SectionContainer = styled.div`
     justify-content: space-between;
     gap: 10px;
     color: white;
+
+    @media only screen and (max-width: 500px) {
+        gap: 2px;
+    }
 `
 
 export const AddButton = styled.button`
@@ -173,7 +179,7 @@ const Notification = styled.span`
     font-weight: bold;
     width: 100%;
     text-align: center;
-    font-size: 12px;
+    font-size: 0.7rem;
     position: absolute;
     top: 110%;
 `

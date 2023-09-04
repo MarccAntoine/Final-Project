@@ -112,6 +112,10 @@ const Container = styled.div`
     justify-content: center;
     position: relative;
     padding: 20px;
+
+    @media only screen and (max-width: 500px) {
+        padding-top: 70px;
+    }
 `
 
 const ContentContainer = styled.div`
@@ -154,12 +158,20 @@ const CurrentButton = styled.button`
     height: 80%;
     background-color: rgba(209,207,198,0.6);
     font-family: inherit;
-    font-size: 20px;
+    font-size: 1.4rem;
     font-weight: lighter;
 
     &:hover {
         background-color: rgba(209,207,198,1);
         cursor: pointer;
+    }
+
+    @media only screen and (max-width: 850px) {
+        width: 20%;
+    }
+
+    @media only screen and (max-width: 500px) {
+        width: 25%;
     }
 `
 

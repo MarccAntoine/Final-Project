@@ -24,31 +24,16 @@ const Container = styled.div`
     padding: 0px 20px;
 
     h2 {
-        font-size: 50px;
+        font-size: 3rem;
     }
 
     h1 {
-        font-size: 200px;
+        font-size: 10rem;
     }
 
     h3 {
-        font-size: 30px;
+        font-size: 1.8rme;
         font-weight: normal;
-    }
-
-    @media only screen and (max-width: 800px) {
-        h2 {
-            font-size: 30px;
-        }
-
-        h1 {
-            font-size: 80px;
-        }
-
-        h3 {
-            font-size: 20px;
-            font-weight: normal;
-        }
     }
 `
 

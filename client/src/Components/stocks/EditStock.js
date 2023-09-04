@@ -164,6 +164,10 @@ const CheckLabel = styled.label`
     display: flex;
     align-items: center;
     gap: 10px;
+
+    @media only screen and (max-width: 850px) {
+            font-size: 1.1rem;
+        }
 `
 
 

@@ -18,56 +18,20 @@ const Type = ({step, setStep}) =>
 }
 
 const Welcome = styled.h1`
-    font-size: 80px;
+    font-size: 4rem;
     color: white;
-
-    @media only screen and (max-width: 850px) {
-        font-size: 70px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 60px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 40px;
-    }
 `
 
 const Message = styled.h2`
-    font-size: 40px;
+    font-size: 2.5rem;
     color: white;
     font-weight: normal;
-
-    @media only screen and (max-width: 850px) {
-        font-size: 35px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 30px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 21px;
-    }
 `
 
 const Question = styled.h3`
-    font-size: 25px;
+    font-size: 1.7rem;
     color: white;
     font-weight: normal;
-
-    @media only screen and (max-width: 850px) {
-        font-size: 22px;
-    }
-
-    @media only screen and (max-width: 650px) {
-        font-size: 20px;
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 18px;
-    }
 `
 
 const OptionsDiv = styled.div`
@@ -91,7 +55,7 @@ const OptionsDiv = styled.div`
 `
 
 const Option = styled.button`
-    font-size: 25px;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,40 +70,8 @@ const Option = styled.button`
     
     &:hover {
         background-color: rgba(255, 255, 255, 0.1);
-        font-size: 27px;
+        font-size: 1.8rem;
         cursor: pointer;
-    }
-
-    @media only screen and (max-width: 1000px) {
-        font-size: 20px;
-
-        &:hover {
-            font-size: 22px;
-        }
-    }
-
-    @media only screen and (max-width: 850px) {
-        font-size: 19px;
-
-        &:hover {
-            font-size: 21px;
-        }
-    }
-
-    @media only screen and (max-width: 700px) {
-        font-size: 17px;
-
-        &:hover {
-            font-size: 19px;
-        }
-    }
-
-    @media only screen and (max-width: 500px) {
-        font-size: 17px;
-
-        &:hover {
-            font-size: 19px;
-        }
     }
 `
 

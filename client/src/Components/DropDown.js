@@ -77,7 +77,7 @@ const ItemInput = styled.input`
     height: 100%;
     width: 96%;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 0.9rem;
     padding: 0px 5px;
     text-align: center;
     position: relative;
@@ -124,7 +124,7 @@ const SuggestionButton = styled.button`
 `
 
 const SuggestionTitle = styled.h5`
-    font-size: 13px;
+    font-size: 0.7rem;
     font-weight: bold;
     margin-bottom: 5px;
 `
@@ -132,7 +132,7 @@ const SuggestionTitle = styled.h5`
 const Suggestion = styled.li`
     width: 100%;
     height: 100%;
-    font-size: 15px;
+    font-size: 0.9rem;
     text-align: left;
     color: inherit;
     font-weight: 300;
@@ -147,17 +147,25 @@ const Suggestion = styled.li`
     &:hover {
         background-color: rgba(255,255,255,0.2);
     }
+
+    @media only screen and (max-width: 500px) {
+        font-size: 0.6rem;
+    }
 `
 
 const SelectedSuggestion = styled(Suggestion)`
-    background-color: rgba(255,255,255,0.2)
+    background-color: rgba(255,255,255,0.2);
 `
 
 const SuggestionCat = styled.span`
     font-weight: 100;
-    font-size: 12px;
+    font-size: 0.8rem;
     color: inherit;
     white-space: nowrap;
+
+    @media only screen and (max-width: 500px) {
+        font-size: 0.6rem;
+    }
 `
 
 export default DropDown;

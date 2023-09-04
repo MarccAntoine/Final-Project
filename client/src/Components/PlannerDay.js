@@ -56,6 +56,14 @@ const DateHeader = styled.div`
     background-color: rgba(209,207,198,0.6);
     display: flex;
     align-items: center;
+
+    @media only screen and (max-width: 850px) {
+        height: 50px
+    }
+
+    @media only screen and (max-width: 500px) {
+        height: 40px;
+    }
 `
 
 const DateCircle = styled.div`
@@ -63,7 +71,7 @@ const DateCircle = styled.div`
     aspect-ratio: 1;
     border-radius: 50%;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,7 +84,7 @@ const Day = styled.div`
     margin-left: 15px;
     color: white;
     font-weight: normal;
-    font-size: 32px;
+    font-size: 1.3rem;
 `
 
 const PlanContainer = styled.div`
@@ -117,12 +125,12 @@ export const SeparateDiv = styled.div`
 
 export const Moment = styled.span`
     font-weight: 500;
-    font-size: 17px;
+    font-size: 1.1rem !important;
 `
 
 export const Name = styled.span`
     font-weight: lighter;
-    font-size: 20px;
+    font-size: 1.3rem;
 `
 
 export const PlanButton = styled(DeleteButton)`

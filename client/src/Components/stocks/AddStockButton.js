@@ -163,6 +163,14 @@ export const Container = styled.div`
     border-radius: 25px;
     background-color: #b8ccac;
     z-index: 80;
+
+    @media only screen and (max-width: 850px) {
+        width: 50%;
+    }
+
+    @media only screen and (max-width: 850px) {
+        width: 65%;
+    }
 `
 
 const AddButton = styled.button`
@@ -170,7 +178,7 @@ const AddButton = styled.button`
     height: 100%;
     border-radius: inherit;
     color: white;
-    font-size: 20px;
+    font-size: 1.4rem;
     font-family: inherit;
     font-weight: 500;
     background-color: transparent;
@@ -196,7 +204,7 @@ export const AddForm = styled.form`
     height: 100%;
     border-radius: inherit;
     color: white;
-    font-size: 20px;
+    font-size: 1.4rem;
     font-family: inherit;
     font-weight: lighter;
     display: flex;
@@ -212,21 +220,30 @@ export const CloseButton = styled.button`
     background-color: transparent;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 1.3rem;
     border-radius: 50%;
 
     &:hover {
         background-color: rgba(255,255,255,0.2);
         cursor: pointer;
     }
+
+    @media only screen and (max-width: 500px) {
+        font-size: 1.8rem;
+        top: 2%;
+    }
 `
 
 export const Title = styled.h2`
     width: 90%;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.4rem;
     text-align: center;
     overflow: hidden;
+
+    @media only screen and (max-width: 850px) {
+            font-size: 1.6rem;
+        }
 `
 
 export const SeparationDiv = styled.div`
@@ -238,6 +255,10 @@ export const SeparationDiv = styled.div`
     gap: 6%;
     margin: 7px 0px;
     color: white;
+
+    @media only screen and (max-width: 500px) {
+        gap: 5px;
+    }
 `
 
 export const ItemInputDiv = styled.div`
@@ -253,7 +274,7 @@ export const UnitInput = styled.input`
     height: 100%;
     width: 47%;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 0.9rem;
     padding: 0px 5px;
     text-align: center;
 
@@ -268,6 +289,10 @@ export const UnitInput = styled.input`
     &:disabled {
         filter: brightness(91%);
     }
+
+    @media only screen and (max-width: 850px) {
+            font-size: 0.9rem;
+        }
 `
 
 export const MeasureSelect = styled.select`
@@ -277,12 +302,21 @@ export const MeasureSelect = styled.select`
     height: 100%;
     width: 47%;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 0.9rem;
     padding: 5px 5px;
     text-align: center;
 
     &:focus {
         outline: none;
+    }
+
+    @media only screen and (max-width: 850px) {
+            font-size: 0.9rem;
+        }
+
+    @media only screen and (max-width: 500px) {
+        font-size: 0.8rem;
+        padding: 0px;
     }
 `
 
@@ -294,12 +328,21 @@ export const CatSelect = styled.select`
     min-width: 47%;
     max-width: 70%;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 0.9rem;
     padding: 5px 5px;
     text-align: center;
 
     &:focus {
         outline: none;
+    }
+
+    @media only screen and (max-width: 850px) {
+        font-size: 0.9rem;
+    }
+
+    @media only screen and (max-width: 500px) {
+        font-size: 0.8rem;
+        padding: 0px;
     }
 `
 
@@ -310,7 +353,7 @@ export const ExpInput = styled.input`
     height: 100%;
     width: 47%;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 0.9rem;
     padding: 0px 5px;
     text-align: center;
 
@@ -325,15 +368,23 @@ export const ExpInput = styled.input`
     &:disabled {
         filter: brightness(91%);
     }
+
+    @media only screen and (max-width: 850px) {
+            font-size: 0.9rem;
+        }
 `
 
 export const Notification = styled.span`
     width: 100%;
     text-align: center;
     height: 30%;
-    font-size: 12px;
+    font-size: 0.7rem;
     font-weight: bold;
     margin-top: -5px;
+
+    @media only screen and (max-width: 850px) {
+            font-size: 1rem;
+        }
 `
 
 export const ConfirmButton = styled.button`
@@ -342,7 +393,7 @@ export const ConfirmButton = styled.button`
     color: white;
     border: none;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.2rem;
     border-radius: 10px;
     height: 60%;
     padding: 0px 10px;
@@ -355,6 +406,10 @@ export const ConfirmButton = styled.button`
         cursor: pointer;
         background-color: rgba(255, 255, 255, 0.4);
     }
+
+    @media only screen and (max-width: 850px) {
+            font-size: 1.4rem;
+        }
 `
 
 export default AddStockButton;

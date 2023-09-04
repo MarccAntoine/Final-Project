@@ -16,6 +16,7 @@ const initialSetup = {
 
 const NewUserSetup = () =>
 {
+
     const [step, setStep] = useState("initial");
     const {triggerModification, setTriggerModification} = useContext(KitchenContext)
     const { user } = useAuth0()
@@ -23,8 +24,8 @@ const NewUserSetup = () =>
 
     const fetchData = (ev, formData) =>
     {
-        console.log(formData)
         ev.preventDefault();
+
         fetch("/api/newUser", {
         method: "POST",
         body: JSON.stringify({"userData" : formData}),
@@ -38,7 +39,10 @@ const NewUserSetup = () =>
             setTriggerModification(triggerModification + 1)
             const { status } = json;
             if (status === 201) {
-            navigate(`/homepage`)
+            setTimeout(() =>
+            {
+                navigate(`/homepage`)
+            }, 1500)
             } else {
             navigate("/error")
             }

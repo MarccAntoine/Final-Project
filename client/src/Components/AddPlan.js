@@ -90,7 +90,7 @@ const ToggleButton = styled.button`
     color: white;
     font-family: inherit;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.4rem;
 
 
     &:hover {
@@ -109,7 +109,7 @@ const FormContainer = styled.form`
     background-color: #b8ccac;
     font-weight: lighter;
     color: white;
-    font-size: 20px;
+    font-size: 1.4rem;
 `
 
 const MomentInput = styled.input`
@@ -123,6 +123,7 @@ const MomentInput = styled.input`
     font-family: inherit;
     color: white;
     position: relative;
+    font-size: 1rem;
 
     &::placeholder {
         color: rgba(255, 255, 255, 0.5);
@@ -138,33 +139,8 @@ const RecipeDiv = styled.div`
     width: 50%;
     font-weight: lighter;
     color: white;
-    font-size: 20px;
+    font-size: 1.4rem;
     position: relative;
-`
-
-const RecipeInput = styled.input`
-    height: 100%;
-    width: 96%;
-    border-radius: 20px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 0px 15px;
-    text-align: center;
-    color: white;
-    font-family: inherit;
-
-
-    &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-    }
-
-    &:focus {
-        outline: none;
-    }
-`
-
-const ConfirmButton = styled.button`
-    
 `
 
 export default AddPlan;
