@@ -23,12 +23,17 @@ const OutButton = styled.button`
     font-family: inherit;
     font-weight: lighter;
     border-radius: 15px;
+    width: 90%;
+    height: 35px;
+    border-radius: 17px;
 
     &:focus {
         outline: none;
     }
 
     &:hover {
+        background-color: rgba(0,0,0,0.03);
+        font-weight: 500;
         cursor: pointer;
     }
 `

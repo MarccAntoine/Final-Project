@@ -5,7 +5,7 @@ const port = 8000
 
 const app = express()
 
-const {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan} = require('./handlers')
+const {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan, getUserInviteCode} = require('./handlers')
 
 app
     .use(function(req, res, next) {
@@ -48,5 +48,7 @@ app
     .get("/api/planner/:userId", getPlanner)
 
     .post("/api/planner/add", addPlan)
+
+    .get("/api/invite/:userId", getUserInviteCode)
 
 app.listen(port, () => {console.log('Server running at port 8000')})

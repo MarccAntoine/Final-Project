@@ -27,6 +27,7 @@ const ComputerNavbar = () =>
             <RelOptionDiv>
                 <OptionButton>Options</OptionButton>
                 <DropDownOption>
+                    <DropDownLink to={'/invite'}>Collaborate</DropDownLink>
                     <DropDownLink to={'/profile'}>Profile</DropDownLink>
                     <LogoutButton />
                 </DropDownOption>

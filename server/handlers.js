@@ -26,7 +26,7 @@ const getUser = async (req, res) => {
 
       if (userResult === null) {return res.status(200).json({ status: 200, data: null, message: "User not initialized."})}
 
-      let stockResult = await db.collection("kitchen").findOne({ users: [userId]});
+      let stockResult = await db.collection("kitchen").findOne({ "users": { $elemMatch: { $eq: userId } } });
 
       return res.status(200).json({ status: 200, data: {...stockResult, ...userResult}});
 
@@ -82,6 +82,33 @@ const postNewUser = async (req, res) => {
     client.close()
   }
 }
+
+const getUserInviteCode = async (req, res) => {
+  let client
+  const userId = req.params.userId;
+  const newCodeInvite = uuidv4()
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      const newCode = {
+        "_id": newCodeInvite,
+        "inviteId": userId,
+      }
+
+      let newCodeResult = await db.collection("invites").insertOne(newCode);
+
+      return res.status(200).json({ status: 200, data: newCodeInvite});
+
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+};
 
 const postNewStock = async (req, res) =>
 {
@@ -417,4 +444,4 @@ const addPlan = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan}
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan, getUserInviteCode}
