@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Loading from "./Loading";
 import { KitchenContext } from "./KitchenContext";
-import { dateToDay, getCurrentWeek, getNextWeek, whenIsDate } from "../helpers/weekBuilding";
+import { getCurrentWeek, getNextWeek, whenIsDate } from "../helpers/weekBuilding";
 import { styled } from "styled-components";
 import PlannerDay from "./PlannerDay";
 import { useNavigate } from "react-router-dom";
@@ -73,7 +73,7 @@ const Planner = () =>
             .then((res) => res.json())
             .then((json) => {
                 setTriggerModification(triggerModification + 1)
-                const { status, message } = json;
+                const { status } = json;
                 if (status === 200) {
                 } else {
                 navigate("/error")

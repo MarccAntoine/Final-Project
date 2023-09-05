@@ -19,6 +19,7 @@ const EditStock = ({edit, setEdit}) =>
         {
             setFormData({...formData, "stockId": edit.stockId, "category": edit.category, "product": edit.product, "measurement" : edit.measurement, "expiration" : edit.expiration, "userId" : currentUser._id, "quantity" : edit.quantity})
         }
+        // eslint-disable-next-line
     }, [edit])
 
     const handleChange = (ev) =>
@@ -65,7 +66,7 @@ const EditStock = ({edit, setEdit}) =>
         if (formData.expiration.length > 0 && !(moment(formData.expiration, 'MM/DD/YY', true).isValid())) {setNotification("Please enter a valid date"); return}
         if (formData.quantity.length < 0) {setNotification("Please enter a valid quantity"); return}
 
-        if (formData.quantity != 0)
+        if (formData.quantity !== 0)
         {
             fetch("/api/stock/modify", {
                 method: "PUT",
@@ -80,7 +81,7 @@ const EditStock = ({edit, setEdit}) =>
                     setTriggerModification(triggerModification + 1)
                     setFormData(initialForm)
                     setNotification(null)
-                    const { status, message } = json;
+                    const { status } = json;
                     if (status === 200) {
                     setEdit(false)
                     } else {

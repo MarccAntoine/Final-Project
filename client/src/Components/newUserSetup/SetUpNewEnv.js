@@ -10,7 +10,8 @@ const SetupNewEnv = ({step, setStep, initialSetup, fetchData, user}) =>
     useEffect(() =>
     {
         setFormData({...formData, _id: user.sub})
-    }, [])
+        // eslint-disable-next-line
+    }, [user])
 
     const handleChange = (ev) => 
     {

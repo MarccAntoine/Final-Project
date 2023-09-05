@@ -1,4 +1,3 @@
-import Loading from "../Loading";
 import { styled } from "styled-components";
 import AddStockButton from "./AddStockButton";
 import { useContext, useEffect, useState } from "react";

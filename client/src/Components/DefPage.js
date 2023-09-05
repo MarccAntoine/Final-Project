@@ -19,6 +19,7 @@ const DefPage = () =>
             if (currentUser === null) {navigate('/profile/setup')}
             else {navigate('/homepage')}
         }
+                // eslint-disable-next-line
     }, [isAuthenticated, currentUser])
 
     return (

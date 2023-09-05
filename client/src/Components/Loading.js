@@ -15,6 +15,7 @@ const AnimDiv = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    user-select: none;
 `
 
 const WhiteLogo = styled.div`
@@ -22,6 +23,7 @@ const WhiteLogo = styled.div`
     font-size: 50px;
     color: rgba(255, 255, 255, 0.5);
     font-weight: bold;
+    user-select: none;
 
 
     @media only screen and (max-width: 850px) {
@@ -44,6 +46,7 @@ const OrangeLogo = styled.div`
     font-weight: bold;
     overflow: hidden;
     opacity: 0.7;
+    user-select: none;
 
     transition: all 4s cubic-bezier(1, 1, 1, 1);
 

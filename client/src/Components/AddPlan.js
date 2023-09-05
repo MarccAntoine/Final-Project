@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { AddButton } from "./AddProductSmall";
 import { Plus } from "./stocks/AddStockButton";
-import { itemSearch } from "../helpers/fuzzyTesting";
-import { ItemSuggestions, SuggestionButton, Suggestion, SuggestionCat, SuggestionTitle } from "./stocks/AddStockButton";
 import DropDown from "./DropDown";
 
 const initialForm = {
@@ -36,6 +34,7 @@ const AddPlan = ({sendPlanServer, dayPlan, currentUser}) =>
                 console.log(error);
             })
         }
+                // eslint-disable-next-line
     }, [showForm])
 
     const handleChange = (ev) =>

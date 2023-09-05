@@ -18,8 +18,9 @@ const NewRecipeForm = ({setAddRecipe, recipeToAdd}) =>
     {
         if (recipeToAdd)
         {
-            setRecipeFormData({...recipeFormData, "ingredients" : recipeToAdd.ingredients, "name" : recipeToAdd.name})
+            setRecipeFormData({...recipeFormData, "ingredients" : recipeToAdd.ingredients, "name" : recipeToAdd.name, "instructions" : recipeToAdd.instructions})
         }
+                // eslint-disable-next-line
     }, [recipeToAdd])
 
     const handleChange = (ev) =>
@@ -51,7 +52,6 @@ const NewRecipeForm = ({setAddRecipe, recipeToAdd}) =>
         ev.preventDefault();
 
         if (recipeFormData.name.length === 0) {setNotification("Please give a name to your recipe."); return}
-        else if (recipeFormData.time.length === 0) {setNotification("Please add a time."); return}
         else if (recipeFormData.ingredients.length === 0) {setNotification("Please add ingredients."); return}
         else if (recipeFormData.instructions.length === 0) {setNotification("Please add instructions."); return}
 

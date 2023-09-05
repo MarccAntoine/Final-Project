@@ -21,6 +21,7 @@ const Homepage = () =>
         {
             navigate('/profile/setup')
         }
+                // eslint-disable-next-line
     }, [currentUser])
 
     const setDayPlanner = (planner) =>

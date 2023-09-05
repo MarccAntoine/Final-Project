@@ -58,7 +58,8 @@ const Container = styled.div`
 
 const RecipeName = styled.h1`
     font-weight: lighter;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    text-align: center;
 `
 
 const Time = styled.span`
@@ -76,7 +77,8 @@ const Name = styled.span`
 `
 
 const Category = styled.span`
-    font-size: 1rem;
+    font-size: 0.7rem;
+    font-weight: bold;
 
 `
 

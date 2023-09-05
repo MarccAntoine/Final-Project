@@ -6,7 +6,7 @@ import { styled } from "styled-components";
 
 const Profile = () =>
 {
-    const { user, isAuthenticated } = useAuth0();
+    const { user } = useAuth0();
     const {currentUser} = useContext(KitchenContext)
 
     return (

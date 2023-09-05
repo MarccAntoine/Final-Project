@@ -27,6 +27,7 @@ const Recipes = () =>
             let recipe = recipes.filter((reci) => reci._id === param.recipeId)
             setCurrentRecipe(recipe[0])
         }
+        // eslint-disable-next-line
     }, [recipes])
 
     const fetchRecipes = () =>
@@ -53,6 +54,7 @@ const Recipes = () =>
         {
             fetchRecipes();
         }
+        // eslint-disable-next-line
     }, [currentUser])
 
     return (
@@ -78,7 +80,7 @@ const Recipes = () =>
                                     <RecipeButton key={recipe._id} onClick={() => {setCurrentRecipe(recipe); document.activeElement.blur()}} style={{backgroundColor : (currentRecipe._id === recipe._id ? ("rgba(209,207,198,0.3)") : (null))}}>
                                         <RecipeItem>
                                             <Name>{recipe.name}</Name>
-                                            <Time> - {recipe.time}</Time>
+                                            {recipe.time && (<Time> - {recipe.time}</Time>)}
                                             <InStock style={{backgroundColor : (((howManyInStock(recipe, currentUser.items) * 100) / recipe.ingredients.length) > 80 ? ("#b8ccac") : (null))}} >{howManyInStock(recipe, currentUser.items)}/{recipe.ingredients.length} In stock</InStock>
                                         </RecipeItem>
                                     </RecipeButton>
@@ -319,7 +321,9 @@ const RecipeItem = styled.li`
 
 const Name = styled.h3`
     font-weight: lighter;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
+    text-align: left;
+    max-width: 75%;
 `
 
 const Time = styled.span`

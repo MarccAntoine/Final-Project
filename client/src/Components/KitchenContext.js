@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export const KitchenContext = createContext(null);
 
 export const KitchenProvider = ({ children }) => {
-    const { logout, user, isAuthenticated } = useAuth0()
+    const { logout, user, isAuthenticated, isLoading } = useAuth0()
     const [currentUser, setCurrentUser] = useState(null);
     const [status, setStatus] = useState("loading");
     const [triggerModification, setTriggerModification] = useState(0)
@@ -25,13 +25,13 @@ export const KitchenProvider = ({ children }) => {
                 })
                 .catch((err) => {setStatus("idle"); logout()})
         }
-        else 
+        else if (!isLoading)
         {
             setCurrentUser(undefined); 
-            {setStatus("idle")}
+            setStatus("idle")
         }
         // eslint-disable-next-line
-    }, [isAuthenticated, triggerModification])
+    }, [isAuthenticated, triggerModification, isLoading])
 
     return (
         <>

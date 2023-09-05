@@ -1,13 +1,15 @@
 import { styled } from "styled-components";
 import { CloseButton } from "./stocks/AddStockButton";
 import { useEffect, useState } from "react";
-const apiKey = process.env.REACT_APP_SPOONACULAR_KEY;
+
+
 
 const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAdd}) =>
 {
     const [stocks, setStocks] = useState([])
-    const [selectedStocks, setSelectedStocks] = useState(new Set)
+    const [selectedStocks, setSelectedStocks] = useState(new Set())
     const [results, setResults] = useState([])
+    const apiKey = process.env.REACT_APP_SPOONACULAR_KEY;
 
     useEffect(() =>
     {
@@ -30,7 +32,7 @@ const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAd
         }
         else if (selectedStocks.has(ev.target.value))
         {
-            const stocksLi = new Set(Array.from(selectedStocks).filter((stock) => stock != ev.target.value))
+            const stocksLi = new Set(Array.from(selectedStocks).filter((stock) => stock !== ev.target.value))
             setSelectedStocks(stocksLi)
         }
     }
@@ -43,16 +45,13 @@ const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAd
 
         const ingredientsQuery = Array.from(selectedStocks).reduce((acc, item) => {return (acc += (item.toLowerCase()) + ",+")}, "").slice(0, -2).replace(/ /g, "%20")
 
-        console.log(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsQuery}&number=5&apiKey=863c233c38e7465da2978015e0f1e35d`)
-
-        fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsQuery}&number=5&apiKey=863c233c38e7465da2978015e0f1e35d`)
+        fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsQuery}&number=5&ranking=1&apiKey=${apiKey}`)
         .then(res => res.json())
         .then((data) => {
             if(data.status === 400 || data.status === 500) {
                 throw new Error(data.message);
             }
             else {
-                console.log(data)
                 setResults(data)
             }
         })
@@ -61,8 +60,34 @@ const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAd
         })
     }
 
-    const handleChoice = (ev, index) =>
+    const fetchInstructions = async (recipeId) => {
+        try {
+            const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=${apiKey}`);
+            const data = await response.json();
+        
+            if (data.status === 400 || data.status === 500) {
+            throw new Error(data.message);
+            } else {
+            return data[0];
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        };
+
+    const handleChoice = async (ev, index) =>
     {
+        ev.preventDefault();
+
+        const instructions = await fetchInstructions(results[index].id)
+
+        let instructionsArray = []
+
+        if (instructions.steps.length !== 0)
+        {
+            instructionsArray = instructions.steps.map((instruc) => {return (instruc.step)})
+        }
+
         const missedIngredients = results[index].missedIngredients.map((ingredient) =>
         {
             return ({"product" : ingredient.name, "quantity" : ingredient.amount, "measurement" : ingredient.unitShort, "category" : ingredient.aisle})
@@ -73,9 +98,10 @@ const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAd
         })
 
         const ingredients = [...usedIngredients, ...missedIngredients]
+
         setFindRecipe(false)
         setAddRecipe(true)
-        setRecipeToAdd({"id" : results[index].id, "ingredients" : ingredients, "name" : results[index].title})
+        setRecipeToAdd({"instructions" : instructionsArray, "ingredients" : ingredients, "name" : results[index].title})
     }
 
     return (
@@ -275,6 +301,7 @@ const ResultItem = styled.button`
 
 const Name = styled.span`
     font-size: 0.8rem;
+    text-align: left;
 
     @media only screen and (max-width: 850px) {
         font-size: 1rem;
