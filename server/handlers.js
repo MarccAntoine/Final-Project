@@ -110,6 +110,46 @@ const getUserInviteCode = async (req, res) => {
   }
 };
 
+const postNewUserInvited = async (req, res) =>
+{
+  let client
+  const userData = req.body.userData
+
+  try {
+      client = new MongoClient(MONGO_URI, options);
+      await client.connect();
+      const dbName = "FinalProject";
+      const db = client.db(dbName);
+
+      if (userData.inviteCode === undefined)
+      {
+        const newUser = {
+          "_id": userData._id,
+          "name": userData.name,
+        }
+
+        const inviteId = userData.inviteId
+
+        const newUserResult = await db.collection("usersProfile").insertOne( newUser );
+
+        const invitingUser = await db.collection("invites").findOneAndDelete({ _id : inviteId })
+
+        const kitchenUsersUpdate = await db.collection("kitchen").findOneAndUpdate(
+          { "users": { $elemMatch: { $eq: invitingUser.value.inviteId } } },
+          { $push: { "users": userData._id } },
+          { returnOriginal: false }
+        )
+
+        return res.status(201).json({ status: 201, message: "success"});
+      }
+
+  } catch (err) {
+      res.status(500).json({ status: 500, message: err });
+  } finally {
+    client.close()
+  }
+}
+
 const postNewStock = async (req, res) =>
 {
   let client
@@ -444,4 +484,4 @@ const addPlan = async (req, res) =>
   }
 }
 
-module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan, getUserInviteCode}
+module.exports = {getUser, postNewUser, postNewStock, modifyStock, deleteStock, postAddGrocery, getGrocery, deleteFromGrocery, postNewRecipe, getRecipes, getPlanner, addPlan, getUserInviteCode, postNewUserInvited}

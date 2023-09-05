@@ -9,7 +9,7 @@ const JoinInvitation = ({step, setStep, initialSetup, fetchData, user}) =>
     useEffect(() =>
     {
         setFormData({...formData, _id: user.sub})
-    }, [])
+    }, [user])
 
     const handleChange = (ev) => 
     {
@@ -26,7 +26,7 @@ const JoinInvitation = ({step, setStep, initialSetup, fetchData, user}) =>
                     <OptionsDiv autoComplete="off" id="name" onChange={handleChange}></OptionsDiv>
                     <Question>Please enter your invitation code</Question>
                     <label htmlFor="inviteCode">Invite Code</label>
-                    <OptionsDiv autoComplete="off" id="inviteCode" onChange={handleChange}></OptionsDiv>
+                    <OptionsDiv autoComplete="off" id="inviteId" onChange={handleChange}></OptionsDiv>
                     <ConfirmButton onClick={(ev) => fetchData(ev, formData)}>Confirm</ConfirmButton>
                 </FormContainer>
             </>

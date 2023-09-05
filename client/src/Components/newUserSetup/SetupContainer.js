@@ -25,8 +25,12 @@ const NewUserSetup = () =>
     const fetchData = (ev, formData) =>
     {
         ev.preventDefault();
+        let fetchLink;
 
-        fetch("/api/newUser", {
+        if (formData.inviteId) {fetchLink = "/api/newUser/invite"}
+        else {fetchLink = "/api/newUser"}
+
+        fetch(fetchLink, {
         method: "POST",
         body: JSON.stringify({"userData" : formData}),
         headers: {
