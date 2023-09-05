@@ -46,10 +46,11 @@ const DropDown = ({setFormData, formData, location, recipes}) =>
 
     const handleChange = (ev) =>
     {
-        const input = ev.target.value
+        let input = ev.target.value
         let result = itemSearch(input, (recipes || "initialItems"))
         if (input.length >= 2) {setSimilar(result.matchingNames)}
         else {setSimilar([])}
+        input = input.replace(/\b\w/g, (match) => match.toUpperCase());
         setFormData({...formData, [ev.target.id]: input})
         setSelectedIndex(-1)
     }

@@ -6,13 +6,17 @@ import CurrentRecipeContent from "./CurrentRecipeContent";
 import Loading from "./Loading";
 import { useParams } from "react-router-dom";
 import { howManyInStock, recipeFilter } from "../helpers/RecipeFiltering";
+import FindRecipeForm from "./FindRecipeForm";
 
 const Recipes = () =>
 {
     const param = (useParams())
     const [addRecipe, setAddRecipe] = useState(false)
+    const [findRecipe, setFindRecipe] = useState(false)
     const [recipes, setRecipes] = useState([])
     const [showSort, setshowSort] = useState(false)
+    const [recipeToAdd, setRecipeToAdd] = useState(null)
+    const [sortChoice, setSortChoice] = useState("default")
     const [currentRecipe, setCurrentRecipe] = useState({_id: null})
     const [isLoading, setIsLoading] = useState(true);
     const {currentUser} = useContext(KitchenContext)
@@ -36,6 +40,7 @@ const Recipes = () =>
             else {
                 setRecipes(data.data);
                 setIsLoading(false)
+                setSortChoice("default")
             }
         })
         .catch((error) => {
@@ -62,19 +67,19 @@ const Recipes = () =>
                                     <FilterButton onClick={() => {setshowSort(!showSort); document.activeElement.blur();}}>Sort</FilterButton>
                                     {showSort ? (
                                         <SortingList>
-                                            <Filter onClick={() => {fetchRecipes(); setshowSort(false)}}>Default</Filter>
-                                            <Filter onClick={() => {setRecipes(recipeFilter(recipes, null, "alpha")); setshowSort(false)}}>Alphabetical</Filter>
-                                            <Filter onClick={() => {setRecipes(recipeFilter(recipes, currentUser.items, "stock")); setshowSort(false)}}>In stock</Filter>
+                                            <Filter style={{backgroundColor : (sortChoice === "default" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {fetchRecipes(); setshowSort(false); setSortChoice("default")}}>Default</Filter>
+                                            <Filter style={{backgroundColor : (sortChoice === "alpha" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {setRecipes(recipeFilter(recipes, null, "alpha")); setSortChoice("alpha"); setshowSort(false)}}>Alphabetical</Filter>
+                                            <Filter style={{backgroundColor : (sortChoice === "stock" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {setRecipes(recipeFilter(recipes, currentUser.items, "stock")); setshowSort(false); setSortChoice("stock")}}>In stock</Filter>
                                         </SortingList>
                                     ) : (<></>)}
                                 </FilterDiv>
                                 <RecipeList>
                                 {recipes.map((recipe) => {return (
-                                    <RecipeButton key={recipe._id} onClick={() => setCurrentRecipe(recipe)}>
+                                    <RecipeButton key={recipe._id} onClick={() => {setCurrentRecipe(recipe); document.activeElement.blur()}} style={{backgroundColor : (currentRecipe._id === recipe._id ? ("rgba(209,207,198,0.3)") : (null))}}>
                                         <RecipeItem>
                                             <Name>{recipe.name}</Name>
                                             <Time> - {recipe.time}</Time>
-                                            <InStock>{howManyInStock(recipe, currentUser.items)}/{recipe.ingredients.length} In stock</InStock>
+                                            <InStock style={{backgroundColor : (((howManyInStock(recipe, currentUser.items) * 100) / recipe.ingredients.length) > 80 ? ("#b8ccac") : (null))}} >{howManyInStock(recipe, currentUser.items)}/{recipe.ingredients.length} In stock</InStock>
                                         </RecipeItem>
                                     </RecipeButton>
                                 )})}
@@ -84,12 +89,20 @@ const Recipes = () =>
                                 <CurrentRecipeContent currentRecipe={currentRecipe} />
                             </RecipeContainer>
                         </TopContainer>
-                        <AddButton onClick={() => setAddRecipe(true)}>Add Recipe</AddButton>
+                        <BottomContainer>
+                            <AddButton onClick={() => setFindRecipe(true)}>Find Recipe</AddButton>
+                            <AddButton onClick={() => setAddRecipe(true)}>Add Recipe</AddButton>
+                        </BottomContainer>
                     </ContentContainer>
                 </Container>
                 {addRecipe && (<>
                         <Background></Background>
-                        <NewRecipeForm setAddRecipe={setAddRecipe}></NewRecipeForm>
+                        <NewRecipeForm setAddRecipe={setAddRecipe} recipeToAdd={recipeToAdd} ></NewRecipeForm>
+                    </>
+                )}
+                {findRecipe && (<>
+                        <Background></Background>
+                        <FindRecipeForm setFindRecipe={setFindRecipe} currentUser={currentUser} setAddRecipe={setAddRecipe} setRecipeToAdd={setRecipeToAdd} ></FindRecipeForm>
                     </>
                 )}
             </>
@@ -135,15 +148,15 @@ const ContentContainer = styled.div`
         width: 90%;
     }
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 850px) {
         height: 100%;
         width: 100%;
         border-radius: 0px;
-}
+    }
 `
 
 const SideContainer = styled.div`
-    width: 35%;
+    width: 45%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -153,17 +166,17 @@ const SideContainer = styled.div`
     padding: 20px;
     position: relative;
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 850px) {
         width: 75%;
     }
 `
 
 const RecipeContainer = styled(SideContainer)`
-    width: 60%;
+    width: 50%;
     border-radius: 25px;
     background-color: #e8e4dc;
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 850px) {
         width: 90%;
         height: 250%;
     }
@@ -180,10 +193,17 @@ const TopContainer = styled.div`
     gap: 5%;
     overflow: hidden;
 
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 850px) {
         flex-direction: column-reverse;
         padding-top: 70px;
     }
+`
+
+const BottomContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 `
 
 const FilterDiv = styled.div`
@@ -312,6 +332,8 @@ const InStock = styled.span`
     right: 10px;
     font-weight: 500;
     font-size: 0.8rem;
+    border-radius: 10px;
+    padding: 3px;
 `
 
 export default Recipes;

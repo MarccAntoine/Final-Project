@@ -18,8 +18,8 @@ export const recipeFilter = (recipes, stocks, filter) =>
 
         return recipes.sort((a, b) =>
         {
-            const stockA = (a.ingredients.filter((ingre) => stocksName.has(ingre.product)).length) * (a.ingredients.length) / 100
-            const stockB = (b.ingredients.filter((ingre) => stocksName.has(ingre.product)).length) * (b.ingredients.length) / 100
+            const stockA = (a.ingredients.filter((ingre) => stocksName.has(ingre.product)).length) * 100 / (a.ingredients.length)
+            const stockB = (b.ingredients.filter((ingre) => stocksName.has(ingre.product)).length) * 100 / (b.ingredients.length)
 
             if (stockA > stockB) {return -1}
             else if (stockA < stockB) {return 1}

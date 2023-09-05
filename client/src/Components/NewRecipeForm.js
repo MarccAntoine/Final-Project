@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import AddProductSmall, { AddButton } from "./AddProductSmall";
 import { CloseButton, ConfirmButton, Notification, Plus } from "./stocks/AddStockButton";
 import { KitchenContext } from "./KitchenContext";
 import { useNavigate } from "react-router-dom";
 
-const NewRecipeForm = ({setAddRecipe}) =>
+const NewRecipeForm = ({setAddRecipe, recipeToAdd}) =>
 {
     const [instruction, setInstruction] = useState("");
     const [recipeFormData, setRecipeFormData] = useState({"ingredients" : [], "instructions" : [], "name" : "", "time": ""})
@@ -14,15 +14,26 @@ const NewRecipeForm = ({setAddRecipe}) =>
     const [showForm, setShowForm] = useState(false)
     const navigate = useNavigate();
 
+    useEffect(() =>
+    {
+        if (recipeToAdd)
+        {
+            setRecipeFormData({...recipeFormData, "ingredients" : recipeToAdd.ingredients, "name" : recipeToAdd.name})
+        }
+    }, [recipeToAdd])
+
     const handleChange = (ev) =>
     {
+        let input = ev.target.value;
         if (ev.target.id === "instruction")
         {
-            setInstruction(ev.target.value);
+            input = input.replace(/(^|\.\s+)([a-z])/g, (match) => match.toUpperCase());
+            setInstruction(input);
         }
         else 
         {
-            setRecipeFormData({...recipeFormData, [ev.target.id] : ev.target.value})
+            input = input.replace(/\b\w/g, (match) => match.toUpperCase());
+            setRecipeFormData({...recipeFormData, [ev.target.id] : input})
         }
     }
 
@@ -103,7 +114,7 @@ const NewRecipeForm = ({setAddRecipe}) =>
                         {!showForm ? (<ToggleButton aria-label="New Instruction" onClick={() => setShowForm(true)}>Add</ToggleButton>) : (
                             <AddInstruction>
                                 <label htmlFor="instruction" >Instruction</label>
-                                <Step id="instruction" value={instruction} onChange={handleChange} placeholder="Instruction:"></Step>
+                                <Step autoComplete="off" id="instruction" value={instruction} onChange={handleChange} placeholder="Instruction:"></Step>
                                 <AddButton aria-label="Add Instruction" onClick={addInstruction}>
                                     <Plus />
                                 </AddButton>

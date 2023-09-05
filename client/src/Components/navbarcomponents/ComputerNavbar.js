@@ -10,17 +10,17 @@ const ComputerNavbar = () =>
         <DropDownDiv>
             <DropDownButton to={'/homepage'}>My Kitchen</DropDownButton>
             <DropDown>
-                <DropDownLink to={'/stocks'}>Stocks</DropDownLink>
-                <DropDownLink to={'/planner'}>Planner</DropDownLink>
-                <DropDownLink to={'/grocery'}>Grocery</DropDownLink>
-                <DropDownLink to={'/recipes'}>Recipes</DropDownLink>
+                <DropDownLink onClick={() => document.activeElement.blur()} to={'/stocks'}>Stocks</DropDownLink>
+                <DropDownLink onClick={() => document.activeElement.blur()} to={'/planner'}>Planner</DropDownLink>
+                <DropDownLink onClick={() => document.activeElement.blur()} to={'/grocery'}>Grocery</DropDownLink>
+                <DropDownLink onClick={() => document.activeElement.blur()} to={'/recipes'}>Recipes</DropDownLink>
             </DropDown>
         </DropDownDiv>
         <DropDownDiv>
             <DropDownButton to={'/blog'}>Tricks and Tips</DropDownButton>
             <DropDown>
-                <DropDownLink to={'/blog'}>Blog</DropDownLink>
-                <DropDownLink to={'/blog/recipes'}>Recipes</DropDownLink>
+                <DropDownLink onClick={() => document.activeElement.blur()} to={'/blog'}>Blog</DropDownLink>
+                <DropDownLink onClick={() => document.activeElement.blur()} to={'/blog/recipes'}>Recipes</DropDownLink>
             </DropDown>
         </DropDownDiv>
         <OptionDiv>
@@ -104,6 +104,12 @@ const DropDown = styled.div`
     gap: 5px;
 
     ${DropDownDiv}:hover & {
+        visibility: visible;
+        height: fit-content;
+        padding: 20px 0px;
+    }
+
+    ${DropDownDiv}:focus-within & {
         visibility: visible;
         height: fit-content;
         padding: 20px 0px;

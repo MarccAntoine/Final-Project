@@ -10,7 +10,7 @@ import { DayItem, Name, SeparateDiv, Moment, PlanButton } from "./PlannerDay"
 const Homepage = () =>
 {
     const {currentUser, status} = useContext(KitchenContext);
-    const currentDate = moment().format("dddd, MMMM do")
+    const currentDate = moment().format("dddd, MMMM Do")
     const [isLoading, setIsLoading] = useState(true);
     const [expiring, setExpiring] = useState([])
     const [dayPlan, setDayPlan] = useState([]);
