@@ -69,21 +69,21 @@ const Recipes = () =>
                                     <FilterButton onClick={() => {setshowSort(!showSort); document.activeElement.blur();}}>Sort</FilterButton>
                                     {showSort ? (
                                         <SortingList>
-                                            <Filter style={{backgroundColor : (sortChoice === "default" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {fetchRecipes(); setshowSort(false); setSortChoice("default")}}>Default</Filter>
-                                            <Filter style={{backgroundColor : (sortChoice === "alpha" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {setRecipes(recipeFilter(recipes, null, "alpha")); setSortChoice("alpha"); setshowSort(false)}}>Alphabetical</Filter>
-                                            <Filter style={{backgroundColor : (sortChoice === "stock" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {setRecipes(recipeFilter(recipes, currentUser.items, "stock")); setshowSort(false); setSortChoice("stock")}}>In stock</Filter>
+                                            <Filter><FilterItemButton style={{backgroundColor : (sortChoice === "default" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {fetchRecipes(); setshowSort(false); setSortChoice("default")}}>Default</FilterItemButton></Filter>
+                                            <Filter><FilterItemButton style={{backgroundColor : (sortChoice === "alpha" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {setRecipes(recipeFilter(recipes, null, "alpha")); setSortChoice("alpha"); setshowSort(false)}}>Alphabetical</FilterItemButton></Filter>
+                                            <Filter><FilterItemButton style={{backgroundColor : (sortChoice === "stock" ? ("rgba(209,207,198,0.3)") : (null))}} onClick={() => {setRecipes(recipeFilter(recipes, currentUser.items, "stock")); setshowSort(false); setSortChoice("stock")}}>In stock</FilterItemButton></Filter>
                                         </SortingList>
                                     ) : (<></>)}
                                 </FilterDiv>
                                 <RecipeList>
                                 {recipes.map((recipe) => {return (
-                                    <RecipeButton key={recipe._id} onClick={() => {setCurrentRecipe(recipe); document.activeElement.blur()}} style={{backgroundColor : (currentRecipe._id === recipe._id ? ("rgba(209,207,198,0.3)") : (null))}}>
-                                        <RecipeItem>
+                                    <RecipeItem>
+                                        <RecipeButton key={recipe._id} onClick={() => {setCurrentRecipe(recipe); document.activeElement.blur()}} style={{backgroundColor : (currentRecipe._id === recipe._id ? ("rgba(209,207,198,0.3)") : (null))}}>
                                             <Name>{recipe.name}</Name>
                                             {recipe.time && (<Time> - {recipe.time}</Time>)}
                                             <InStock style={{backgroundColor : (((howManyInStock(recipe, currentUser.items) * 100) / recipe.ingredients.length) > 80 ? ("#b8ccac") : (null))}} >{howManyInStock(recipe, currentUser.items)}/{recipe.ingredients.length} In stock</InStock>
-                                        </RecipeItem>
-                                    </RecipeButton>
+                                        </RecipeButton>
+                                    </RecipeItem>
                                 )})}
                                 </RecipeList>
                             </SideContainer>
@@ -286,10 +286,17 @@ const SortingList = styled.ul`
 
 const Filter = styled.li`
     width: 90%;
+
+`
+
+const FilterItemButton = styled.button`
+    width: 100%;
     padding: 3px 0px;
     text-align: center;
     border-radius: 10px;
     font-size: 1rem;
+    border: none;
+    background-color: transparent;
 
     &:hover {
         background-color: rgba(209,207,198,0.3);
@@ -306,6 +313,11 @@ const RecipeButton = styled.button`
     border-radius: 15px;
     border: none;
 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+
     &:hover {
         background-color: rgba(209,207,198,0.3);
         cursor: pointer;
@@ -313,10 +325,7 @@ const RecipeButton = styled.button`
 `
 
 const RecipeItem = styled.li`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
+    width: 100%;
 `
 
 const Name = styled.h3`

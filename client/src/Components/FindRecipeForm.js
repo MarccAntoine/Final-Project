@@ -114,7 +114,7 @@ const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAd
                     <StocksDiv>
                         <StocksList>
                             {stocks.length !== 0 && Array.from(stocks).map((stock) => {
-                                return (<StockItem style={{backgroundColor : (selectedStocks.has(stock) ? "#b8ccac" : "rgba(255, 255, 255, 0.3)")}} onClick={handleClick} key={stock} value={stock}>{stock}</StockItem>)
+                                return (<StockItem key={stock}><StockButton style={{backgroundColor : (selectedStocks.has(stock) ? "#b8ccac" : "rgba(255, 255, 255, 0.3)")}} onClick={handleClick} value={stock}>{stock}</StockButton></StockItem>)
                             })}
                         </StocksList>
                     </StocksDiv>
@@ -125,9 +125,11 @@ const FindRecipeForm = ({setFindRecipe, currentUser, setAddRecipe, setRecipeToAd
                                 {results.map((recipe, index) =>
                                 {
                                     return (
-                                        <ResultItem key={recipe.id} onClick={(ev) => {handleChoice(ev, index)}}>
-                                            <Name>{recipe.title}</Name>
-                                            <UsedOrUnused>Used ingredients: {recipe.usedIngredientCount}<br /> Additional ingredients: {recipe.missedIngredientCount}</UsedOrUnused>
+                                        <ResultItem key={recipe.id}>
+                                            <ResultButton onClick={(ev) => {handleChoice(ev, index)}}>
+                                                <Name>{recipe.title}</Name>
+                                                <UsedOrUnused>Used ingredients: {recipe.usedIngredientCount}<br /> Additional ingredients: {recipe.missedIngredientCount}</UsedOrUnused>
+                                            </ResultButton>
                                         </ResultItem>
                                     )
                                 })}
@@ -223,9 +225,18 @@ const StocksList = styled.ul`
     gap: 2%;
 `
 
-const StockItem = styled.button`
+const StockItem = styled.li`
     width: 23%;
     height: 40px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    align-items: center;
+`
+
+const StockButton = styled.button`
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -233,7 +244,6 @@ const StockItem = styled.button`
     font-weight: 500;
     border: none;
     border-radius: 20px;
-    margin-bottom: 5px;
     font-family: inherit;
 `
 
@@ -282,12 +292,20 @@ const ResultsList = styled.ul`
     justify-content: flex-start;
 `
 
-const ResultItem = styled.button`
+const ResultItem = styled.li`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 35px;
+`
+
+const ResultButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 35px;
+    height: 100%;
     border-radius: 12px;
     border: none;
     background-color: rgba(209,207,198,0.5);
