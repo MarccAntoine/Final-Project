@@ -89,7 +89,6 @@ const GlobalStyles = createGlobalStyle`
         margin: -1px;
         padding: 0;
         overflow: hidden;
-        clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border: none;
         visibility: hidden;

@@ -28,7 +28,9 @@ const getUser = async (req, res) => {
 
       let stockResult = await db.collection("kitchen").findOne({ "users": { $elemMatch: { $eq: userId } } });
 
-      return res.status(200).json({ status: 200, data: {...stockResult, ...userResult}});
+      stockResult
+      ? res.status(200).json({ status: 200, data: {...stockResult, ...userResult}})
+      : res.status(400).json({ status: 400, message : "Did not find kitchen for this user!" })
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
@@ -48,33 +50,32 @@ const postNewUser = async (req, res) => {
       const dbName = "FinalProject";
       const db = client.db(dbName);
 
-      if (userData.inviteCode === undefined)
-      {
-        const newUser = {
-          "_id": userData._id,
-          "name": userData.name,
-          "system": userData.system
-        }
-
-        const newKitchen = {
-          "users": [userData._id],
-          "items": [],
-          "recipeBook": [],
-          "groceryList": id,
-          "planner" : []
-        }
-
-        const newList = {
-          "_id" : id,
-          "list" : []
-        }
-
-        const newUserResult = await db.collection("usersProfile").insertOne( newUser );
-        const newKitchenResult = await db.collection("kitchen").insertOne( newKitchen );
-        const newListResult = await db.collection("grocery").insertOne( newList );
-
-        return res.status(201).json({ status: 201, message: "success"});
+      const newUser = {
+        "_id": userData._id,
+        "name": userData.name,
+        "system": userData.system
       }
+
+      const newKitchen = {
+        "users": [userData._id],
+        "items": [],
+        "recipeBook": [],
+        "groceryList": id,
+        "planner" : []
+      }
+
+      const newList = {
+        "_id" : id,
+        "list" : []
+      }
+
+      const newUserResult = await db.collection("usersProfile").insertOne( newUser );
+      const newKitchenResult = await db.collection("kitchen").insertOne( newKitchen );
+      const newListResult = await db.collection("grocery").insertOne( newList );
+
+      (newListResult.acknowledged && newKitchenResult.acknowledged && newUserResult.acknowledged)
+      ? res.status(201).json({ status: 201, message: "success"})
+      : res.status(500).json({ status: 500, message: "Failed to insert document."})
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
@@ -101,7 +102,9 @@ const getUserInviteCode = async (req, res) => {
 
       let newCodeResult = await db.collection("invites").insertOne(newCode);
 
-      return res.status(200).json({ status: 200, data: newCodeInvite});
+      newCodeResult.acknowledged 
+      ? res.status(200).json({ status: 200, data: newCodeInvite})
+      : res.status(500).json({ status: 500, message: "Failed to insert document."})
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
@@ -121,28 +124,35 @@ const postNewUserInvited = async (req, res) =>
       const dbName = "FinalProject";
       const db = client.db(dbName);
 
-      if (userData.inviteCode === undefined)
+      const newUser = {
+        "_id": userData._id,
+        "name": userData.name,
+      }
+
+      const inviteId = userData.inviteId
+
+      const invitingUser = await db.collection("invites").findOneAndDelete({ _id : inviteId })
+
+      if (invitingUser.value)
       {
-        const newUser = {
-          "_id": userData._id,
-          "name": userData.name,
-        }
-
-        const inviteId = userData.inviteId
-
-        const newUserResult = await db.collection("usersProfile").insertOne( newUser );
-
-        const invitingUser = await db.collection("invites").findOneAndDelete({ _id : inviteId })
-
         const kitchenUsersUpdate = await db.collection("kitchen").findOneAndUpdate(
           { "users": { $elemMatch: { $eq: invitingUser.value.inviteId } } },
           { $push: { "users": userData._id } },
           { returnOriginal: false }
         )
 
-        return res.status(201).json({ status: 201, message: "success"});
-      }
+        if (kitchenUsersUpdate.value)
+        {
+          const newUserResult = await db.collection("usersProfile").insertOne( newUser );
 
+          newUserResult.acknowledged
+          ? res.status(201).json({ status: 201, message: "success"})
+          : res.status(500).json({ status: 500, message: "Could not create the user."})
+        }
+        else {return res.status(500).json({ status: 500, message: "Failed to inssert user to the kitchen"})}
+      }
+      else {return res.status(400).json({ status: 400, message: "Did not find the invite code!"})}
+    
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
   } finally {
@@ -177,9 +187,9 @@ const postNewStock = async (req, res) =>
         { returnOriginal: false }
       );
 
-      if (result.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
-
-      else {return res.status(400).json({ status: 400, message: "failed"});}
+      result.value 
+      ? res.status(201).json({ status: 201, message: "success"})
+      : res.status(400).json({ status: 400, message: "Failed to find the kitchen and add the product."})
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
@@ -216,14 +226,11 @@ const modifyStock = async (req, res) =>
         }
       );
 
-      console.log(result)
-
-      if (result.value) {return res.status(200).json({ status: 200, message: "success"});}
-
-      else {return res.status(400).json({ status: 400, message: "failed"});}
+      result.value
+      ? res.status(200).json({ status: 200, message: "success"})
+      : res.status(400).json({ status: 400, message: "Failed to find the user/stock and to update the product."})
 
   } catch (err) {
-      console.log(err)
       res.status(500).json({ status: 500, message: err });
   } finally {
     client.close()
@@ -248,12 +255,11 @@ const deleteStock = async (req, res) =>
         { returnOriginal: false }
       );
 
-      if (result.value) {return res.status(200).json({ status: 200, message: "success"});}
-
-      else {return res.status(400).json({ status: 400, message: "failed"});}
+      result.value
+      ? res.status(200).json({ status: 200, message: "success"})
+      : res.status(400).json({ status: 400, message: "Failed to fint the user/stocks and to delete the product."})
 
   } catch (err) {
-      console.log(err)
       res.status(500).json({ status: 500, message: err });
   } finally {
     client.close()
@@ -283,9 +289,9 @@ const postAddGrocery = async (req, res) =>
         { returnOriginal: false }
       );
 
-      if (result.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
-
-      else {return res.status(400).json({ status: 400, message: "failed"});}
+      result.value
+      ? res.status(201).json({ status: 201, message: "success"})
+      : res.status(400).json({ status: 400, message: "Failed to find the grocery and to add the product."})
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
@@ -307,7 +313,9 @@ const getGrocery = async (req, res) =>
 
       let groceryResult = await db.collection("grocery").findOne({ _id: groceryId});
 
-      return res.status(200).json({ status: 200, data: groceryResult});
+      groceryResult
+      ? res.status(200).json({ status: 200, data: groceryResult})
+      : res.status(404).json({ status: 404, message: "Could not find the grocery list."})
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
@@ -334,12 +342,11 @@ const deleteFromGrocery = async (req, res) =>
         { returnOriginal: false }
       );
 
-      if (result.value) {return res.status(200).json({ status: 200, message: "success"});}
-
-      else {return res.status(400).json({ status: 400, message: "failed"});}
+      result.value
+      ? res.status(200).json({ status: 200, message: "success"})
+      : res.status(400).json({ status: 400, message: "Could not find the product and delete it."})
 
   } catch (err) {
-      console.log(err)
       res.status(500).json({ status: 500, message: err });
   } finally {
     client.close()
@@ -365,21 +372,27 @@ const postNewRecipe = async (req, res) =>
 
       delete recipeData.userId
 
-      const recipeIdresult = await db.collection("kitchen").findOneAndUpdate(
-        { "users": { $elemMatch: { $eq: userId } } },
-        { $push: { "recipeBook": id } },
-        { returnOriginal: false }
-      );
-
       const recipesResult = await db.collection("recipes").insertOne(recipeData)
 
-      if (recipesResult.value !== null) {return res.status(201).json({ status: 201, message: "success"});}
+      if (recipesResult.acknowledged)
+      {
+        const recipeIdresult = await db.collection("kitchen").findOneAndUpdate(
+          { "users": { $elemMatch: { $eq: userId } } },
+          { $push: { "recipeBook": id } },
+          { returnOriginal: false }
+        );
 
-      else {return res.status(400).json({ status: 400, message: "failed"});}
+        recipeIdresult.value
+        ? res.status(201).json({ status: 201, message: "success"})
+        : res.status(400).json({ status: 400, message: "Failed to add the recipe to the user's recipe book."})
+      }
+      else 
+      {
+        return res.status(400).json({ status: 400, message: "Failed to add the recipe in the database."})
+      }
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
-      console.log(err)
   } finally {
     client.close()
   }
@@ -400,14 +413,27 @@ const getRecipes = async (req, res) =>
 
       let userResult = await db.collection("kitchen").findOne(userQuery);
 
-      if (userResult.recipeBook.length === 0) {return res.status(200).json({ status: 200, data: [null], message: "No recipes"});}
-
-      else 
+      if (userResult)
       {
-        const query = { _id: { $in: userResult.recipeBook } }
-        const recipesResult = await db.collection("recipes").find(query).toArray()
-        return res.status(200).json({ status: 200, data: recipesResult});
+        if (userResult.recipeBook.length === 0) 
+        {
+          return res.status(200).json({ status: 200, data: [null], message: "No recipes"})
+        }
+        else
+        {
+          const query = { _id: { $in: userResult.recipeBook } }
+          const recipesResult = await db.collection("recipes").find(query).toArray()
+
+          recipesResult
+          ? res.status(200).json({ status: 200, data: recipesResult})
+          : res.status(404).json({ status: 404, message: "Failed to find recipes from the user recipe book."})
+        }
       }
+      else
+      {
+        return res.status(404).json({ status : 404, message: "Failed to find the User"})
+      }
+
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
   } finally {
@@ -430,16 +456,33 @@ const getPlanner = async (req, res) =>
 
       let userResult = await db.collection("kitchen").findOne(userQuery);
 
-      if (userResult.planner.length === 0) {return res.status(200).json({ status: 200, data: ["null"], message: "No planner"});}
-
-      else 
+      if (userResult)
       {
-        const plannerResult = await db.collection("planners").findOne({ _id : userResult.planner})
+        if (userResult.planner.length === 0) 
+        {
+          return res.status(200).json({ status: 200, data: ["null"], message: "No planner created yet."})
+        }
+        else 
+        {
+          const plannerResult = await db.collection("planners").findOne({ _id : userResult.planner})
 
-        if (plannerResult.planner.length === 0) {return res.status(200).json({ status: 200, data: [userResult.planner], message: "No planner"});}
-
-        return res.status(200).json({ status: 200, data: plannerResult});
+          if (plannerResult)
+          {
+            plannerResult.planner.length === 0
+            ? res.status(200).json({ status: 200, data: [userResult.planner], message: "No planner"})
+            : res.status(200).json({ status: 200, data: plannerResult})
+          }
+          else
+          {
+            return res.status(404).json({ status: 404, message : "Failed to find the planner."})
+          }
+        }
       }
+      else
+      {
+        return res.status(404).json({ status: 404, message : "Failed to find the user."})
+      }
+
   } catch (err) {
       res.status(500).json({ status: 500, message: err });
   } finally {
@@ -464,18 +507,14 @@ const addPlan = async (req, res) =>
 
       const plannerDataArray = [plannerData.current, plannerData.next]
 
-      console.log(plannerId + "hi")
-
-      const update = { $set: { planner : plannerData } }
-
       let updateResult = await db.collection("planners").findOneAndUpdate(
         { _id : plannerId },
         { $set: { planner : plannerDataArray } }
       );
 
-      console.log(updateResult)
-
-      return res.status(200).json({ status: 200, message: "success"})
+      updateResult.value
+      ? res.status(200).json({ status: 200, message: "success"})
+      : res.status(400).json({ status: 200, message: "failed to find the planner and add the plan."})
 
   } catch (err) {
       res.status(500).json({ status: 500, message: err });

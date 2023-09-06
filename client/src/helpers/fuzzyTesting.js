@@ -47,7 +47,7 @@ export const itemSearch = (input, array) => {
 
     array.forEach((item) => {exactTesting(query, item)})
 
-    if (exactMatch === null) {initialItems.forEach((item) => {fuzzyMatch(query, item)})}
+    if (exactMatch === null) {array.forEach((item) => {fuzzyMatch(query, item)})}
 
     return {exactMatch, matchingNames}
 }

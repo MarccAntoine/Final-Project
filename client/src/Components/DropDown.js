@@ -58,7 +58,7 @@ const DropDown = ({setFormData, formData, location, recipes}) =>
     return (
         <>
             <label htmlFor={location} >{location} Name</label>
-            <ItemInput autoComplete="off" id={location} value={location === "product" ? (formData.product) : (formData.recipe)} placeholder={location} onKeyDown={keyEvent} onChange={handleChange}></ItemInput>
+            <ItemInput autoComplete="off" id={location} value={location === "product" ? (formData.product) : (formData.recipe)} placeholder={location} onKeyDown={keyEvent} onChange={handleChange} onBlur={() => setSimilar([])}></ItemInput>
             {similar.length !== 0 ? (
             <ItemSuggestions ref={ulRef}>
                 <SuggestionTitle>Suggestions:</SuggestionTitle>
