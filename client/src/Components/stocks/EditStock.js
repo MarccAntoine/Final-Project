@@ -1,10 +1,11 @@
 import { styled } from "styled-components";
-import {Background, Container, CloseButton, AddForm, SeparationDiv, Title, initialForm, ExpInput, UnitInput, MeasureSelect, Notification, ConfirmButton} from "./AddStockButton"
+import { Container, CloseButton, AddForm, SeparationDiv, Title, initialForm, ExpInput, UnitInput, MeasureSelect, Notification, ConfirmButton} from "./AddStockButton"
 import { useContext, useEffect, useState } from "react";
 import { KitchenContext } from "../KitchenContext";
 import {measurement} from "../../helpers/MainItemsDatabase"
 import { useNavigate } from "react-router-dom";
 import moment from 'moment';
+import Background from "../WindowBackground";
 
 const EditStock = ({edit, setEdit}) =>
 {
@@ -118,7 +119,7 @@ const EditStock = ({edit, setEdit}) =>
         <>
         {edit &&
         <>
-            <Background></Background>
+            <Background />
             <Container style={{backgroundColor: "#ECC49C"}}>
                 <CloseButton onClick={() => {setEdit(false); setDeleteAll(false); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
                 <AddForm>

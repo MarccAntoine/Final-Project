@@ -7,6 +7,7 @@ import Loading from "./Loading";
 import { useParams } from "react-router-dom";
 import { howManyInStock, recipeFilter } from "../helpers/RecipeFiltering";
 import FindRecipeForm from "./FindRecipeForm";
+import Background from "./WindowBackground";
 
 const Recipes = () =>
 {
@@ -76,9 +77,9 @@ const Recipes = () =>
                                     ) : (<></>)}
                                 </FilterDiv>
                                 <RecipeList>
-                                {recipes.map((recipe) => {return (
-                                    <RecipeItem>
-                                        <RecipeButton key={recipe._id} onClick={() => {setCurrentRecipe(recipe); document.activeElement.blur()}} style={{backgroundColor : (currentRecipe._id === recipe._id ? ("rgba(209,207,198,0.3)") : (null))}}>
+                                {(recipes[0] !== null && recipes) && recipes.map((recipe) => {return (
+                                    <RecipeItem key={recipe._id}>
+                                        <RecipeButton onClick={() => {setCurrentRecipe(recipe); document.activeElement.blur()}} style={{backgroundColor : (currentRecipe._id === recipe._id ? ("rgba(209,207,198,0.3)") : (null))}}>
                                             <Name>{recipe.name}</Name>
                                             {recipe.time && (<Time> - {recipe.time}</Time>)}
                                             <InStock style={{backgroundColor : (((howManyInStock(recipe, currentUser.items) * 100) / recipe.ingredients.length) > 80 ? ("#b8ccac") : (null))}} >{howManyInStock(recipe, currentUser.items)}/{recipe.ingredients.length} In stock</InStock>
@@ -98,12 +99,12 @@ const Recipes = () =>
                     </ContentContainer>
                 </Container>
                 {addRecipe && (<>
-                        <Background></Background>
+                        <Background />
                         <NewRecipeForm setAddRecipe={setAddRecipe} recipeToAdd={recipeToAdd} ></NewRecipeForm>
                     </>
                 )}
                 {findRecipe && (<>
-                        <Background></Background>
+                        <Background />
                         <FindRecipeForm setFindRecipe={setFindRecipe} currentUser={currentUser} setAddRecipe={setAddRecipe} setRecipeToAdd={setRecipeToAdd} ></FindRecipeForm>
                     </>
                 )}
@@ -112,16 +113,6 @@ const Recipes = () =>
         </>
     )
 }
-
-const Background = styled.div`
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(255,255,255,0.7);
-    z-index: 70;
-`
 
 const Container = styled.div`
     width: 100vw;

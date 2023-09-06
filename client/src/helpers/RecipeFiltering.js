@@ -1,3 +1,5 @@
+
+// This function here filters the recipes by alphabetical order or by "how many ingredients" from the recipe ar in stocks
 export const recipeFilter = (recipes, stocks, filter) =>
 {
     if (filter === "alpha")
@@ -28,6 +30,7 @@ export const recipeFilter = (recipes, stocks, filter) =>
     }
 }
 
+// This function here returns the number of ingredients in stock for any recipe
 export const howManyInStock = (recipe, stocks) =>
 {
     const stocksName = new Set(stocks.map((stock) => {return stock.product.toLowerCase()}))

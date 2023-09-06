@@ -58,12 +58,12 @@ const DropDown = ({setFormData, formData, location, recipes}) =>
     return (
         <>
             <label htmlFor={location} >{location} Name</label>
-            <ItemInput autoComplete="off" id={location} value={location === "product" ? (formData.product) : (formData.recipe)} placeholder={location} onKeyDown={keyEvent} onChange={handleChange} onBlur={() => setSimilar([])}></ItemInput>
+            <ItemInput autoComplete="off" id={location} value={location === "product" ? (formData.product) : (formData.recipe)} placeholder={location} onKeyDown={keyEvent} onChange={handleChange} onBlur={() => setTimeout(() => {setSimilar([])}, 100)}></ItemInput>
             {similar.length !== 0 ? (
             <ItemSuggestions ref={ulRef}>
                 <SuggestionTitle>Suggestions:</SuggestionTitle>
                 {similar && similar.map((item, index) => {return (
-                <SuggestionButton onClick={() => setSuggestion(item)} id={location} value={item.name} key={item.name}>
+                <SuggestionButton onClick={() => {setSuggestion(item)}} id={location} value={item.name} key={item.name}>
                     {selectedIndex === index ? (<SelectedSuggestion>{item.name}<SuggestionCat> - {item.category || item.time}</SuggestionCat></SelectedSuggestion>) : (<Suggestion>{item.name}<SuggestionCat> - {item.category || item.time}</SuggestionCat></Suggestion>)} 
                 </SuggestionButton>)})}
             </ItemSuggestions>) : (<></>)}

@@ -1287,4 +1287,4 @@ export const initialItems = [
 
   export const categories = Array.from(new Set(initialItems.map((item) => {return item.category})))
 
-  export const measurement = ["whole", "half", "L", "ML", "G", "MG", "KG", "cup", "tbsp", "tsp"]
+  export const measurement = ["whole", "half", "box", "can", "l", "ml", "g", "mg", "kg", "cup", "tbsp", "tsp"]

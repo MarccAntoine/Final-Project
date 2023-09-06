@@ -6,6 +6,7 @@ import { KitchenContext } from "../KitchenContext";
 import { useNavigate } from "react-router-dom";
 import {measurement, categories} from "../../helpers/MainItemsDatabase"
 import DropDown from "../DropDown";
+import Background from "../WindowBackground";
 
 export const initialForm = {
     "quantity": "",
@@ -87,7 +88,7 @@ const AddStockButton = ({location}) =>
         <>
         {buttonState === "add" && (
             <>
-                <Background></Background>
+                <Background />
                 <Container>
                     <AddForm>
                         <CloseButton aria-label="Close Section" onClick={(ev) => {ev.preventDefault(); setButtonState("button"); setFormData(initialForm); setNotification(null)}}>X</CloseButton>
@@ -133,17 +134,6 @@ const AddStockButton = ({location}) =>
         </>
     )
 }
-
-export const Background = styled.div`
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(255,255,255,0.6);
-    z-index: 70;
-    pointer-events: none;
-`
 
 const ContainerButton = styled.div`
     width: fit-content;

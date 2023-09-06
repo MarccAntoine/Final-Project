@@ -1,5 +1,6 @@
 const moment = require('moment');
 
+//Those functions are used in the planner, to build weeks and to test that its the good weeks in the planner. 
 const getWeekRange = (startDate) => 
 {
     const startOfWeek = startDate.clone().startOf('week').startOf('day');
@@ -42,6 +43,7 @@ export const whenIsDate = (dateToTest) =>
     else if (testDate.isAfter(endOfWeek)) {return "next"}
 }
 
+//This function converts a date to a day. Ex. march 20th to monday
 export const dateToDay = (date) =>
 {
     const dateToConvert = moment(date, 'MM/DD/YY');
