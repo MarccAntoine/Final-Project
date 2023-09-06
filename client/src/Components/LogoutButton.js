@@ -36,6 +36,10 @@ const OutButton = styled.button`
         font-weight: 500;
         cursor: pointer;
     }
+
+    @media only screen and (max-width: 850px) {
+        text-align: right;
+    }
 `
 
 export default LogoutButton;

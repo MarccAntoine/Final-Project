@@ -55,6 +55,7 @@ const ContentContainer = styled.div`
     gap: 40px;
     margin-top: 5vh;
     text-align: center;
+    padding: 0px 20px;
 
     h2 {
         font-size: 3rem;
@@ -63,7 +64,7 @@ const ContentContainer = styled.div`
 
     h4 {
         font-size: 1.5rem;
-        font-weight: normal;
+        font-weight: lighter;
     }
 
 
